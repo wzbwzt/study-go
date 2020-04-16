@@ -1,0 +1,3 @@
+heiheihei---
+os.O_TRUNC 指每次打开先清空再重写入
+hahaha+++++
