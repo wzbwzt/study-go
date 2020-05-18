@@ -39,6 +39,24 @@ func query(n int) {
 	}
 	fmt.Printf("%#v", u)
 }
+func insert(name string, age int) (err error) {
+	sqlStr := "insert into user (name,age) values (?,?)"
+	_, err = db.Exec(sqlStr, name, age)
+	if err != nil {
+		fmt.Println("insert failed err is :", err)
+		return
+	}
+	return
+}
+func delete(id int) (err error) {
+	sqlStr := "delete from user where id=?"
+	_, err = db.Exec(sqlStr, id)
+	if err != nil {
+		fmt.Println("delete failed err is :", err)
+		return
+	}
+	return
+}
 func main() {
 	err := initDB()
 	if err != nil {
