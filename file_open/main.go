@@ -47,7 +47,7 @@ func readFromFile1() {
 
 //按行读取文件
 func readfileByBufio() {
-	fileObj, err := os.Open("./main.go")
+	fileObj, err := os.Open("./channel.pdf")
 	if err != nil {
 		fmt.Printf("file open field err:%v", err)
 		return
@@ -73,7 +73,7 @@ func readfileByBufio() {
 
 //读取整个文件
 func readFileByIoutil() {
-	ret, err := ioutil.ReadFile("./main.go")
+	ret, err := ioutil.ReadFile("./channel.md")
 	if err != nil {
 		fmt.Printf("file read filed err is %v", err)
 		return
@@ -85,11 +85,11 @@ func readFileByIoutil() {
 func main() {
 	// readFromFile1()
 	// readfileByBufio()
-	// readFileByIoutil()
-	fileSize, fileName, mode := getFileInfo("./main.go")
-	fmt.Printf("%vB\n", fileSize)
-	fmt.Printf("%v\n", fileName)
-	fmt.Printf("%v", mode)
+	readFileByIoutil()
+	// fileSize, fileName, mode := getFileInfo("./main.go")
+	// fmt.Printf("%vB\n", fileSize)
+	// fmt.Printf("%v\n", fileName)
+	// fmt.Printf("%v", mode)
 }
 
 //获取文件信息

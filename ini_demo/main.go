@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-//配置文件的代码可以使用github上的：gopkg.in.ini.vi
+//配置文件的代码可以使用github上的：gopkg.in/ini.v1
 
 //MysqlConfig  mysql配置文件结构体
 type MysqlConfig struct {

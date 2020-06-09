@@ -2,8 +2,20 @@ package main
 
 import "fmt"
 
+type s struct {
+	name string
+}
+
 //map因为是引用类型 所以使用一定要先初始化
 func main() {
+	//---------------------------
+	//重点：map中的结构体无法直接寻址，必须取地
+	//---------------------------
+	ma := map[string]*s{"x": &s{"one"}}
+	ma["x"].name = "two"
+	fmt.Println(ma)
+
+	return
 	var m1 map[string]int
 	fmt.Println(m1)               //没有初始化（没有在内存中开辟空间）
 	m1 = make(map[string]int, 10) //要估算好该map容量，避免在程序运行中再动态扩容
