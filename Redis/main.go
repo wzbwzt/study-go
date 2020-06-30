@@ -20,6 +20,7 @@ func initRedis() (err error) {
 		fmt.Println("redis connect failed err:", err)
 		return
 	}
+
 	return nil
 }
 

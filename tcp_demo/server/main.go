@@ -10,7 +10,7 @@ import (
 //tcp服务端
 //1.本地端口启动服务
 //2.等待别人请求连接
-//3.与客户端通信
+//3.与客户端通信（为每一个客户端开辟一个独立的并发与其IO）
 func main() {
 	//1.
 	listener, err := net.Listen("tcp", "127.0.0.1:20000")
@@ -18,6 +18,7 @@ func main() {
 		fmt.Println("Listen failed err:", err)
 		return
 	}
+
 	for {
 		//2.
 		conn, err := listener.Accept()
@@ -41,7 +42,7 @@ func processConn(conn net.Conn) {
 			fmt.Println("read msg failed err:", err)
 			return
 		}
-		fmt.Println(string(tmp[:n]))
+		fmt.Println("收到消息：",string(tmp[:n]))
 		fmt.Print("请回复：")
 		msg, err := reader.ReadString('\n')
 		_, err = conn.Write([]byte(msg))

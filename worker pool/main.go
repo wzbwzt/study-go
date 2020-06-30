@@ -36,72 +36,73 @@ import (
 
 //Task 定义任务对象
 type Task struct {
-	f func()error //任务要具体执行的业务 叫f
+	f func() error //任务要具体执行的业务 叫f
 }
 
 //WorkerPool 定义协程池对象
-type WorkerPool struct{
-	JobChannel  chan *Task
+type WorkerPool struct {
+	JobChannel   chan *Task
 	EntryChannel chan *Task
-	MaxNum int
+	MaxNum       int
 }
 
 //NewTask 创建一个任务实例
-func NewTask(fun func()error )(task *Task){
-	task=&Task{
+func NewTask(fun func() error) (task *Task) {
+	task = &Task{
 		f: fun,
 	}
 	return
 }
 
 //Execute 执行任务实体中的方法
-func (t *Task)Execute(){
-	t.f()  //调用任务中已经绑定的方法
+func (t *Task) Execute() {
+	t.f() //调用任务中已经绑定的方法
 }
 
 //NewPool 创建一个协程池实例
-func NewPool(maxNum int )(pool *WorkerPool) {
-	pool=&WorkerPool{
-		JobChannel: make( chan *Task),
+func NewPool(maxNum int) (pool *WorkerPool) {
+	pool = &WorkerPool{
+		JobChannel:   make(chan *Task),
 		EntryChannel: make(chan *Task),
-		MaxNum: maxNum,
+		MaxNum:       maxNum,
 	}
 	return
 }
+
 //Worker 协程池创建一个worker让worker去执行任务
-func (w *WorkerPool)Worker(workID int){
-	for task:= range w.JobChannel{ //永久的从jobchannel中拿取任务去执行
+func (w *WorkerPool) Worker(workID int) {
+	for task := range w.JobChannel { //永久的从jobchannel中拿取任务去执行
 		task.Execute()
-		fmt.Println("worker ID:",workID,"has execute a task")
+		fmt.Println("worker ID:", workID, "has execute a task")
 	}
 }
 
-func (w *WorkerPool)run(){
+func (w *WorkerPool) run() {
 	//1.根据maxNum来创建对应数据的worker来工作
-	for i:=0;i<w.MaxNum;i++ {
+	for i := 0; i < w.MaxNum; i++ {
 		go w.Worker(i)
 	}
 	//2.从EntryChannel中取任务，将任务发送给jobchannel
-	for  tast:= range w.EntryChannel{
-		 w.JobChannel <- tast
+	for tast := range w.EntryChannel {
+		w.JobChannel <- tast
 	}
 }
 
-//testTask 测试使用 模拟具体具体
-func testTask()error{
+//testTask 测试使用 模拟具体任务
+func testTask() error {
 	fmt.Println(time.Now().Second())
 	return nil
 }
 
-func main(){
+func main() {
 	//1.创建一些具体任务
-	t:= NewTask(testTask)
+	t := NewTask(testTask)
 	//2.创建一个workPool实例
 	p := NewPool(6)
 	//3.将创建的任务流到entryChannel中
 	go func() {
-		for  {      //不断的将任务给写道接口通道中
-			p.EntryChannel<-t
+		for { //不断的将任务给写道接口通道中
+			p.EntryChannel <- t
 		}
 	}()
 	//4.启动pool去执行
