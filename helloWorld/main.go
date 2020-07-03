@@ -154,14 +154,12 @@ func main() {
 	val *= 2
 	val /= 2
 	val %= 3
-
 	val <<= 2 //val=val<<2
 	val &= 2  //val=val&2
 	val |= 2
 	val ^= 2
 	val >>= 2
 	fmt.Println(val)
-
 	//数组
 	fmt.Println("数组")
 	/*
