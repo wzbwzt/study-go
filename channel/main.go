@@ -32,28 +32,33 @@ for {
 }
 
 */
+// 	}
+// }
+
+// */
 
 var c chan int
 var wg sync.WaitGroup
 
 func main() {
-	// noBufChan()
+	//noBufChan()
 	// bufChan()
 	channelDemo()
 }
 
 func noBufChan() {
-	c = make(chan int) //chan必须使用make来实例化分配一块内存才可以使用，无缓冲区，必须先定义一个接受方，才可以发送
+	//chan必须使用make来实例化分配一块内存才可以使用，无缓冲区，必须先定义一个接受方，才可以发送
+	c = make(chan int)
 	//c <- 10                //hang住了 程序无法执行下去了  值发送不进去，没有接受的缓存区；所以必须先定义一个goroutine来接受，再发送
-	wg.Add(1)
+	//wg.Add(1)
 	go func() {
-		defer wg.Done()
+		//defer wg.Done()
 		x := <-c
 		fmt.Println("X:", x)
 	}()
 	c <- 10
 	fmt.Println("C:", c)
-	wg.Wait()
+	//wg.Wait()
 	close(c)
 
 }
@@ -74,11 +79,11 @@ func bufChan() {
 func channelDemo() {
 	var ch1, ch2 chan int
 	ch1 = make(chan int)
-	ch2 = make(chan int, 100)
-	wg.Add(1)
+	ch2 = make(chan int, 10)
+	//wg.Add(1)
 	go func() {
-		defer wg.Done()
-		for i := 0; i < 100; i++ {
+		//defer wg.Done()
+		for i := 0; i < 10; i++ {
 			x := <-ch1
 			x = x * x
 			ch2 <- x
@@ -87,15 +92,15 @@ func channelDemo() {
 		close(ch2)
 
 	}()
-	for i := 0; i < 100; i++ {
+	for i := 0; i < 10; i++ {
 		ch1 <- i
 	}
 
-	for i := 0; i < 100; i++ {
+	for i := 0; i < 10; i++ {
 		y := <-ch2
 		fmt.Println(y)
 	}
-	wg.Wait()
+	//wg.Wait()
 }
 
 //单项通道  规定通道只能用来send 或者receive;一般用于函数参数的传递，来保证通道的操作唯一
