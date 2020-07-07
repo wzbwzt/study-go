@@ -33,5 +33,5 @@ func main() {
 	//返回命令行参数后的其他参数个数
 	// fmt.Println(flag.NArg())
 	//返回使用的命令行参数个数
-	// fmt.Println(flag.NFlag())
+	fmt.Println(flag.NFlag())
 }
