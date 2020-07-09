@@ -9,6 +9,15 @@ import (
 	"log"
 	"net/http"
 )
+/*
+github.com/gorilla/mux:
+golang自带的http.SeverMux路由实现简单,本质是一个map[string]Handler,是请求路径与该路
+径对应的处理函数的映射关系。实现简单功能也比较单一：
+	1.不支持正则路由， 这个是比较致命的
+	2.只支持路径匹配，不支持按照Method，header，host等信息匹配，所以也就没法实现RESTful架构
+而gorilla/mux是一个强大的路由，小巧但是稳定高效，不仅可以支持正则路由还可以按照Method，
+header，host等信息匹配，可以从我们设定的路由表达式中提取出参数方便上层应用，而且完全兼容http.ServerMux
+*/
 
 var (
 	hostname string
@@ -16,7 +25,7 @@ var (
 )
 
 func init(){
-	flag.StringVar(&hostname,"addr","0.0.0.0","sercive listen IP or hostname")
+	flag.StringVar(&hostname,"addr","0.0.0.0","service listen IP or hostname")
 	flag.IntVar(&port,"port",8000,"service listen port")
 }
 //get 方式请求handle  //客户端请求命令：curl -X GET http://localhost:8000/api/service/get?name=wzb

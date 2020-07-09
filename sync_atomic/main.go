@@ -20,7 +20,8 @@ var (
 func main() {
 	for i := 0; i < 200; i++ {
 		wg.Add(1)
-		go add()
+		//go add()
+		go atoAdd()
 	}
 	wg.Wait()
 	fmt.Println(x)

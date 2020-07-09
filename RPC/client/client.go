@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
-	"net/rpc"
+	"net/rpc/jsonrpc"
 )
 
 type Params struct {
@@ -13,7 +13,8 @@ type Params struct {
 
 func main(){
 	//连接远程rpc服务
-	reps, err := rpc.DialHTTP("tcp", "127.0.0.1:8002")
+	//reps, err := rpc.DialHTTP("tcp", "127.0.0.1:8002")//new/rpc
+	reps, err := jsonrpc.Dial("tcp", "127.0.0.1:8002")//new/rpc/jsonrpc
 	if err != nil {
 		log.Fatal(err)
 	}

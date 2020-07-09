@@ -1,8 +1,11 @@
 package main
 
 import (
-	"net/http"
+	"fmt"
+	"log"
+	"net"
 	"net/rpc"
+	"net/rpc/jsonrpc"
 )
 
 /*-----------------------------------------
@@ -43,19 +46,47 @@ func (r *Rect)Perimeter(params Params,resp *int)(error){
 	*resp=(params.Width+params.Height)*2
 	return nil
 }
+//net/rpc
+//func main(){
+//	//1.注册服务
+//	rect:=new(Rect)
+//	err := rpc.Register(rect)
+//	if err != nil {
+//		return
+//	}
+//	//2.把服务处理绑定到http协议中
+//	rpc.HandleHTTP()
+//	//3.监听服务等待客户端调用
+//	err = http.ListenAndServe(":8002", nil)
+//	if err != nil {
+//		return
+//	}
+//}
 
+//net/rpc/jsonrpc
 func main(){
-	//1.注册服务
+	//注册服务
 	rect:=new(Rect)
 	err := rpc.Register(rect)
 	if err != nil {
-		return
+		log.Fatal(err)
 	}
-	//2.把服务处理绑定到http协议中
-	rpc.HandleHTTP()
-	//3.监听服务等待客户端调用
-	err = http.ListenAndServe(":8002", nil)
+	//监听服务
+	listen, err := net.Listen("tcp", "127.0.0.1:8002")
 	if err != nil {
-		return
+		log.Fatal(err)
 	}
+	//循环监听
+	for  {
+		conn, err := listen.Accept()
+		if err != nil {
+			continue
+		}
+		go func(conn net.Conn){
+			fmt.Println("new a client")
+			jsonrpc.ServeConn(conn)
+
+		}(conn)
+	}
+	
 }
