@@ -292,7 +292,7 @@ func main() {
 	fmt.Println(cop, cop2, cop3)
 	cop[0] = 100
 	fmt.Println(cop, cop2, cop3)
-
+	fmt.Println("--------------------")
 	//删除切片元素
 	//删除del切边中的3元素
 	del := [...]int{1, 2, 3, 4, 5, 6}

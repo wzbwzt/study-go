@@ -18,7 +18,7 @@ type cat struct {
 func reflectType(i interface{}) {
 	t := reflect.TypeOf(i)
 	// fmt.Printf("type:%v\n", t)
-	fmt.Printf("type:%v ;kind:%v\n", t.Name(), t.Kind()) //Value()有Kind()方法
+	fmt.Printf("type:%v ;kind:%v;%v\n", t.Name(), t.Kind(),t) //Value()有Kind()方法
 }
 
 //valueOf
@@ -39,6 +39,8 @@ func reflectValue(i interface{}) {
 	case reflect.Int32:
 		//v.Float()从反射中获取整型的原始值，然后通过int32()强制转换类型
 		fmt.Printf("type is int32,value is %d\n", int32(v.Int()))
+	default:
+		fmt.Println("other type")
 	}
 
 }
