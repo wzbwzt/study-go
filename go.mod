@@ -6,8 +6,11 @@ require (
 	github.com/coreos/etcd v3.3.22+incompatible // indirect
 	github.com/coreos/go-systemd v0.0.0-20191104093116-d3cd4ed1dbcf // indirect
 	github.com/go-log/log v0.2.0 // indirect
+	github.com/go-redis/redis v6.15.8+incompatible
+	github.com/go-sql-driver/mysql v1.5.0
 	github.com/gogo/protobuf v1.3.1 // indirect
 	github.com/golang/protobuf v1.4.2
+	github.com/jmoiron/sqlx v1.2.0
 	github.com/json-iterator/go v1.1.10 // indirect
 	github.com/lucas-clemente/quic-go v0.17.2 // indirect
 	github.com/marten-seemann/qtls v0.10.0 // indirect
