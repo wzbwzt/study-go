@@ -15,7 +15,6 @@ func main() {
 	ma["x"].name = "two"
 	fmt.Println(ma)
 
-	return
 	var m1 map[string]int
 	fmt.Println(m1)               //没有初始化（没有在内存中开辟空间）
 	m1 = make(map[string]int, 10) //要估算好该map容量，避免在程序运行中再动态扩容

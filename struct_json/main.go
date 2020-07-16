@@ -14,7 +14,7 @@ type person struct {
 	Age  int    `json:"age"`  //``是为了指定转换为对应格式的字段名。json："age"标识转json时该字段显示为age
 }
 
-func main() {
+func main1() {
 	p1 := person{
 		Name: "Bradley",
 		Age:  18,
@@ -32,4 +32,29 @@ func main() {
 	var p2 person
 	json.Unmarshal([]byte(str), &p2) //因为是传入函数且是修改  所以需要传入的是指针
 	fmt.Printf("%#v\n", p2)
+}
+
+type Person struct {
+	name   string
+	age    int8
+	dreams []string
+}
+
+func (p *Person) SetDreams1(dreams []string) {
+	p.dreams = dreams
+}
+func (p *Person) SetDreams2(dreams []string) {
+	p.dreams = make([]string, len(dreams))
+	p.dreams = dreams
+}
+func SetDreams(dreams []string) {
+	dreams[0] = "dreams"
+}
+func main(){
+	//p1 := Person{name: "小王子", age: 18}
+	data := []string{"吃饭", "睡觉", "打豆豆"}
+	//p1.SetDreams1(data)
+	SetDreams(data)
+	//data[1]="bu"
+	fmt.Println(data)
 }

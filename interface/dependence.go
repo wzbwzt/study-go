@@ -45,7 +45,7 @@ func (f *WanW)Drive(car Car){
 //业务逻辑层
 //-------------------
 func main(){
-	// 业务1：张三开奔驰
+	// 业务1：ZhanS开奔驰
 	var z ZhanS
 	var fentian Car
 	fentian=&Fent{}  //多态

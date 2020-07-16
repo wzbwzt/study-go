@@ -1,7 +1,10 @@
 package main
 
 import (
+	"bufio"
+	"errors"
 	"fmt"
+	"os"
 	"strings"
 )
 
@@ -30,12 +33,28 @@ func main() {
 	fmt.Printf("%o\n", n)
 	//打印十六进制
 	fmt.Printf("%x\n", n)
-	s := "hello/wzb"
 
+	f := 12.34
+	fmt.Printf("%b\n", f)//无小数部分、二进制指数的科学计数法，如-123456p-78
+	fmt.Printf("%e\n", f)//科学计数法，如-1234.456e+78
+	fmt.Printf("%E\n", f)//科学计数法，如-1234.456E+78
+	fmt.Printf("%f\n", f)//有小数部分但无指数部分，如123.456
+	fmt.Printf("%F\n", f)//同%f
+	fmt.Printf("%g\n", f)//根据实际情况采用%e或%f格式（以获得更简洁、准确的输出）
+	fmt.Printf("%G\n", f)//根据实际情况采用%E或%F格式（以获得更简洁、准确的输出）
+
+
+
+
+
+	s := "hello/wzb"
 	//打印字符串
 	fmt.Printf("string:%s\n", s)
 	fmt.Printf("value:%v\n", s)
-	fmt.Printf("value:%#v\n", s)
+	o := struct{ name string }{"teizhu"}
+	fmt.Printf("%+v\n", o)//输出结构体时会添加字段名
+	fmt.Printf("%v\n", o)
+	fmt.Printf("%#v\n", o)//值的Go语法表示
 	sc := 'c'
 	fmt.Printf("字符:%c\n", sc)    //打印字符
 	fmt.Println(len(s))          //字符串长度
@@ -61,4 +80,46 @@ func main() {
 	s2[0] = '红'      //2。修改的话必须用单引号 因为装换位rune后所有的选择都是字符
 	fmt.Println(s2)
 	fmt.Println(string(s2)) //把切片强制转换为字符串
+
+	//Fprint
+	// 向标准输出写入内容
+	fmt.Fprintln(os.Stdout, "向标准输出写入内容")
+	fileObj, err := os.OpenFile("./test2.txt", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+	if err != nil {
+		fmt.Println("打开文件出错，err:", err)
+		return
+	}
+	name := "阿无的吴"
+	//向打开的文件句柄中写入内容
+	fmt.Fprintf(fileObj, "往文件中写如信息：%s", name)
+
+	ss1 := fmt.Sprint("沙河小王子")
+	name1 := "沙河小王子"
+	age := 18
+	ss2 := fmt.Sprintf("name:%s,age:%d", name1, age)
+	ss3 := fmt.Sprintln("沙河小王子")
+	fmt.Println(ss1, ss2, ss3)
+
+	//Errorf
+	err3 := fmt.Errorf("这是一个错误") //定义一个error
+	fmt.Println(err3)
+	e := errors.New("原始错误e")
+	fmt.Println(e)
+	w := fmt.Errorf("Wrap了一个错误%w", e)
+	fmt.Println(w)
+	var (
+		name3    string
+		age3    int
+		married bool
+	)
+	fmt.Scan(&name3, &age3, &married)
+	fmt.Printf("扫描结果 name:%s age:%d married:%t \n", name3, age3, married)
+
+}
+func bufioDemo() {
+	reader := bufio.NewReader(os.Stdin) // 从标准输入生成读对象
+	fmt.Print("请输入内容：")
+	text, _ := reader.ReadString('\n') // 读到换行
+	text = strings.TrimSpace(text)
+	fmt.Printf("%#v\n", text)
 }

@@ -41,9 +41,9 @@ var c chan int
 var wg sync.WaitGroup
 
 func main() {
-	//noBufChan()
+	noBufChan()
 	// bufChan()
-	channelDemo()
+	//channelDemo()
 }
 
 func noBufChan() {

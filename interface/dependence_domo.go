@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 //模拟组装2台电脑
 
 //------------------------
@@ -50,10 +52,10 @@ func NewComputer(cpu Cpu,card Card,memory Memory)(c *Computer){
 	}
 	return
 }
-func (this *Computer)Work(){
-	this.ItemCard.Display()
-	this.ItemMemory.Storage()
-	this.ItemCpu.Calcalate()
+func (c *Computer)Work(){
+	c.ItemCard.Display()
+	c.ItemMemory.Storage()
+	c.ItemCpu.Calcalate()
 }
 //------------实现层------------
 type IntelCpu struct {
@@ -96,6 +98,19 @@ func main(){
 	//组装Intel Cpu、Kingston Memory、NVIDIA Card混合的电脑并运行
 	mixComputer:=NewComputer(&IntelCpu{},&NVIDCard{},&KingMemory{})
 	mixComputer.Work()
+
+	var a int
+	//a = 100
+	fmt.Println(&a)
+
+
+	b:= map[string]int{"zs":12}
+	fmt.Println(b)
+
+	//var b map[string]int
+	//b=make(map[string]int,0)
+	//b["zs"] = 100
+	//fmt.Println(b) //会panic
 }
 
 

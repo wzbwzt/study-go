@@ -10,7 +10,6 @@ import "fmt"
 实例化的话直接：struct{}{}
 因为不占内存；所以匿名空的结构体一般用来做通知使用
 
-
 */
 
 type person struct {
