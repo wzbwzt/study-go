@@ -31,10 +31,10 @@ func main() {
 	//now +24hour
 	fmt.Println(now.Add(time.Hour * 24))
 	//定时器
-	// timer := time.Tick(time.Second)
-	// for i := range timer {
-	// 	fmt.Println(i)
-	// }
+	//timer := time.Tick(time.Second)
+	//for i := range timer {
+	//	fmt.Println(i)
+	//}
 
 	//时间格式话  以2006 12345表示年月日时分秒
 	fmt.Println(now.Format("2006-01-02 03:04:05"))
@@ -54,12 +54,24 @@ func main() {
 	d := now.Sub(timer)
 	fmt.Println(d)
 
+	//判断两个时间是否相等；这种方法还会比较地点和时区信息。
+	fmt.Println(now.Equal(timer))
+	//判断时间（now）是否在（timer）之前
+	fmt.Println(now.Before(timer))
+	//判断时间（now）是否在（timer）之后
+	fmt.Println(now.After(timer))
+
 	//Sleep
 	time.Sleep(100) //默认纳秒
 	time.Sleep(3 * time.Second)
 	fmt.Println("3 second pass")
 	n := 100
 	time.Sleep(time.Duration(n)) //强转类型才可以使用
+
+	//同样起到sleep的作用；time.After本质是通道
+	<-time.After(time.Second*2)
+
+
 
 	//指定时区
 	//默认按照当前所在时区来解析时间
@@ -86,8 +98,10 @@ func main() {
 	td := timeObj2.Sub(now)
 	fmt.Println(td)
 
+
+
 	//tick 定时器
-	timerT := time.Tick(time.Second * 5)
+	timerT := time.Tick(time.Second * 1)
 	for t := range timerT {
 		fmt.Println(t)
 	}

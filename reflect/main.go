@@ -18,6 +18,7 @@ type cat struct {
 func reflectType(i interface{}) {
 	t := reflect.TypeOf(i)
 	// fmt.Printf("type:%v\n", t)
+
 	fmt.Printf("type:%v ;kind:%v;%v\n", t.Name(), t.Kind(),t) //Value()有Kind()方法
 }
 
@@ -59,7 +60,7 @@ func reflectSetValue2(i interface{}) {
 	}
 }
 
-func main() {
+func main1() {
 
 	//反射的应用
 	//Unmarshal将jsonz字符串给写入为结构体
@@ -105,4 +106,20 @@ func main() {
 	// 尝试从map中查找一个不存在的键
 	fmt.Println("map中不存在的键：", reflect.ValueOf(ma).MapIndex(reflect.ValueOf("娜扎")).IsValid())
 
+}
+func main(){
+	// 实例化一个匿名结构体
+	st := struct{
+		abc string
+	}{
+		"abc",
+	}
+	// 尝试从结构体中查找"abc"字段
+	fmt.Println("不存在的结构体成员:", reflect.ValueOf(st).FieldByName("abc").IsValid())
+	// 尝试从结构体中查找"abc"方法
+	fmt.Println("不存在的结构体方法:", reflect.ValueOf(st).MethodByName("abc").IsValid())
+	ma := map[string]int{}
+	// 尝试从map中查找一个不存在的键
+	fmt.Println("map中不存在的键：", reflect.ValueOf(ma).MapIndex(reflect.ValueOf("娜扎")).IsValid())
+	reflect.Type().Field()
 }

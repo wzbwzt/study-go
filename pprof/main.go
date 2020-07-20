@@ -25,7 +25,7 @@ func main() {
 	var isCPUPprof bool
 	var isMemPprof bool
 
-	flag.BoolVar(&isCPUPprof, "cpu", false, "turn cpu pprof on") //cup 默认是false 所以在命令行执行二进制文件时需要 =cpu=true
+	flag.BoolVar(&isCPUPprof, "cpu", false, "turn cpu pprof on") //cup 默认是false 所以在命令行执行二进制文件时需要 -cpu=true
 	flag.BoolVar(&isMemPprof, "mem", false, "turn mem pprof on")
 	flag.Parse()
 
@@ -38,9 +38,9 @@ func main() {
 		pprof.StartCPUProfile(file)
 		defer pprof.StopCPUProfile()
 	}
-	for i := 0; i < 8; i++ {
-		go logicCode()
-	}
+	//for i := 0; i < 8; i++ {
+	//	go logicCode()
+	//}
 	time.Sleep(20 * time.Second)
 	if isMemPprof {
 		file, err := os.Create("./mem.pprof")

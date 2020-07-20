@@ -37,6 +37,7 @@ func query(n int) {
 		fmt.Println("query failed err:", err)
 		return
 	}
+	db.NamedExec()
 	fmt.Printf("%#v", u)
 }
 func insert(name string, age int) (err error) {

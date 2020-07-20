@@ -21,9 +21,7 @@ var wg sync.WaitGroup
 func main() {
 	jobChan = make(chan int64, 100)
 	resultChan = make(chan int64, 50)
-	wg.Add(1)
 	go proInt(jobChan)
-	wg.Add(24)
 	for i := 1; i <= 24; i++ { //worker pool
 		go spendInt(jobChan, resultChan)
 	}

@@ -1,39 +1,40 @@
 package splittostring
 
 import (
+	"fmt"
 	"reflect"
 	"testing"
 )
 
 //示例
-// func TestSplittostring1(t *testing.T) { //// 测试函数名必须以Test开头，必须接收一个*testing.T类型参数
-// 	got := Splittostring("a:b:c", ":") // 程序输出的结果
-// 	want := []string{"a", "b", "c"}    // 期望的结果
-// 	if !reflect.DeepEqual(want, got) { // 因为slice不能比较直接，借助反射包中的方法比较
-// 		t.Errorf("excepted:%v, got:%v", want, got) // 测试失败输出错误提示
-// 	}
-// }
+func TestSplittostring1(t *testing.T) { //// 测试函数名必须以Test开头，必须接收一个*testing.T类型参数
+	got := Splittostring("a:b:c", ":") // 程序输出的结果
+	want := []string{"a", "b", "c"}    // 期望的结果
+	if !reflect.DeepEqual(want, got) { // 因为slice不能比较直接，借助反射包中的方法比较
+		t.Errorf("excepted:%v, got:%v", want, got) // 测试失败输出错误提示
+	}
+}
 
 //测试组(无法对单个case进行测试)
-// func TestSplittostring(t *testing.T) {
-// 	type testCase struct {
-// 		str  string
-// 		sep  string
-// 		want []string
-// 	}
-// 	test := []testCase{
-// 		{str: "a:b:c", sep: ":", want: []string{"a", "b", "c"}},
-// 		{str: "adfgadsf", sep: "d", want: []string{"a", "fga", "sf"}},
-// 		{str: "avddfddfddf", sep: "fd", want: []string{"avdd", "d", "df"}},
-// 	}
-// 	for _, v := range test {
-// 		got := Splittostring(v.str, v.sep)
-// 		if !reflect.DeepEqual(v.want, got) {
-// 			t.Errorf("want:%#v,got:%#v\n", v.want, got)
-// 		}
-// 	}
+func TestSplittostring2(t *testing.T) {
+	type testCase struct {
+		str  string
+		sep  string
+		want []string
+	}
+	test := []testCase{
+		{str: "a:b:c", sep: ":", want: []string{"a", "b", "c"}},
+		{str: "adfgadsf", sep: "d", want: []string{"a", "fga", "sf"}},
+		{str: "avddfddfddf", sep: "fd", want: []string{"avdd", "d", "df"}},
+	}
+	for _, v := range test {
+		got := Splittostring(v.str, v.sep)
+		if !reflect.DeepEqual(v.want, got) {
+			t.Errorf("want:%#v,got:%#v\n", v.want, got)
+		}
+	}
 
-// }
+}
 
 //子测试(即可以组测试，也可以进行单个case的测试)
 
@@ -55,9 +56,7 @@ func TestSplittostring(t *testing.T) {
 				t.Errorf("name:%s,want:%#v,got:%#v\n", k, v.want, got)
 			}
 		})
-
 	}
-
 }
 
 //可以通过-run=RegExp来指定运行的测试用例，还可以通过/来指定要运行的子测试用例，
@@ -96,3 +95,12 @@ func BenchmarkFib3(b *testing.B)  { benchmarkFib(b, 3) }
 func BenchmarkFib10(b *testing.B) { benchmarkFib(b, 10) }
 func BenchmarkFib20(b *testing.B) { benchmarkFib(b, 20) }
 func BenchmarkFib40(b *testing.B) { benchmarkFib(b, 40) }
+
+//示例函数
+func ExampleSplittostring() {
+	fmt.Println(Splittostring( "adfgadsf","d"))
+	fmt.Println(Splittostring("avddfddfddf", "fd"))
+	// Output:
+	// [a fga sf]
+	// [avdd d df]
+}

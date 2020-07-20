@@ -9,7 +9,8 @@ import (
 //redis 示例
 var redisdb *redis.Client
 
-func initRedis() (err error) {
+//普通连接
+func initRedis1() (err error) {
 	redisdb = redis.NewClient(&redis.Options{
 		Addr:     "127.0.0.1:6379",
 		Password: "",
@@ -24,7 +25,32 @@ func initRedis() (err error) {
 	return nil
 }
 
+//哨兵模式
+func initRedis2()(err error){
+	redisdb := redis.NewFailoverClient(&redis.FailoverOptions{
+		MasterName:    "master",
+		SentinelAddrs: []string{":26379", ":26379", ":26379"},
+	})
+	_, err = redisdb.Ping().Result()
+	if err != nil {
+		fmt.Println("redis connect failed err:", err)
+		return
+	}
+	return nil
+}
+//集群模式
+func initRedis3()(err error){
+	redisdb := redis.NewClusterClient(&redis.ClusterOptions{
+		Addrs: []string{":7000", ":7001", ":7002", ":7003", ":7004", ":7005"},
+	})
+	_, err = redisdb.Ping().Result()
+	if err != nil {
+		fmt.Println("redis connect failed err:", err)
+		return
+	}
+	return nil
+}
 func main() {
-	initRedis()
+	initRedis1()
 
 }
