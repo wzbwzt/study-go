@@ -5,8 +5,8 @@ import (
 	"strconv"
 )
 
-func main() {
-	//从字符串中解析数字
+func main1() {
+	//从字符串转解析数字
 	str := "123123"
 	strToInt, err := strconv.ParseInt(str, 10, 64)
 	if err != nil {
@@ -34,4 +34,6 @@ func main() {
 	var sf = "12.12"
 	fs, _ := strconv.ParseFloat(sf, 64)
 	fmt.Printf("%v,%T\n", fs, fs)
+
+
 }

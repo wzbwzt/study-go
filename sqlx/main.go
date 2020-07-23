@@ -37,7 +37,7 @@ func query(n int) {
 		fmt.Println("query failed err:", err)
 		return
 	}
-	db.NamedExec()
+	//db.NamedExec()
 	fmt.Printf("%#v", u)
 }
 func insert(name string, age int) (err error) {
@@ -58,11 +58,16 @@ func delete(id int) (err error) {
 	}
 	return
 }
-func main() {
+func main1() {
 	err := initDB()
 	if err != nil {
 		fmt.Println("connect db failed err:", err)
 		return
 	}
 	query(0)
+}
+func main(){
+	var i int
+	var a rune =123
+	fmt.Printf("%#d;%T;%T;",i,i,a)
 }
