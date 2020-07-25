@@ -99,10 +99,11 @@ func main() {
 	fmt.Println(td)
 
 
-
 	//tick 定时器
-	timerT := time.Tick(time.Second * 1)
+	timerT := time.Tick(time.Second * 2)
 	for t := range timerT {
 		fmt.Println(t)
 	}
+
+
 }

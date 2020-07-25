@@ -52,6 +52,7 @@ func NewFileLog(levelStr, fp, fn string, maxSize int64) *FileLogger {
 	if err != nil {
 		panic(err)
 	}
+	fmt.Println(*f)
 	//开启一个后台的goroutine来写日志
 	go f.getLogFromChan()
 	return f

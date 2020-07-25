@@ -70,9 +70,9 @@ LOOP:
 		fmt.Printf("worker, trace code:%s\n", traceCode)
 		time.Sleep(time.Millisecond * 10) // 假设正常连接数据库耗时10毫秒
 		select {
-		case <-ctxP.Done(): // 50毫秒后自动调用
-			break LOOP
-		default:
+			case <-ctxP.Done(): // 50毫秒后自动调用
+				break LOOP
+			default:
 		}
 	}
 	wg.Done()
