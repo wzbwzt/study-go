@@ -45,3 +45,6 @@ func b() {
 		fmt.Printf("B:%d\n", i)
 	}
 }
+
+
+

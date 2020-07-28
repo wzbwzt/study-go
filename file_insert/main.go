@@ -52,7 +52,7 @@ func fileInsert() {
 	}
 
 	//移动光标
-	// _, err2 := fileObjOld.Seek(1, 0)
+	//_, err2 := fileObjOld.Seek(1, 0)
 	// if err2 != nil {
 	// 	fmt.Printf("file seek failed err is %v\n", err2)
 	// 	return
@@ -80,4 +80,5 @@ func fileInsert() {
 
 func main() {
 	fileInsert()
+
 }

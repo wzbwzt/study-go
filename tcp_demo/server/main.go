@@ -50,7 +50,5 @@ func processConn(conn net.Conn) {
 			fmt.Println("conn write to client failed,err:", err)
 			return
 		}
-
 	}
-
 }
