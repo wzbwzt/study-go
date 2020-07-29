@@ -78,35 +78,34 @@ LOOP:
 	wg.Done()
 }
 func main() {
-	//WithCancel
-	// ctx, cancel := context.WithCancel(context.Background())
-	// //Background():Go内置函数要用于main函数、初始化以及测试代码中，作为Context这个树结构的最顶层的Context，也就是根Context。
-	// wg.Add(1)
-	// go f(ctx)
-	// time.Sleep(time.Second * 2)
-	// cancel() //通知子goroutine结束
-	// wg.Wait()
+	//ctx, cancel := context.WithCancel(context.Background())
+	////Background():Go内置函数要用于main函数、初始化以及测试代码中，作为Context这个树结构的最顶层的Context，也就是根Context。
+	//wg.Add(1)
+	//go f(ctx)
+	//time.Sleep(time.Second * 2)
+	//cancel() //通知子goroutine结束
+	//wg.Wait()
 	//---------------------------------------------------------------
 	//WithDeadline
-	// d := time.Now().Add(time.Second * 1)
-	// ctx2, cancel2 := context.WithDeadline(context.Background(), d)
-	// 尽管ctx2会过期，但在任何情况下调用它的cancel2函数都是很好的实践。
-	// 如果不这样做，可能会使上下文及其父类存活的时间超过必要的时间。
-	// defer cancel2()
-	// select {
-	// case <-ctx2.Done():
-	// 	fmt.Println(ctx2.Err())
-	// case <-time.After(time.Millisecond * 2000):
-	// 	fmt.Println("working...")
-	// }
+	//d := time.Now().Add(time.Second * 1)
+	//ctx2, cancel2 := context.WithDeadline(context.Background(), d)
+	//尽管ctx2会过期，但在任何情况下调用它的cancel2函数都是很好的实践。
+	//如果不这样做，可能会使上下文及其父类存活的时间超过必要的时间。
+	//defer cancel2()
+	//select {
+	//case <-ctx2.Done():
+	//	fmt.Println(ctx2.Err())
+	//case <-time.After(time.Millisecond * 2000):
+	//	fmt.Println("working...")
+	//}
 	//-----------------------------------------------------------------
 	//WithTimeout()//通常用于数据库或者网络连接的超时控制。
-	// ctx3, cancel3 := context.WithTimeout(context.Background(), time.Millisecond*50) // 设置一个50毫秒的超时
-	// wg.Add(1)
-	// go connectDB(ctx3)
-	// time.Sleep(time.Second * 2)
-	// cancel3()
-	// wg.Wait()
+	//ctx3, cancel3 := context.WithTimeout(context.Background(), time.Millisecond*50) // 设置一个50毫秒的超时
+	//wg.Add(1)
+	//go connectDB(ctx3)
+	//time.Sleep(time.Second * 2)
+	//cancel3()
+	//wg.Wait()
 	//-----------------------------------------------------------------
 	ctxP, cancel := context.WithTimeout(context.Background(), time.Millisecond*50) // 设置一个50毫秒的超时
 	// 在系统的入口中设置trace code传递给后续启动的goroutine实现日志数据聚合
@@ -117,3 +116,4 @@ func main() {
 	cancel()
 	wg.Wait()
 }
+

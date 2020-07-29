@@ -33,7 +33,7 @@ func main2(){
 //100 120 220
 //10 30 40
 
-func main3(){
+func main(){
 	a:=10
 	b:=20
 	defer func(i int) {
@@ -49,7 +49,7 @@ func main3(){
 //1000
 
 
-func main(){
+func main3(){
 	a:=make([]int ,6)
 	a=append(a,1,2,3)
 	fmt.Println(a)

@@ -30,5 +30,4 @@ func main() {
 	http.HandleFunc("/simulation/", f2)
 	// http.ListenAndServe("127.0.0.1:9090", nil) //监听并服务于指定的IP和端口；
 	http.ListenAndServe("0.0.0.0:9090", nil) //0.0.0.0 表示监听任何网段的信息
-
 }
