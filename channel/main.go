@@ -37,13 +37,18 @@ for {
 
 // */
 
+
 var c chan int
 var wg sync.WaitGroup
 
+
+
 func main() {
-	noBufChan()
+	//noBufChan()
 	// bufChan()
 	//channelDemo()
+
+
 }
 
 func noBufChan() {

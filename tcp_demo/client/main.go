@@ -3,9 +3,9 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"log"
 	"net"
 	"os"
-	"strings"
 )
 
 //tcp  客户端
@@ -18,22 +18,30 @@ func main() {
 		fmt.Println("dial failed err :", err)
 		return
 	}
+	defer conn.Close()
+	//子协程从读取用户输入，往conn中写
+	go func(){
+		//fmt.Print("input:")
+		for  {
+			//fmt.Print("input:")
+			newReader := bufio.NewReader(os.Stdin)
+			msg, err := newReader.ReadString('\n')
+			if err != nil {
+				log.Fatal(err)
+			}
+			_, err = conn.Write([]byte(msg))
+			if err != nil {
+				log.Fatal(err)
+			}
+		}
+	}()
+	//从conn中读取数据输出到控制台
 	var tmp [128]byte
-	reader := bufio.NewReader(os.Stdin) //获取终端输入 os.Args 也可以获取终端输入
-	for {
-		fmt.Print("请写入发送内容：")
-		msg, err := reader.ReadString('\n')
-		if msg == "exit" {
-			break
-		}
-		msg = strings.TrimSpace(msg)
-		_, err = conn.Write([]byte(msg))
-		n, _ := conn.Read(tmp[:])
-		fmt.Print("收到消息：",string(tmp[:n]))
+	for  {
+		n, err := conn.Read(tmp[:])
 		if err != nil {
-			fmt.Println("conn write to server failed,err:", err)
-			return
+			log.Fatal(err)
 		}
+		fmt.Println("收到消息：",string(tmp[:n]))
 	}
-	conn.Close()
 }

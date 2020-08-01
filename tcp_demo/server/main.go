@@ -42,7 +42,7 @@ func processConn(conn net.Conn) {
 			fmt.Println("read msg failed err:", err)
 			return
 		}
-		fmt.Println("收到消息：",string(tmp[:n]))
+		fmt.Printf("收到消息：%v;from{%v}\n",string(tmp[:n]),conn.RemoteAddr().String())
 		fmt.Print("请回复：")
 		msg, err := reader.ReadString('\n')
 		_, err = conn.Write([]byte(msg))
