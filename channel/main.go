@@ -47,8 +47,16 @@ func main() {
 	//noBufChan()
 	// bufChan()
 	//channelDemo()
+	test()
 
-
+}
+func test(){
+	defer fmt.Println(123)
+	defer fmt.Println(456)
+	//panic(func()int{
+	// n,_:=fmt.Println("done")
+	// return  n
+	//}())
 }
 
 func noBufChan() {

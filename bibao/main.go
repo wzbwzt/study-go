@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 //闭包
 //闭包是一个函数。这个函数包含外部作用域的一个变量
@@ -23,6 +25,9 @@ func bb(f func(int, int), m, n int) func() {
 	}
 	return tmp
 }
+type  Slice []int
+
+
 func main() {
 	ret := bb(f2, 1, 2) //把原来需要传递两个int类型的参数包装成一个不需要传参的函数
 	f1(ret)

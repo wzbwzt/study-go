@@ -21,7 +21,7 @@ func main() {
 	urlData.Set("name", "铁柱")
 	urlData.Set("age", "123")
 	queryStr := urlData.Encode() //编码后的url 地址
-	// fmt.Println(queryStr)
+	 fmt.Println(queryStr)
 	urlObj.RawQuery = queryStr
 	req, err := http.NewRequest("get", urlObj.String(), nil)
 	resp, err := http.DefaultClient.Do(req) //发送请求

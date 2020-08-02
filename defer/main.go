@@ -1,6 +1,11 @@
 package main
 
-import "fmt"
+import (
+	"bytes"
+	"fmt"
+	"strconv"
+	"strings"
+)
 
 //defer  执行顺序按照先后后出的原则，即先入栈的最后执行
 func main1() {
@@ -33,7 +38,7 @@ func main2(){
 //100 120 220
 //10 30 40
 
-func main(){
+func main4(){
 	a:=10
 	b:=20
 	defer func(i int) {
@@ -54,3 +59,37 @@ func main3(){
 	a=append(a,1,2,3)
 	fmt.Println(a)
 }
+
+func main(){
+	i, err := divi(1, 0)
+	fmt.Println(i,err)
+
+}
+
+//自定义error类型
+type DIYerror struct{
+	e string
+	param string
+}
+
+func (d *DIYerror)Error()string{
+	obj:= bytes.Buffer{}
+	obj.WriteString("err is:")
+	obj.WriteString(d.e)
+	obj.WriteString("param is:")
+	obj.WriteString(d.param)
+	return obj.String()
+}
+
+func divi(x,y int) (z int,err error){
+	if y == 0 {
+		return 0,&DIYerror{
+			e: "y can`t be 0",
+			param: strings.Join([]string{strconv.Itoa(x),strconv.Itoa(y)},","),
+		}
+	}
+	z = x / y
+	return z ,nil
+}
+
+
