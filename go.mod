@@ -7,6 +7,7 @@ require (
 	github.com/go-redis/redis v6.15.8+incompatible
 	github.com/go-sql-driver/mysql v1.5.0
 	github.com/golang/protobuf v1.4.2
+	github.com/gorilla/websocket v1.4.2
 	github.com/jehiah/go-strftime v0.0.0-20171201141054-1d33003b3869 // indirect
 	github.com/jmoiron/sqlx v1.2.0
 	github.com/jonboulle/clockwork v0.1.0 // indirect
@@ -18,14 +19,13 @@ require (
 	github.com/miekg/dns v1.1.30
 	github.com/onsi/ginkgo v1.11.0 // indirect
 	github.com/onsi/gomega v1.8.1 // indirect
-	github.com/opencontainers/runc v0.1.1
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/rifflock/lfshook v0.0.0-20180920164130-b9218ef580f5
 	github.com/sirupsen/logrus v1.4.2
 	github.com/stretchr/testify v1.4.0 // indirect
 	github.com/tebeka/strftime v0.1.4 // indirect
 	golang.org/x/crypto v0.0.0-20200709230013-948cd5f35899 // indirect
-	golang.org/x/net v0.0.0-20200707034311-ab3426394381 // indirect
+	golang.org/x/net v0.0.0-20200707034311-ab3426394381
 	golang.org/x/sync v0.0.0-20200625203802-6e8e738ad208 // indirect
 	golang.org/x/sys v0.0.0-20200625212154-ddb9806d33ae // indirect
 	golang.org/x/text v0.3.3 // indirect
