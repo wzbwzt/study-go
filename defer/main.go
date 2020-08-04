@@ -1,20 +1,21 @@
 package main
 
 import (
-	"bytes"
 	"fmt"
-	"strconv"
-	"strings"
 )
 
 //defer  执行顺序按照先后后出的原则，即先入栈的最后执行
 func main1() {
 	i := 10
-	defer fmt.Printf(" defer i=%d", i) //defer 虽然是最后执行 但是会先把值压入到栈，执行是最后执行
+	defer fmt.Printf("defer i=%d", i) //defer 虽然是最后执行 但是会先把值压入到栈，执行是最后执行
 	i = 100
 	fmt.Println(i)
 }
-
+/*
+output:
+100
+defer i=10
+*/
 
 
 func calc(x,y int )int{
@@ -48,6 +49,7 @@ func main4(){
 	a=100
 }
 
+//闭包的原理：a会从函数外面找最新的那个值，这个区别于main2中的压栈执行（先将a传进去，等待执行）；
 //output:
 //100 20 120
 //100 120 220
@@ -60,36 +62,6 @@ func main3(){
 	fmt.Println(a)
 }
 
-func main(){
-	i, err := divi(1, 0)
-	fmt.Println(i,err)
 
-}
-
-//自定义error类型
-type DIYerror struct{
-	e string
-	param string
-}
-
-func (d *DIYerror)Error()string{
-	obj:= bytes.Buffer{}
-	obj.WriteString("err is:")
-	obj.WriteString(d.e)
-	obj.WriteString("param is:")
-	obj.WriteString(d.param)
-	return obj.String()
-}
-
-func divi(x,y int) (z int,err error){
-	if y == 0 {
-		return 0,&DIYerror{
-			e: "y can`t be 0",
-			param: strings.Join([]string{strconv.Itoa(x),strconv.Itoa(y)},","),
-		}
-	}
-	z = x / y
-	return z ,nil
-}
 
 
