@@ -28,7 +28,40 @@ func bb(f func(int, int), m, n int) func() {
 type  Slice []int
 
 
-func main() {
+func main1() {
 	ret := bb(f2, 1, 2) //把原来需要传递两个int类型的参数包装成一个不需要传参的函数
 	f1(ret)
 }
+
+//闭包延迟求值
+//错误
+func testF() []func() {
+	var funs []func()
+	for i:=0;i<2;i++  {
+		funs = append(funs,func() {
+			println(&i,i)      //结果拿的始终是i=2,和其地址；要想结果不一样；需要用一个变量来接受
+		})
+	}
+	return funs
+}
+//正确
+func testT() []func() {
+	var funs []func()
+	for i:=0;i<2;i++  {
+		x:=i
+		funs = append(funs,func() {
+			println(&x,x)
+		})
+	}
+	return funs
+}
+
+func main(){
+	funs:=testT()
+	for _,f:=range funs{
+		f()
+	}
+}
+
+
+

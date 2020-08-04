@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"reflect"
 )
 
 func main1() {
@@ -38,6 +39,7 @@ func main1() {
 	fmt.Println(string(b))
 }
 
+/*-------------------------------分割线----------------------------*/
 //KMP字符串匹配
 func SindexKMP(S,T string) int {
 	//next := get_next(T)
@@ -110,20 +112,25 @@ func pase_student() {
 
 
 
-
-func calc(index string, a, b int) int {
-	ret := a+ b
-	fmt.Println(index,a, b, ret)
-	return ret
-}
 func main() {
-	a := 1
-	b := 2
-	defer calc("1", a, calc("10", a, b))
-	a = 0
-	defer calc("2", a, calc("20", a, b))
-	b = 1
+	defer func() {
+		if err:=recover();err!=nil{
+			fmt.Println("++++")
+			f:=err.(func()string)
+			fmt.Println(err,f(),reflect.TypeOf(err).Kind().String())
+		}else {
+			fmt.Println("fatal")
+		}
+	}()
+	defer func() {
+		panic (func()string {
+			return "defer panic"
+		})
+	}()
+	panic("panic")
 }
+
+
 
 
 

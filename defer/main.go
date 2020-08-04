@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"reflect"
 )
 
 //defer  执行顺序按照先后后出的原则，即先入栈的最后执行
@@ -24,7 +25,7 @@ func calc(x,y int )int{
 	return res
 }
 
-func main2(){
+func main12(){
 	a:=10
 	b:=20
 	defer calc(a,calc(a,b))
@@ -39,7 +40,7 @@ func main2(){
 //100 120 220
 //10 30 40
 
-func main4(){
+func main2(){
 	a:=10
 	b:=20
 	defer func(i int) {
@@ -62,6 +63,30 @@ func main3(){
 	fmt.Println(a)
 }
 
+func main() {
+	defer func() {
+		if err:=recover();err!=nil{
+			fmt.Println("++++")
+			f:=err.(func()string)
+			fmt.Println(err,f(),reflect.TypeOf(err).Kind().String())
+		}else {
+			fmt.Println("fatal")
+		}
+	}()
+	defer func() {
+		fmt.Println("-----")
+		panic (func()string {
+			return "defer panic"
+		})
+	}()
+	panic("panic")
+}
+
+/*
+-----
+++++
+0x49abd0 defer panic func
+*/
 
 
 

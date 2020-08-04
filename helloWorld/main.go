@@ -56,7 +56,13 @@ const (
 	c4        //3
 	c5        //4
 )
-
+const (
+	x = iota   //0
+	y          //1
+	z = "zz"	//zz
+	k			//zz
+	p = iota	//4
+)
 //多个常量声明在一行
 const (
 	d1, d2 = iota + 1, iota + 2 //d1=1;d2=2
@@ -118,7 +124,7 @@ go语言中函数传的参数永远是复制黏贴的值
 
 */
 //程序的入口函数
-func main() {
+func main1() {
 	fmt.Println("hello wzb")
 	//声明的同时赋值
 	var s1 string = "tiezhu"
