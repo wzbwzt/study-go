@@ -232,4 +232,5 @@ func main() {
 	fmt.Println(result.FirstName)
 	fmt.Println(result.LastName)
 	fmt.Println(result.City)
+
 }
