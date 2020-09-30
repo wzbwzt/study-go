@@ -120,12 +120,12 @@ func Init() {
 		fmt.Println(err)
 		return
 	}
-	err = f.RemoveRow("Sheet3", 1)
+	err = f.RemoveRow("Sheet4", 1)
 	if err != nil {
 		panic(err)
 	}
 	// Get all the rows in the Sheet1.
-	rows, err := f.GetRows("Sheet3")
+	rows, err := f.GetRows("Sheet4")
 	if err != nil {
 		panic(err)
 	}
@@ -134,7 +134,7 @@ func Init() {
     rowLine:=0
 	for _,v:= range rows{
          rowLine++
-		parse, err := time.Parse("2006-01-2", v[3])
+		parse, err := time.Parse("2006-01-02", v[3])
 		if err != nil {
 			panic(err)
 		}
