@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/wzbwzt/studyGo/gRPC/proto"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 	"log"
 	"net"
 )
@@ -42,6 +43,10 @@ func main(){
 	//3.在gRPC中注册该服务
 	//第二个参数要接口类型的变量
 	proto.RegisterUserInfoServiceServer(serv,&us)
+
+	//不加该映射 执行grpcui -plaintext 127.0.0.1:8000打开grpcui会报错
+	reflection.Register(serv)
+
 	//4.启动gRPC服务端
 	serv.Serve(listen)
 }

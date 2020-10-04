@@ -4,27 +4,23 @@ go 1.13
 
 require (
 	github.com/fastly/go-utils v0.0.0-20180712184237-d95a45783239 // indirect
+	github.com/fullstorydev/grpcui v1.0.0 // indirect
 	github.com/go-redis/redis v6.15.8+incompatible
 	github.com/go-sql-driver/mysql v1.5.0
 	github.com/golang/protobuf v1.4.2
 	github.com/gorilla/websocket v1.4.2
 	github.com/jehiah/go-strftime v0.0.0-20171201141054-1d33003b3869 // indirect
 	github.com/jmoiron/sqlx v1.2.0
-	github.com/jonboulle/clockwork v0.1.0 // indirect
-	github.com/konsorten/go-windows-terminal-sequences v1.0.2 // indirect
-	github.com/kr/pretty v0.1.0 // indirect
 	github.com/lestrrat-go/file-rotatelogs v2.3.0+incompatible
 	github.com/lestrrat-go/strftime v1.0.3 // indirect
-	github.com/lib/pq v1.2.0 // indirect
+	github.com/micro/go-plugins/registry/consul v0.0.0-20200119172437-4fe21aa238fd // indirect
 	github.com/miekg/dns v1.1.30
 	github.com/mitchellh/mapstructure v1.3.3
 	github.com/onsi/ginkgo v1.11.0 // indirect
 	github.com/onsi/gomega v1.8.1 // indirect
-	github.com/pkg/errors v0.9.1 // indirect
 	github.com/rifflock/lfshook v0.0.0-20180920164130-b9218ef580f5
 	github.com/sirupsen/logrus v1.4.2
 	github.com/skip2/go-qrcode v0.0.0-20200617195104-da1b6568686e
-	github.com/stretchr/testify v1.4.0 // indirect
 	github.com/tebeka/strftime v0.1.4 // indirect
 	golang.org/x/crypto v0.0.0-20200709230013-948cd5f35899 // indirect
 	golang.org/x/net v0.0.0-20200707034311-ab3426394381
@@ -35,6 +31,5 @@ require (
 	google.golang.org/grpc v1.30.0
 	google.golang.org/protobuf v1.25.0 // indirect
 	gopkg.in/alexcesaro/quotedprintable.v3 v3.0.0-20150716171945-2caba252f4dc // indirect
-	gopkg.in/check.v1 v1.0.0-20180628173108-788fd7840127 // indirect
 	gopkg.in/gomail.v2 v2.0.0-20160411212932-81ebce5c23df
 )
