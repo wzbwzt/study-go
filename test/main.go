@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+	"strconv"
 	"time"
 )
 
@@ -67,7 +69,7 @@ func (ct *CleanTask) Execute() {
 	println("CleanTask.Execute()")
 }
 
-func main () {
+func main1() {
 	cleanTask := &CleanTask{
 		Task{},
 	}
@@ -75,6 +77,44 @@ func main () {
 	cleanTask.Start()
 }
 
+func main2(){
+		a:=int32(1)
+	b:=int32(3)
+	fmt.Println(a/b)
+	passrate, _ := strconv.ParseFloat(fmt.Sprintf("%.6f", float64(a)/float64(b)), 64)
+	fmt.Println(passrate)
 
+}
 
+//在使用func (t Time) AddDate(years int, months int, days int) Time{}需要注意如果是8.31往后推一个月会直接跳过9月
+func  main3(){
+	t, _ := time.Parse(time.RFC3339, "2020-08-31T08:10:45.814Z")
+	year := t.Year()
+	month := t.Month()
+	local:=t.Location()
+	date := time.Date(year, month, 1, 0, 0, 0, 0, local)
+	fmt.Println(date)
+	format := date.AddDate(0, 0, 0).Format("200601")
+	fmt.Println(format)
+	format2 := date.AddDate(0, 1, 0).Format("200601")
+	fmt.Println(format2)
+}
 
+func main4(){
+	timer,_:=time.Parse("200601","202009")
+	fmt.Println(timer)
+	addDate := timer.AddDate(0, 1, 0)
+	fmt.Println(addDate)
+	date := time.Date(timer.Year(), timer.Month(), 1, 0, 0, 0, 0, timer.Location())
+	startime := date.Format(time.RFC3339)
+	endtime := date.AddDate(0, 1, 0).Format(time.RFC3339)
+	fmt.Println(startime)
+	fmt.Println(endtime)
+
+}
+func main(){
+	//var m =map[int]int64{}
+	m:=make(map[int]int64)
+	m[1]=123
+	fmt.Println(m)
+}
