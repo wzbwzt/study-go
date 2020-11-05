@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"strconv"
 	"time"
@@ -77,21 +78,21 @@ func main1() {
 	cleanTask.Start()
 }
 
-func main2(){
-		a:=int32(1)
-	b:=int32(3)
-	fmt.Println(a/b)
+func main2() {
+	a := int32(1)
+	b := int32(3)
+	fmt.Println(a / b)
 	passrate, _ := strconv.ParseFloat(fmt.Sprintf("%.6f", float64(a)/float64(b)), 64)
 	fmt.Println(passrate)
 
 }
 
 //在使用func (t Time) AddDate(years int, months int, days int) Time{}需要注意如果是8.31往后推一个月会直接跳过9月
-func  main3(){
+func main3() {
 	t, _ := time.Parse(time.RFC3339, "2020-08-31T08:10:45.814Z")
 	year := t.Year()
 	month := t.Month()
-	local:=t.Location()
+	local := t.Location()
 	date := time.Date(year, month, 1, 0, 0, 0, 0, local)
 	fmt.Println(date)
 	format := date.AddDate(0, 0, 0).Format("200601")
@@ -100,8 +101,8 @@ func  main3(){
 	fmt.Println(format2)
 }
 
-func main4(){
-	timer,_:=time.Parse("200601","202009")
+func main4() {
+	timer, _ := time.Parse("200601", "202009")
 	fmt.Println(timer)
 	addDate := timer.AddDate(0, 1, 0)
 	fmt.Println(addDate)
@@ -112,9 +113,82 @@ func main4(){
 	fmt.Println(endtime)
 
 }
-func main(){
+func main5() {
 	//var m =map[int]int64{}
-	m:=make(map[int]int64)
-	m[1]=123
+	m := make(map[int]int64)
+	m[1] = 123
 	fmt.Println(m)
+}
+
+func main9() {
+	a := "ABC123123"
+	fmt.Println(a)
+	marshal, _ := json.Marshal(a)
+	fmt.Println(string(marshal))
+	var c string
+	_ = json.Unmarshal(marshal, &c)
+	fmt.Println(c)
+	var d []string
+	d = append(d, c)
+	bytes, _ := json.Marshal(d)
+
+	var tmp1 []string
+	_ = json.Unmarshal(bytes, &tmp1)
+	for _, v := range tmp1 {
+		fmt.Println(v)
+	}
+}
+func main12() {
+	a := "sh202010261002"
+	fmt.Println(a[2:])
+}
+
+func main13() {
+	a := []string{"aaa", "bbb", "ccc"}
+	b := []string{"bbb", "ddd", "eee", "ccc", "aaa"}
+	res := RemoveFromSlice(a, b)
+	fmt.Println(res)
+}
+func RemoveFromSlice(target, source []string) []string {
+	for _, v := range target {
+		for k, vv := range source {
+			if v == vv {
+				source = append(source[:k], source[k+1:]...)
+			}
+		}
+	}
+	return source
+}
+
+func main() {
+	// m := make(map[string]int)
+	// m["go"] = 123
+	// m["ptyhon"] = 12
+	// for k := range m {
+	// 	fmt.Println(k)
+	// }
+	a := []string{"aaa", "abc", "acd", "aaa", "abc"}
+	c := []string{}
+	res := RemoveRepeatedElement(a)
+	res1 := RemoveRepeatedElement(c)
+	fmt.Println(res)
+	fmt.Println(res1)
+}
+
+//数组去重
+func RemoveRepeatedElement(arr []string) (newArr []string) {
+	newArr = make([]string, 0)
+	for i := 0; i < len(arr); i++ {
+		repeat := false
+		for j := i + 1; j < len(arr); j++ {
+			if arr[i] == arr[j] {
+				repeat = true
+				break
+			}
+		}
+		if !repeat {
+			newArr = append(newArr, arr[i])
+		}
+	}
+	return
 }
