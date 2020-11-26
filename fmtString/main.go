@@ -35,26 +35,23 @@ func main() {
 	fmt.Printf("%x\n", n)
 
 	f := 12.34
-	fmt.Printf("%b\n", f)//无小数部分、二进制指数的科学计数法，如-123456p-78
-	fmt.Printf("%e\n", f)//科学计数法，如-1234.456e+78
-	fmt.Printf("%E\n", f)//科学计数法，如-1234.456E+78
-	fmt.Printf("%f\n", f)//有小数部分但无指数部分，如123.456
-	fmt.Printf("%F\n", f)//同%f
-	fmt.Printf("%g\n", f)//根据实际情况采用%e或%f格式（以获得更简洁、准确的输出）
-	fmt.Printf("%G\n", f)//根据实际情况采用%E或%F格式（以获得更简洁、准确的输出）
-
-
-
-
+	fmt.Printf("浮点数:%T\n", f)
+	fmt.Printf("%b\n", f) //无小数部分、二进制指数的科学计数法，如-123456p-78
+	fmt.Printf("%e\n", f) //科学计数法，如-1234.456e+78
+	fmt.Printf("%E\n", f) //科学计数法，如-1234.456E+78
+	fmt.Printf("%f\n", f) //有小数部分但无指数部分，如123.456
+	fmt.Printf("%F\n", f) //同%f
+	fmt.Printf("%g\n", f) //根据实际情况采用%e或%f格式（以获得更简洁、准确的输出）
+	fmt.Printf("%G\n", f) //根据实际情况采用%E或%F格式（以获得更简洁、准确的输出）
 
 	s := "hello/wzb"
 	//打印字符串
 	fmt.Printf("string:%s\n", s)
 	fmt.Printf("value:%v\n", s)
 	o := struct{ name string }{"teizhu"}
-	fmt.Printf("%+v\n", o)//输出结构体时会添加字段名
+	fmt.Printf("%+v\n", o) //输出结构体时会添加字段名
 	fmt.Printf("%v\n", o)
-	fmt.Printf("%#v\n", o)//值的Go语法表示
+	fmt.Printf("%#v\n", o) //值的Go语法表示
 	sc := 'c'
 	fmt.Printf("字符:%c\n", sc)    //打印字符
 	fmt.Println(len(s))          //字符串长度
@@ -108,7 +105,7 @@ func main() {
 	w := fmt.Errorf("Wrap了一个错误%w", e)
 	fmt.Println(w)
 	var (
-		name3    string
+		name3   string
 		age3    int
 		married bool
 	)

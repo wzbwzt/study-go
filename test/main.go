@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"math"
 	"strconv"
 	"time"
 )
@@ -160,21 +161,6 @@ func RemoveFromSlice(target, source []string) []string {
 	return source
 }
 
-func main() {
-	// m := make(map[string]int)
-	// m["go"] = 123
-	// m["ptyhon"] = 12
-	// for k := range m {
-	// 	fmt.Println(k)
-	// }
-	a := []string{"aaa", "abc", "acd", "aaa", "abc"}
-	c := []string{}
-	res := RemoveRepeatedElement(a)
-	res1 := RemoveRepeatedElement(c)
-	fmt.Println(res)
-	fmt.Println(res1)
-}
-
 //数组去重
 func RemoveRepeatedElement(arr []string) (newArr []string) {
 	newArr = make([]string, 0)
@@ -191,4 +177,83 @@ func RemoveRepeatedElement(arr []string) (newArr []string) {
 		}
 	}
 	return
+}
+
+func GenNowNumber() string {
+	return time.Now().Format("20060102150405")
+}
+
+func main29() {
+	// m := make(map[string]int)
+	// m["go"] = 123
+	// m["ptyhon"] = 12
+	// for k := range m {
+	// 	fmt.Println(k)
+	// }
+	a := []string{"aaa", "abc", "acd", "aaa", "abc"}
+	c := []string{}
+	res := RemoveRepeatedElement(a)
+	res1 := RemoveRepeatedElement(c)
+	fmt.Println(res)
+	fmt.Println(res1)
+	test := float64(6)
+	for i := float64(1); i < test; i++ {
+		fmt.Println(i)
+	}
+	fmt.Println(GenNowNumber())
+	timer, _ := time.Parse("2006", "2020")
+	fmt.Println(timer.Format(time.RFC3339))
+
+}
+
+//判断浮点数是不是整数
+func main26() {
+	var a float64
+	a = 1.23
+	fmt.Println(int64(a))
+	//1
+	if a == float64(int64(a)) {
+		fmt.Println("yay")
+	} else {
+		fmt.Println("you fail")
+	}
+	//2.
+	fmt.Println(math.Trunc(a))
+}
+
+func main27() {
+	var codes []string
+	v := "[]"
+	_ = json.Unmarshal([]byte(v), &codes)
+	fmt.Println(codes)
+	for _, v := range codes {
+		fmt.Println(123)
+		fmt.Println(v)
+	}
+	var transferCodes []string
+	transferCodes = nil
+	marshal, _ := json.Marshal(transferCodes)
+	fmt.Println(string(marshal))
+}
+
+func main() {
+	m := make(map[*bool]int)
+	t := true
+	f := false
+	m[nil] = 0
+	m[&t] = 1
+	m[&f] = 2
+	fmt.Println(m[nil])
+	fmt.Println(m[&t])
+
+	m1 := make(map[*bool]*int)
+	one := 0
+	two := 1
+	three := 2
+
+	m1[nil] = &one
+	m1[&t] = &two
+	m1[&f] = &three
+	fmt.Println(*m1[nil])
+	fmt.Println(*m1[&t])
 }
