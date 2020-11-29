@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"strconv"
 	"time"
@@ -77,21 +78,21 @@ func main1() {
 	cleanTask.Start()
 }
 
-func main2(){
-		a:=int32(1)
-	b:=int32(3)
-	fmt.Println(a/b)
+func main2() {
+	a := int32(1)
+	b := int32(3)
+	fmt.Println(a / b)
 	passrate, _ := strconv.ParseFloat(fmt.Sprintf("%.6f", float64(a)/float64(b)), 64)
 	fmt.Println(passrate)
 
 }
 
 //在使用func (t Time) AddDate(years int, months int, days int) Time{}需要注意如果是8.31往后推一个月会直接跳过9月
-func  main3(){
+func main3() {
 	t, _ := time.Parse(time.RFC3339, "2020-08-31T08:10:45.814Z")
 	year := t.Year()
 	month := t.Month()
-	local:=t.Location()
+	local := t.Location()
 	date := time.Date(year, month, 1, 0, 0, 0, 0, local)
 	fmt.Println(date)
 	format := date.AddDate(0, 0, 0).Format("200601")
@@ -100,8 +101,8 @@ func  main3(){
 	fmt.Println(format2)
 }
 
-func main4(){
-	timer,_:=time.Parse("200601","202009")
+func main4() {
+	timer, _ := time.Parse("200601", "202009")
 	fmt.Println(timer)
 	addDate := timer.AddDate(0, 1, 0)
 	fmt.Println(addDate)
@@ -112,9 +113,31 @@ func main4(){
 	fmt.Println(endtime)
 
 }
-func main(){
+func main5() {
 	//var m =map[int]int64{}
-	m:=make(map[int]int64)
-	m[1]=123
+	m := make(map[int]int64)
+	m[1] = 123
 	fmt.Println(m)
+}
+func main() {
+	a := []int{1, 2, 3}
+	sprintf := fmt.Sprintf(`{"deleted":%v}`, a)
+	fmt.Println(sprintf)
+	fmt.Printf("%T", sprintf)
+	type Test struct {
+		Deleted []int `json:"deleted"`
+	}
+	var t Test
+	_ = json.Unmarshal([]byte(sprintf), &t)
+	fmt.Println(t)
+	var t2 Test
+	t2.Deleted = a
+	marshal, _ := json.Marshal(t2)
+	fmt.Println(string(marshal))
+	t3 := struct {
+		Deleted []int
+	}{}
+	t3.Deleted = a
+	marshal3, _ := json.Marshal(t3)
+	fmt.Println(string(marshal3))
 }

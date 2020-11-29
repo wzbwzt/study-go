@@ -118,8 +118,8 @@ func main() {
 
 	layout := "2006-01-02 15:04:05"
 	loc, _ := time.LoadLocation("Asia/Chongqing")
-	zero_day, _ := time.ParseInLocation(layout, "1949-10-01 00:00:00", loc)
-	fmt.Println(zero_day)
+	zeroday, _ := time.ParseInLocation(layout, "1949-10-01 00:00:00", loc)
+	fmt.Println(zeroday)
 	str := now.Format(time.RFC3339)
 	fmt.Println(str)
 	if str > "0" {
