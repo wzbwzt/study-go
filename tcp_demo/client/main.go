@@ -20,9 +20,9 @@ func main() {
 	}
 	defer conn.Close()
 	//子协程从读取用户输入，往conn中写
-	go func(){
+	go func() {
 		//fmt.Print("input:")
-		for  {
+		for {
 			//fmt.Print("input:")
 			newReader := bufio.NewReader(os.Stdin)
 			msg, err := newReader.ReadString('\n')
@@ -37,11 +37,11 @@ func main() {
 	}()
 	//从conn中读取数据输出到控制台
 	var tmp [128]byte
-	for  {
+	for {
 		n, err := conn.Read(tmp[:])
 		if err != nil {
 			log.Fatal(err)
 		}
-		fmt.Println("收到消息：",string(tmp[:n]))
+		fmt.Println("收到消息：", string(tmp[:n]))
 	}
 }

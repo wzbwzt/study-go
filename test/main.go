@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"math"
 	"strconv"
 	"time"
 )
@@ -28,7 +29,6 @@ import (
 当需要新的行为时，需要不断定义新的对象来满足需求。
 */
 /*
-
 任务类型包括按照文件过期时间清理，按照文件夹容量进行清理及将文件上传至服务器，对于这些任务而言，
 具有某些共同点：如都是定时执行的，并且支持启动、停止等操作。
 
@@ -37,7 +37,12 @@ import (
 对于各类任务的特有行为而言，如按过期时间清理任务需要遍历文件夹筛选出满足过期条件的文件，按照文件
 夹容量清理任务需要先统计文件夹的总容量，当总容量大于警戒容量时再按照修改时间对文件列表进行排序，
 从过期时间最久的文件开始删除，直至文件夹容量小于安全容量，则通过实现Executable接口定义的方法Execute来定义各自的行为。
+
 */
+
+*/
+
+
 
 type Executable interface {
 	Start()
@@ -119,7 +124,7 @@ func main5() {
 	m[1] = 123
 	fmt.Println(m)
 }
-func main() {
+func main16() {
 	a := []int{1, 2, 3}
 	sprintf := fmt.Sprintf(`{"deleted":%v}`, a)
 	fmt.Println(sprintf)
@@ -140,4 +145,141 @@ func main() {
 	t3.Deleted = a
 	marshal3, _ := json.Marshal(t3)
 	fmt.Println(string(marshal3))
+}
+
+func main9() {
+	a := "ABC123123"
+	fmt.Println(a)
+	marshal, _ := json.Marshal(a)
+	fmt.Println(string(marshal))
+	var c string
+	_ = json.Unmarshal(marshal, &c)
+	fmt.Println(c)
+	var d []string
+	d = append(d, c)
+	bytes, _ := json.Marshal(d)
+
+	var tmp1 []string
+	_ = json.Unmarshal(bytes, &tmp1)
+	for _, v := range tmp1 {
+		fmt.Println(v)
+	}
+}
+func main12() {
+	a := "sh202010261002"
+	fmt.Println(a[2:])
+}
+
+func main13() {
+	a := []string{"aaa", "bbb", "ccc"}
+	b := []string{"bbb", "ddd", "eee", "ccc", "aaa"}
+	res := RemoveFromSlice(a, b)
+	fmt.Println(res)
+}
+func RemoveFromSlice(target, source []string) []string {
+	for _, v := range target {
+		for k, vv := range source {
+			if v == vv {
+				source = append(source[:k], source[k+1:]...)
+			}
+		}
+	}
+	return source
+}
+
+//数组去重
+func RemoveRepeatedElement(arr []string) (newArr []string) {
+	newArr = make([]string, 0)
+	for i := 0; i < len(arr); i++ {
+		repeat := false
+		for j := i + 1; j < len(arr); j++ {
+			if arr[i] == arr[j] {
+				repeat = true
+				break
+			}
+		}
+		if !repeat {
+			newArr = append(newArr, arr[i])
+		}
+	}
+	return
+}
+
+func GenNowNumber() string {
+	return time.Now().Format("20060102150405")
+}
+
+func main29() {
+	// m := make(map[string]int)
+	// m["go"] = 123
+	// m["ptyhon"] = 12
+	// for k := range m {
+	// 	fmt.Println(k)
+	// }
+	a := []string{"aaa", "abc", "acd", "aaa", "abc"}
+	c := []string{}
+	res := RemoveRepeatedElement(a)
+	res1 := RemoveRepeatedElement(c)
+	fmt.Println(res)
+	fmt.Println(res1)
+	test := float64(6)
+	for i := float64(1); i < test; i++ {
+		fmt.Println(i)
+	}
+	fmt.Println(GenNowNumber())
+	timer, _ := time.Parse("2006", "2020")
+	fmt.Println(timer.Format(time.RFC3339))
+
+}
+
+//判断浮点数是不是整数
+func main26() {
+	var a float64
+	a = 1.23
+	fmt.Println(int64(a))
+	//1
+	if a == float64(int64(a)) {
+		fmt.Println("yay")
+	} else {
+		fmt.Println("you fail")
+	}
+	//2.
+	fmt.Println(math.Trunc(a))
+}
+
+func main27() {
+	var codes []string
+	v := "[]"
+	_ = json.Unmarshal([]byte(v), &codes)
+	fmt.Println(codes)
+	for _, v := range codes {
+		fmt.Println(123)
+		fmt.Println(v)
+	}
+	var transferCodes []string
+	transferCodes = nil
+	marshal, _ := json.Marshal(transferCodes)
+	fmt.Println(string(marshal))
+}
+
+func main() {
+	m := make(map[*bool]int)
+	t := true
+	f := false
+	m[nil] = 0
+	m[&t] = 1
+	m[&f] = 2
+	fmt.Println(m[nil])
+	fmt.Println(m[&t])
+
+	m1 := make(map[*bool]*int)
+	one := 0
+	two := 1
+	three := 2
+
+	m1[nil] = &one
+	m1[&t] = &two
+	m1[&f] = &three
+	fmt.Println(*m1[nil])
+	fmt.Println(*m1[&t])
 }
