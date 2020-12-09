@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"math"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -236,7 +237,7 @@ func main27() {
 	fmt.Println(string(marshal))
 }
 
-func main() {
+func main28() {
 	m := make(map[*bool]int)
 	t := true
 	f := false
@@ -256,4 +257,25 @@ func main() {
 	m1[&f] = &three
 	fmt.Println(*m1[nil])
 	fmt.Println(*m1[&t])
+}
+
+func main() {
+	a := []int{}
+	if a == nil {
+		fmt.Println("is nil")
+	}
+	if len(a) == 0 {
+		fmt.Println("is 0")
+	}
+	fmt.Println(a)
+
+	str := "03排B01"
+	pos := strings.Index(str, "排")
+	fmt.Println(pos)
+	strs := []rune(str)
+	regionName := string(strs[:pos+1])
+	shelveName := string(strs[pos+1:])
+	fmt.Println(regionName)
+	fmt.Println(shelveName)
+
 }
