@@ -30,7 +30,6 @@ import (
 当需要新的行为时，需要不断定义新的对象来满足需求。
 */
 /*
-
 任务类型包括按照文件过期时间清理，按照文件夹容量进行清理及将文件上传至服务器，对于这些任务而言，
 具有某些共同点：如都是定时执行的，并且支持启动、停止等操作。
 
@@ -39,7 +38,12 @@ import (
 对于各类任务的特有行为而言，如按过期时间清理任务需要遍历文件夹筛选出满足过期条件的文件，按照文件
 夹容量清理任务需要先统计文件夹的总容量，当总容量大于警戒容量时再按照修改时间对文件列表进行排序，
 从过期时间最久的文件开始删除，直至文件夹容量小于安全容量，则通过实现Executable接口定义的方法Execute来定义各自的行为。
+
 */
+
+*/
+
+
 
 type Executable interface {
 	Start()
@@ -120,6 +124,28 @@ func main5() {
 	m := make(map[int]int64)
 	m[1] = 123
 	fmt.Println(m)
+}
+func main16() {
+	a := []int{1, 2, 3}
+	sprintf := fmt.Sprintf(`{"deleted":%v}`, a)
+	fmt.Println(sprintf)
+	fmt.Printf("%T", sprintf)
+	type Test struct {
+		Deleted []int `json:"deleted"`
+	}
+	var t Test
+	_ = json.Unmarshal([]byte(sprintf), &t)
+	fmt.Println(t)
+	var t2 Test
+	t2.Deleted = a
+	marshal, _ := json.Marshal(t2)
+	fmt.Println(string(marshal))
+	t3 := struct {
+		Deleted []int
+	}{}
+	t3.Deleted = a
+	marshal3, _ := json.Marshal(t3)
+	fmt.Println(string(marshal3))
 }
 
 func main9() {

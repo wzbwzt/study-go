@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-func main() {
+func main1() {
 	now := time.Now()
 	fmt.Println(now)
 	fmt.Println(now.Year())
@@ -69,9 +69,7 @@ func main() {
 	time.Sleep(time.Duration(n)) //强转类型才可以使用
 
 	//同样起到sleep的作用；time.After本质是通道
-	<-time.After(time.Second*2)
-
-
+	<-time.After(time.Second * 2)
 
 	//指定时区
 	//默认按照当前所在时区来解析时间
@@ -98,12 +96,33 @@ func main() {
 	td := timeObj2.Sub(now)
 	fmt.Println(td)
 
-
 	//tick 定时器
 	timerT := time.Tick(time.Second * 2)
 	for t := range timerT {
 		fmt.Println(t)
 	}
 
+}
+func main() {
+	now := time.Now()
+	currentYear, currentMonth, _ := now.Date()
+	println(currentYear, currentMonth)
+	currentLocation := now.Location()
+	fmt.Println(currentLocation)
+	firstOfMonth := time.Date(currentYear, currentMonth, 1, 0, 0, 0, 0, currentLocation)
+	lastOfMonth := firstOfMonth.AddDate(0, -12, 0)
 
+	fmt.Println(firstOfMonth)
+	fmt.Println(lastOfMonth)
+	fmt.Println(lastOfMonth)
+
+	layout := "2006-01-02 15:04:05"
+	loc, _ := time.LoadLocation("Asia/Chongqing")
+	zeroday, _ := time.ParseInLocation(layout, "1949-10-01 00:00:00", loc)
+	fmt.Println(zeroday)
+	str := now.Format(time.RFC3339)
+	fmt.Println(str)
+	if str > "0" {
+		println(123)
+	}
 }

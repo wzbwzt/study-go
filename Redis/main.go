@@ -26,7 +26,7 @@ func initRedis1() (err error) {
 }
 
 //哨兵模式
-func initRedis2()(err error){
+func initRedis2() (err error) {
 	redisdb := redis.NewFailoverClient(&redis.FailoverOptions{
 		MasterName:    "master",
 		SentinelAddrs: []string{":26379", ":26379", ":26379"},
@@ -38,8 +38,9 @@ func initRedis2()(err error){
 	}
 	return nil
 }
+
 //集群模式
-func initRedis3()(err error){
+func initRedis3() (err error) {
 	redisdb := redis.NewClusterClient(&redis.ClusterOptions{
 		Addrs: []string{":7000", ":7001", ":7002", ":7003", ":7004", ":7005"},
 	})
@@ -49,6 +50,27 @@ func initRedis3()(err error){
 		return
 	}
 	return nil
+}
+
+//连接池连接	"github.com/garyburd/redigo/redis"
+//"github.com/go-redis/redis" 不支持连接池
+func initRedis() (err error) {
+	// redisPool := &redis.Pool{
+	// 	MaxIdle:     10,                               //最大闲置数
+	// 	MaxActive:   100,                              //最大连接数
+	// 	IdleTimeout: time.Duration(100) * time.Second, //连接超时
+	// 	Dial: func() (redis.Conn, error) {
+	// 		return redis.Dial("tcp", secKillConfig.redisConf.redisAddr)
+	// 	},
+	// }
+
+	// //测试连接池
+	// conn := redisPool.Get()
+	// _, err = conn.Do("ping")
+	// if err != nil {
+	// 	return
+	// }
+	// return
 }
 func main() {
 	initRedis1()
