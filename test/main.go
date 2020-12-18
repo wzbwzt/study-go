@@ -5,7 +5,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"math"
+	"path"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -259,7 +261,7 @@ func main27() {
 	fmt.Println(string(marshal))
 }
 
-func main() {
+func main28() {
 	m := make(map[*bool]int)
 	t := true
 	f := false
@@ -284,4 +286,102 @@ func main() {
 	fmt.Printf("%T\n", data)
 	fmt.Printf("%x\n", data)
 
+}
+
+func main() {
+	a := []int{}
+	if a == nil {
+		fmt.Println("is nil")
+	}
+	if len(a) == 0 {
+		fmt.Println("is 0")
+	}
+	fmt.Println(a)
+
+	str := "03排B01"
+	pos := strings.Index(str, "排")
+	fmt.Println(pos)
+	strs := []rune(str)
+	regionName := string(strs[:pos+1])
+	shelveName := string(strs[pos+1:])
+	fmt.Println(regionName)
+	fmt.Println(shelveName)
+
+	strr := []rune(str)
+	fmt.Printf("str len is:%v", len(strr))
+	fmt.Printf("strs  is:%v", strr)
+	for _, v := range strr {
+		fmt.Println(string(v))
+	}
+
+	fmt.Println("==========================")
+	for _, v := range str {
+		fmt.Println(string(v))
+	}
+
+	s := "device/sdk/CMakeLists.txt"
+	ss := "CMakeListstxt"
+	fmt.Println(path.Ext(s))
+	fmt.Println(path.Ext(ss))
+
+	var Map_img map[string]struct{} = map[string]struct{}{
+		".jpg": struct{}{},
+		".png": struct{}{},
+		".gif": struct{}{},
+		".svg": struct{}{},
+		".pcx": struct{}{},
+	}
+	fmt.Println(Map_img)
+
+	fmt.Println("==========================")
+	str_time := "202012"
+	timer, _ := time.Parse("200601", str_time)
+	fmt.Println(timer)
+	start_time := timer.Format("2006-01-02 15:04:05")
+	fmt.Println(start_time)
+	end_time := timer.AddDate(0, 1, 0).Format("2006-01-02 15:04:05")
+	fmt.Println(end_time)
+
+	var xais []string
+	for i := 0; i < 6; i++ {
+		month := time.Now().AddDate(0, -i, 0).Format("200601")
+		xais = append(xais, month)
+	}
+	fmt.Println(xais)
+	map_test := make(map[int]int)
+	map_test[1] = 1
+	fmt.Println(map_test[1])
+	fmt.Println(map_test[2])
+
+	slice_test := []string{}
+	fmt.Println(slice_test)
+	for _, v := range slice_test {
+		fmt.Println(v)
+	}
+
+	fmt.Println("+++++++++++++++++++++++++++++++++")
+	type Peo struct {
+		Name string
+		Age  int
+	}
+	map_demo1 := make(map[int]*Peo)
+	map_demo1[1] = &Peo{
+		"Joel",
+		12,
+	}
+	map_demo1[2] = &Peo{
+		"Alice",
+		16,
+	}
+	fmt.Println(map_demo1)
+	fmt.Println(map_demo1[1])
+	fmt.Println(map_demo1[1].Name)
+
+	value, ok := map_demo1[1]
+	if ok {
+		value.Name = "Joel2.0"
+		value.Age = 16
+		// map_demo1[1] = value
+	}
+	fmt.Println(map_demo1[1])
 }
