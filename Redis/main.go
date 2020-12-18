@@ -70,7 +70,7 @@ func initRedis() (err error) {
 	// if err != nil {
 	// 	return
 	// }
-	// return
+	return
 }
 func main() {
 	initRedis1()

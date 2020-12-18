@@ -1,6 +1,7 @@
 package main
 
 import (
+	"crypto/md5"
 	"encoding/json"
 	"fmt"
 	"math"
@@ -39,10 +40,6 @@ import (
 从过期时间最久的文件开始删除，直至文件夹容量小于安全容量，则通过实现Executable接口定义的方法Execute来定义各自的行为。
 
 */
-
-*/
-
-
 
 type Executable interface {
 	Start()
@@ -282,4 +279,9 @@ func main() {
 	m1[&f] = &three
 	fmt.Println(*m1[nil])
 	fmt.Println(*m1[&t])
+
+	data := md5.Sum([]byte("wzbwzt"))
+	fmt.Printf("%T\n", data)
+	fmt.Printf("%x\n", data)
+
 }
