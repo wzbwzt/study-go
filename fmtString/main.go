@@ -36,13 +36,14 @@ func main() {
 
 	f := 12.34
 	fmt.Printf("浮点数:%T\n", f)
-	fmt.Printf("%b\n", f) //无小数部分、二进制指数的科学计数法，如-123456p-78
-	fmt.Printf("%e\n", f) //科学计数法，如-1234.456e+78
-	fmt.Printf("%E\n", f) //科学计数法，如-1234.456E+78
-	fmt.Printf("%f\n", f) //有小数部分但无指数部分，如123.456
-	fmt.Printf("%F\n", f) //同%f
-	fmt.Printf("%g\n", f) //根据实际情况采用%e或%f格式（以获得更简洁、准确的输出）
-	fmt.Printf("%G\n", f) //根据实际情况采用%E或%F格式（以获得更简洁、准确的输出）
+	fmt.Printf("%b\n", f)               //无小数部分、二进制指数的科学计数法，如-123456p-78
+	fmt.Printf("%e\n", f)               //科学计数法，如-1234.456e+78
+	fmt.Printf("%E\n", f)               //科学计数法，如-1234.456E+78
+	fmt.Printf("%f\n", f)               //有小数部分但无指数部分，如123.456
+	fmt.Printf("%F\n", f)               //同%f
+	fmt.Printf("%g\n", f)               //根据实际情况采用%e或%f格式（以获得更简洁、准确的输出）
+	fmt.Printf("%G\n", f)               //根据实际情况采用%E或%F格式（以获得更简洁、准确的输出）
+	fmt.Println(fmt.Sprintf("%.1f", f)) //保留指定小数位
 
 	s := "hello/wzb"
 	//打印字符串

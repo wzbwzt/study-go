@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"math"
+	"path"
 	"strconv"
 	"strings"
 	"time"
@@ -40,10 +41,6 @@ import (
 从过期时间最久的文件开始删除，直至文件夹容量小于安全容量，则通过实现Executable接口定义的方法Execute来定义各自的行为。
 
 */
-
-*/
-
-
 
 type Executable interface {
 	Start()
@@ -304,4 +301,81 @@ func main() {
 	fmt.Println(regionName)
 	fmt.Println(shelveName)
 
+	strr := []rune(str)
+	fmt.Printf("str len is:%v", len(strr))
+	fmt.Printf("strs  is:%v", strr)
+	for _, v := range strr {
+		fmt.Println(string(v))
+	}
+
+	fmt.Println("==========================")
+	for _, v := range str {
+		fmt.Println(string(v))
+	}
+
+	s := "device/sdk/CMakeLists.txt"
+	ss := "CMakeListstxt"
+	fmt.Println(path.Ext(s))
+	fmt.Println(path.Ext(ss))
+
+	var Map_img map[string]struct{} = map[string]struct{}{
+		".jpg": struct{}{},
+		".png": struct{}{},
+		".gif": struct{}{},
+		".svg": struct{}{},
+		".pcx": struct{}{},
+	}
+	fmt.Println(Map_img)
+
+	fmt.Println("==========================")
+	str_time := "202012"
+	timer, _ := time.Parse("200601", str_time)
+	fmt.Println(timer)
+	start_time := timer.Format("2006-01-02 15:04:05")
+	fmt.Println(start_time)
+	end_time := timer.AddDate(0, 1, 0).Format("2006-01-02 15:04:05")
+	fmt.Println(end_time)
+
+	var xais []string
+	for i := 0; i < 6; i++ {
+		month := time.Now().AddDate(0, -i, 0).Format("200601")
+		xais = append(xais, month)
+	}
+	fmt.Println(xais)
+	map_test := make(map[int]int)
+	map_test[1] = 1
+	fmt.Println(map_test[1])
+	fmt.Println(map_test[2])
+
+	slice_test := []string{}
+	fmt.Println(slice_test)
+	for _, v := range slice_test {
+		fmt.Println(v)
+	}
+
+	fmt.Println("+++++++++++++++++++++++++++++++++")
+	type Peo struct {
+		Name string
+		Age  int
+	}
+	map_demo1 := make(map[int]*Peo)
+	map_demo1[1] = &Peo{
+		"Joel",
+		12,
+	}
+	map_demo1[2] = &Peo{
+		"Alice",
+		16,
+	}
+	fmt.Println(map_demo1)
+	fmt.Println(map_demo1[1])
+	fmt.Println(map_demo1[1].Name)
+
+	value, ok := map_demo1[1]
+	if ok {
+		value.Name = "Joel2.0"
+		value.Age = 16
+		// map_demo1[1] = value
+	}
+	fmt.Println(map_demo1[1])
 }
