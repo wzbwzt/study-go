@@ -1,6 +1,7 @@
 package main
 
 import (
+	"crypto/md5"
 	"encoding/json"
 	"fmt"
 	"math"
@@ -280,6 +281,11 @@ func main28() {
 	m1[&f] = &three
 	fmt.Println(*m1[nil])
 	fmt.Println(*m1[&t])
+
+	data := md5.Sum([]byte("wzbwzt"))
+	fmt.Printf("%T\n", data)
+	fmt.Printf("%x\n", data)
+
 }
 
 func main88() {

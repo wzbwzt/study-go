@@ -2,10 +2,11 @@ package main
 
 import (
 	"fmt"
-	"github.com/wzbwzt/studyGo/Excelize/instore"
 	"regexp"
 	"strconv"
 	"strings"
+
+	"github.com/wzbwzt/studyGo/Excelize/instore"
 )
 
 func main() {
@@ -15,9 +16,9 @@ func main() {
 	compile := regexp.MustCompile("\\d+\\.?\\d*|\\D*")
 	stuffone := "20140923001 | 深沟球轴承 | 6004 | 6004 | 10"
 	details := strings.Split(stuffone, "|")
-	for k,v:= range details{
+	for k, v := range details {
 		space := strings.TrimSpace(v)
-		details[k]=space
+		details[k] = space
 	}
 	fmt.Println(details)
 	if len(details) == 4 {
@@ -39,11 +40,11 @@ func main() {
 		}
 
 	}
-	if len(details)==5 {
+	if len(details) == 5 {
 		all := compile.FindAllStringSubmatch(details[4], 2)
 		//count, err := strconv.ParseFloat(all[0][0], 32)
 		count, err := strconv.Atoi(all[0][0])
-		fmt.Println(all,len(all))
+		fmt.Println(all, len(all))
 		if err != nil {
 			all = compile.FindAllStringSubmatch(details[3], 2)
 			//atoi, err := strconv.ParseFloat(all[0][0], 32)
@@ -52,10 +53,10 @@ func main() {
 				println(err)
 			}
 			fmt.Println(atoi)
-		}else {
-			if len(all)>1 {
-				unit:= all[1][0]
-				fmt.Println(unit,count)
+		} else {
+			if len(all) > 1 {
+				unit := all[1][0]
+				fmt.Println(unit, count)
 			}
 			fmt.Println(123)
 
