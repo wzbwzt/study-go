@@ -125,4 +125,12 @@ func main() {
 	if str > "0" {
 		println(123)
 	}
+
+	str_test := "12-24-20"
+	fmt.Println(str_test)
+	timer_test, err := time.Parse("01-02-06", str_test)
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println(timer_test)
 }

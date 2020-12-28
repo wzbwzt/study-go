@@ -447,6 +447,10 @@ func main() {
 	fmt.Println(sec_struct)
 	fmt.Println(sec_struct[1])
 	fmt.Println(sec_struct[2])
+	for v, vv := range sec_struct {
+		fmt.Println(v)
+		fmt.Println(vv)
+	}
 }
 
 type SecLimit struct {
