@@ -288,7 +288,7 @@ func main28() {
 
 }
 
-func main() {
+func main88() {
 	a := []int{}
 	if a == nil {
 		fmt.Println("is nil")
@@ -384,4 +384,86 @@ func main() {
 		// map_demo1[1] = value
 	}
 	fmt.Println(map_demo1[1])
+
+}
+
+func main() {
+	map_struct := make(map[int]*struct {
+		Num  int
+		Name string
+	})
+	map_struct[1] = &struct {
+		Num  int
+		Name string
+	}{
+		100, "Jole",
+	}
+	fmt.Println(map_struct)
+	fmt.Println(map_struct[1])
+
+	value, ok := map_struct[2]
+	if !ok {
+		map_struct[2] = &struct {
+			Num  int
+			Name string
+		}{}
+	}
+	fmt.Println(map_struct[2].Num)
+	fmt.Println(value)
+	// fmt.Println(value.Num)
+
+	// map_struct[2] = &struct {
+	// 	Num  int
+	// 	Name string
+	// }{
+	// 	Num:  value1.Num + 1,
+	// 	Name: "Alice",
+	// }
+
+	fmt.Println(map_struct)
+	fmt.Println(map_struct[1])
+	fmt.Println(map_struct[2])
+
+	sec_struct := make(map[int]*SecLimit)
+	sec_struct[1] = &SecLimit{
+		100, 88888888,
+	}
+	value_2, ok := sec_struct[2]
+	if !ok {
+		value_2 = &SecLimit{}
+		sec_struct[2] = value_2
+	}
+
+	// fmt.Println(sec_struct[2])
+	// value_2.Count(6666666)
+	// fmt.Println(sec_struct)
+	// fmt.Println(sec_struct[2])
+
+	// value_2.count = 200
+	// value_2.curTime = 666666
+	sec_struct[2].count = 200
+	sec_struct[2].curTime = 666666666
+
+	fmt.Println(sec_struct)
+	fmt.Println(sec_struct[1])
+	fmt.Println(sec_struct[2])
+	for v, vv := range sec_struct {
+		fmt.Println(v)
+		fmt.Println(vv)
+	}
+}
+
+type SecLimit struct {
+	count   int   //每秒访问数量
+	curTime int64 //访问的时间(精确到秒)
+}
+
+//Count 更新每秒访问数量
+func (s *SecLimit) Count(nowTime int64) (newCount int) {
+	if s.curTime == nowTime {
+		return s.count + 1
+	}
+	s.count = 1
+	s.curTime = nowTime
+	return 1
 }

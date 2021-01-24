@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/360EntSecGroup-Skylar/excelize/v2"
+	"github.com/360EntSecGroup-Skylar/excelize/v2" //不支持xls文件格式
 )
 
 type InStoreInfo struct {
