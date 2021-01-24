@@ -2,13 +2,12 @@ package main
 
 import (
 	"fmt"
-	"github.com/gorilla/websocket"
 	"net"
 	"net/http"
 	"time"
+
+	"github.com/gorilla/websocket"
 )
-
-
 
 type WsServer struct {
 	listener net.Listener
@@ -21,7 +20,7 @@ func NewWsServer() *WsServer {
 	ws.addr = "0.0.0.0:8080"
 	ws.upgrade = &websocket.Upgrader{
 		// 指定升级 websocket 握手完成的超时时间
-		HandshakeTimeout :time.Second*5,
+		HandshakeTimeout: time.Second * 5,
 
 		// 写数据操作的缓存池，如果没有设置值，write buffers 将会分配到链接生命周期里。
 		//WriteBufferPool BufferPool
@@ -38,8 +37,8 @@ func NewWsServer() *WsServer {
 		//EnableCompression bool
 
 		// 指定 io 操作的缓存大小，如果不指定就会自动分配。
-		ReadBufferSize:1024,
-		WriteBufferSize:1024,
+		ReadBufferSize:  1024,
+		WriteBufferSize: 1024,
 
 		// 请求检查函数，用于统一的链接检查，以防止跨站点请求伪造。如果不检查，就设置一个返回值为true的函数。
 		// 如果请求Origin标头可以接受，CheckOrigin将返回true。 如果CheckOrigin为nil，则使用安全默认值：
@@ -58,10 +57,6 @@ func NewWsServer() *WsServer {
 	}
 	return ws
 }
-
-
-
-
 
 func (w *WsServer) send10(conn *websocket.Conn) {
 	for i := 0; i < 1000; i++ {
@@ -158,9 +153,6 @@ func (w *WsServer) Start() (err error) {
 
 	return nil
 }
-
-
-
 
 func main() {
 	webS := NewWsServer()
