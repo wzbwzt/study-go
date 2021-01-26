@@ -1,14 +1,25 @@
 package main
 
 import (
+	"bufio"
 	"crypto/md5"
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
+	"io"
+	"io/ioutil"
 	"math"
+	"net/http"
+	"os"
 	"path"
+	"reflect"
 	"strconv"
 	"strings"
 	"time"
+
+	_ "image/gif"
+	_ "image/jpeg"
+	_ "image/png"
 )
 
 /*
@@ -82,7 +93,7 @@ func main1() {
 	cleanTask.Start()
 }
 
-func main2() {
+func main18() {
 	a := int32(1)
 	b := int32(3)
 	fmt.Println(a / b)
@@ -387,7 +398,7 @@ func main88() {
 
 }
 
-func main() {
+func main2() {
 	map_struct := make(map[int]*struct {
 		Num  int
 		Name string
@@ -451,6 +462,11 @@ func main() {
 		fmt.Println(v)
 		fmt.Println(vv)
 	}
+
+	fmt.Println(sec_struct)
+	for v := range sec_struct {
+		fmt.Println(v)
+	}
 }
 
 type SecLimit struct {
@@ -466,4 +482,209 @@ func (s *SecLimit) Count(nowTime int64) (newCount int) {
 	s.count = 1
 	s.curTime = nowTime
 	return 1
+}
+
+func main888() {
+	all_price := fmt.Sprintf("%.2f", 1.234)
+	fmt.Println(all_price)
+
+	timer, _ := time.Parse("20060102", "20201231")
+	y, m, _ := timer.Date()
+	timer_fix := time.Date(y, m, 1, 0, 0, 0, 0, time.Local)
+	fmt.Println(timer_fix)
+
+	var xais []string
+	for i := 5; i >= 0; i-- {
+		y, m, _ := time.Now().Date()
+		timer := time.Date(y, m, 1, 0, 0, 0, 0, time.Local)
+		month := timer.AddDate(0, -i, 0).Format("200601")
+		xais = append(xais, month)
+	}
+	fmt.Println(xais)
+
+	imgPath := "C:\\Users\\Asche\\go\\src\\GoSpiderTest\\"
+	imgUrl := "http://hbimg.b0.upaiyun.com/32f065b3afb3fb36b75a5cbc90051b1050e1e6b6e199-Ml6q9F_fw320"
+
+	fileName := path.Base(imgUrl)
+
+	res, err := http.Get(imgUrl)
+	if err != nil {
+		fmt.Println("A error occurred!")
+		return
+	}
+	defer res.Body.Close()
+	// 获得get请求响应的reader对象
+	reader := bufio.NewReaderSize(res.Body, 32*1024)
+
+	file, err := os.Create(imgPath + fileName)
+	if err != nil {
+		panic(err)
+	}
+	// 获得文件的writer对象
+	writer := bufio.NewWriter(file)
+
+	written, _ := io.Copy(writer, reader)
+	fmt.Printf("Total length: %d", written)
+}
+
+/*-------------------------------分割线----------------------------*/
+//KMP字符串匹配
+func SindexKMP(S, T string) int {
+	//next := get_next(T)
+	next := NextArray(T)
+	i := 0
+	j := 0
+	//同时满足才可以  找除字符串出现的第一个位置
+	for i <= len(S)-1 && j <= len(T)-1 {
+
+		if j == -1 || S[i] == T[j] {
+			//当字符匹配时 i j 都加1
+			i++
+			j++
+		} else {
+			//子串的 偏移量 从next数组中取  i 不变
+			j = next[j]
+		}
+	}
+	//如果 j 大于 或者 等于 T串的长度 说明匹配成功
+	if j >= len(T)-1 {
+		return i - len(T) + 1
+	}
+
+	return 0
+}
+func NextArray(needle string) []int {
+	l := len(needle)
+	next := make([]int, l)
+	next[0] = -1
+	k := -1
+	i := 0
+	for i < l-1 {
+		if k == -1 || needle[k] == needle[i] {
+			i++
+			k++
+			next[i] = k
+		} else {
+			k = next[k]
+		}
+	}
+	return next
+}
+
+type student struct {
+	Name string
+	Age  int
+}
+
+func pase_student() {
+	m := make(map[string]*student)
+	stus := []student{
+		{Name: "zhou", Age: 24},
+		{Name: "li", Age: 23},
+		{Name: "wang", Age: 22},
+	}
+	for i := 0; i < len(stus); i++ {
+		m[stus[i].Name] = &stus[i]
+	}
+	for _, stu := range stus {
+		m[stu.Name] = &stu
+	}
+
+	for k, v := range m {
+		fmt.Println(k, "=>", *v)
+	}
+}
+
+func main222() {
+	defer func() {
+		if err := recover(); err != nil {
+			fmt.Println("++++")
+			f := err.(func() string)
+			fmt.Println(err, f(), reflect.TypeOf(err).Kind().String())
+		} else {
+			fmt.Println("fatal")
+		}
+	}()
+	defer func() {
+		panic(func() string {
+			return "defer panic"
+		})
+	}()
+	panic("panic")
+
+}
+
+func main() {
+	a := 12345
+	fmt.Println(a) // 输出 12345
+	//前置补0
+	fmt.Printf("%08d\n", a)    //9位，不足前面凑0补齐 输出 00012345
+	fmt.Printf("%0*d\n", 8, a) //同上  输出 00012345
+
+	in := 12345
+	fmt.Println(in) // 输出 12345
+	// 需要输出 12300 后面两位置0
+
+	// 小于100则不处理
+	if in > 100 {
+		in = in / 100 * 100
+	}
+	fmt.Println(in) // 输出 12300
+
+	action_card := []byte{}
+	str_action_card := string(action_card)
+	fmt.Printf("%v", str_action_card)
+	fmt.Printf("%v", action_card)
+	id := ""
+	fmt.Println(&id)
+
+	// json_str := `{"小区id": null, "物业名称": "物业名称", "竣工时间": "竣工时间"}`
+	type residential struct {
+		Name    *int64  `json:"小区id"`
+		PMCName *string `json:"物业名称"`
+		EndTime *string `json:"竣工时间"`
+	}
+	out := new(residential)
+	// json.Unmarshal([]byte(json_str), out)
+	// fmt.Println(out)
+	json_str2 := "[]"
+	json.Unmarshal([]byte(json_str2), out)
+	fmt.Printf("%#v\n", out)
+	fmt.Printf("%v", out)
+	marsh_str := residential{
+		Name:    nil,
+		PMCName: nil,
+		EndTime: nil,
+	}
+	byte_marsh_str, _ := json.Marshal(&marsh_str)
+	fmt.Println(string(byte_marsh_str))
+
+	i, err := strconv.ParseInt("1611313585853", 10, 64)
+	if err != nil {
+		panic(err)
+	}
+	tm := time.Unix(i/1000, 0).Format("2006-01-02 15:04:05")
+	fmt.Println(tm)
+
+	fmt.Println("====================================================")
+	path := "https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3887379252,3315859978&fm=26&gp=0.jpg"
+	img_res, err := http.Get(path)
+
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+	defer img_res.Body.Close()
+
+	byte_img, err := ioutil.ReadAll(img_res.Body)
+	s := base64.StdEncoding.EncodeToString(byte_img)
+	s = "data:image/jpeg;base64," + s
+
+	// img, _, err := imageorient.Decode(img_res.Body)
+	// if err != nil {
+	// 	fmt.Println(err.Error())
+	// }
+
+	fmt.Printf("%#v\n", s)
+	// fmt.Printf("%#v\n", img)
+
 }

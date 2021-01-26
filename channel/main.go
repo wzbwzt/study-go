@@ -37,11 +37,8 @@ for {
 
 // */
 
-
 var c chan int
 var wg sync.WaitGroup
-
-
 
 func main() {
 	//noBufChan()
@@ -50,7 +47,7 @@ func main() {
 	test()
 
 }
-func test(){
+func test() {
 	defer fmt.Println(123)
 	defer fmt.Println(456)
 	//panic(func()int{

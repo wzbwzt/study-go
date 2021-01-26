@@ -2,8 +2,9 @@ package main
 
 import (
 	"fmt"
-	"golang.org/x/net/websocket"
 	"net/url"
+
+	"golang.org/x/net/websocket"
 )
 
 type Client struct {
@@ -24,19 +25,19 @@ func (c *Client) SendMessage(body []byte) error {
 	ws, err := websocket.Dial(u.String(), "", "http://"+c.Host+"/")
 	defer ws.Close() //关闭连接
 	if err != nil {
-		fmt.Println("websocket dial err:",err)
+		fmt.Println("websocket dial err:", err)
 		return err
 	}
 
 	_, err = ws.Write(body)
 	if err != nil {
-		fmt.Println("websocket Write err:",err)
+		fmt.Println("websocket Write err:", err)
 		return err
 	}
 	return nil
 }
 
-func main(){
-	wc:=NewWebsocketClient("127.0.0.1:8080","ws")
+func main() {
+	wc := NewWebsocketClient("127.0.0.1:8080", "ws")
 	wc.SendMessage([]byte("hello"))
 }

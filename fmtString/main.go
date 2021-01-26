@@ -45,6 +45,9 @@ func main() {
 	fmt.Printf("%G\n", f)               //根据实际情况采用%E或%F格式（以获得更简洁、准确的输出）
 	fmt.Println(fmt.Sprintf("%.1f", f)) //保留指定小数位
 
+	fmt.Printf("%08d\n", 12345)    //8位，不足前面凑0补齐 输出 00012345
+	fmt.Printf("%0*d\n", 8, 12345) //同上  输出 00012345
+
 	s := "hello/wzb"
 	//打印字符串
 	fmt.Printf("string:%s\n", s)
@@ -120,4 +123,23 @@ func bufioDemo() {
 	text, _ := reader.ReadString('\n') // 读到换行
 	text = strings.TrimSpace(text)
 	fmt.Printf("%#v\n", text)
+}
+
+//前/后置补零
+func buZero() {
+	a := 12345
+	fmt.Println(a) // 输出 12345
+	//前置补0
+	fmt.Printf("%08d\n", a)    //9位，不足前面凑0补齐 输出 00012345
+	fmt.Printf("%0*d\n", 8, a) //同上  输出 00012345
+
+	in := 12345
+	fmt.Println(in) // 输出 12345
+	// 需要输出 12300 后面两位置0
+
+	// 小于100则不处理
+	if in > 100 {
+		in = in / 100 * 100
+	}
+	fmt.Println(in) // 输出 12300
 }

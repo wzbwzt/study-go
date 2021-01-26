@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"os"
+	"strconv"
 	"time"
 )
 
@@ -103,7 +105,7 @@ func main1() {
 	}
 
 }
-func main() {
+func main2() {
 	now := time.Now()
 	currentYear, currentMonth, _ := now.Date()
 	println(currentYear, currentMonth)
@@ -133,4 +135,85 @@ func main() {
 		fmt.Println(err)
 	}
 	fmt.Println(timer_test)
+}
+
+func main() {
+
+	year, month, _ := time.Now().AddDate(0, -1, 0).Date()
+	fmt.Println(year)
+	fmt.Println(int(month))
+	fmt.Println(month.String())
+	fmt.Println(int(month))
+
+	a := float64(0.1)
+	fmt.Println(a)
+	fmt.Println(float32(a))
+
+	month_timer := GetOneMonthDays("2")
+	for _, v := range month_timer {
+		// _, m, d := v.Date()
+		// fmt.Println(int(m))
+		// fmt.Println(d)
+		fmt.Println(v)
+
+	}
+	start, end := GetTimeRange(time.Now(), time.Now())
+	fmt.Println(start)
+	fmt.Println(end)
+
+}
+
+//计算指定年月的天数
+func Count1(year int, month int) (days int) {
+	if month != 2 {
+		if month == 4 || month == 6 || month == 9 || month == 11 {
+			days = 30
+		} else {
+			days = 31
+			fmt.Fprintln(os.Stdout, "The month has 31 days")
+		}
+	} else {
+		//判定公历闰年应遵循的一般规律为:四年一闰，百年不闰，四百年再闰.
+		if ((year%4) == 0 && (year%100) != 0) || (year%400) == 0 {
+			days = 29
+		} else {
+			days = 28
+		}
+	}
+	return
+}
+
+//计算指定年月的天数
+func Count2(year int, month int) (days int) {
+	YMonth := strconv.Itoa(year) + strconv.Itoa(month)
+	time.Parse("200601", YMonth)
+	return
+}
+
+//获取一个月中的每一天
+func GetOneMonthDays(month string) (result []time.Time) {
+	if len(month) == 1 {
+		month = "0" + month
+	}
+	startDate, _ := time.Parse("01", month)
+	endDate := startDate.AddDate(0, 1, 0)
+	for {
+		if startDate.After(endDate) || startDate.Equal(endDate) {
+			break
+		} else {
+			result = append(result, startDate)
+		}
+		startDate = startDate.AddDate(0, 0, 1)
+	}
+	return result
+}
+
+// 归一化时间范围，从起始天的00:00:00到最后一天的23:59:59
+func GetTimeRange(s, e time.Time) (start, end time.Time) {
+	loc := s.Location()
+	yy, mm, dd := s.Date()
+	start = time.Date(yy, mm, dd, 0, 0, 0, 0, loc)
+	yy, mm, dd = e.Date()
+	end = time.Date(yy, mm, dd, 23, 59, 59, 0, loc)
+	return
 }
