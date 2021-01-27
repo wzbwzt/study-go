@@ -8,8 +8,8 @@
 
     <script>
         $(function() {
-            var ws = new WebSocket('ws://127.0.0.1:8080/ws');
-
+            // var ws = new WebSocket('ws://127.0.0.1:8080/ws');
+            var ws = new WebSocket('ws://127.0.0.1:9001/websocket/api/v1/alarm/report?projId=541');
             ws.onopen = function(e) {
                 $('<li>').text("connected").appendTo($ul);
             }

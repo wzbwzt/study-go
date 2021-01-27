@@ -1,11 +1,15 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"net/http"
 	"net/url"
-	"reflect"
+	"os"
+	"path"
+	"strings"
 )
 
 func main1() {
@@ -21,9 +25,11 @@ func main1() {
 	var urlData = url.Values{} //url  map  可以对其编码
 	urlData.Set("name", "铁柱")
 	urlData.Set("age", "123")
+	urlData.Set("appKey", "123")
 	queryStr := urlData.Encode() //编码后的url 地址
-	 fmt.Println(queryStr)
+	fmt.Println(queryStr)
 	urlObj.RawQuery = queryStr
+
 	req, err := http.NewRequest("get", urlObj.String(), nil)
 	resp, err := http.DefaultClient.Do(req) //发送请求
 	if err != nil {
@@ -37,100 +43,53 @@ func main1() {
 		return
 	}
 	fmt.Println(string(b))
+
 }
 
-/*-------------------------------分割线----------------------------*/
-//KMP字符串匹配
-func SindexKMP(S,T string) int {
-	//next := get_next(T)
-	next:=NextArray(T)
-	i := 0
-	j := 0
-	//同时满足才可以  找除字符串出现的第一个位置
-	for ;i <= len(S) -1  && j <= len(T) -1;{
-
-		if j == -1|| S[i] == T[j]{
-			//当字符匹配时 i j 都加1
-			i++
-			j++
-		}else{
-			//子串的 偏移量 从next数组中取  i 不变
-			j = next[j]
-		}
+//客户端post请求实例
+func postDemo() {
+	url := "http://127.0.0.1:9090/post"
+	// 表单数据
+	//contentType := "application/x-www-form-urlencoded"
+	//data := "name=joel&age=18"
+	// json
+	contentType := "application/json"
+	data := `{"name":"joel","age":18}`
+	resp, err := http.Post(url, contentType, strings.NewReader(data))
+	if err != nil {
+		fmt.Printf("post failed, err:%v\n", err)
+		return
 	}
-	//如果 j 大于 或者 等于 T串的长度 说明匹配成功
-	if j >= len(T) -1 {
-		return i - len(T) +1
+	defer resp.Body.Close()
+	b, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		fmt.Printf("get resp failed, err:%v\n", err)
+		return
 	}
-
-	return 0
+	fmt.Println(string(b))
 }
-func NextArray(needle string) []int {
-	l := len(needle)
-	next := make([]int, l)
-	next[0] = -1
-	k := -1
-	i := 0
-	for i < l-1 {
-		if k == -1 || needle[k] == needle[i] {
-			i++
-			k++
-			next[i] = k
-		} else {
-			k = next[k]
-		}
-	}
-	return next
-}
-
-
-
-type student struct {
-	Name string
-	Age  int
-}
-func pase_student() {
-	m := make(map[string]*student)
-	stus := []student{
-		{Name: "zhou",Age: 24},
-		{Name: "li",Age: 23},
-		{Name: "wang",Age: 22},
-	}
-	for i:=0;i<len(stus);i++{
-		m[stus[i].Name]=&stus[i]
-	}
-	for _,stu:=range stus{
-		m[stu.Name]=&stu
-	}
-
-
-	for k,v:=range m{
-		fmt.Println(k,"=>",*v)
-	}
-}
-
-
-
 
 func main() {
-	defer func() {
-		if err:=recover();err!=nil{
-			fmt.Println("++++")
-			f:=err.(func()string)
-			fmt.Println(err,f(),reflect.TypeOf(err).Kind().String())
-		}else {
-			fmt.Println("fatal")
-		}
-	}()
-	defer func() {
-		panic (func()string {
-			return "defer panic"
-		})
-	}()
-	panic("panic")
+	imgPath := "C:/Users/LM-LL/Desktop/"
+	imgUrl := "http://hbimg.b0.upaiyun.com/32f065b3afb3fb36b75a5cbc90051b1050e1e6b6e199-Ml6q9F_fw320"
+
+	fileName := path.Base(imgUrl)
+
+	res, err := http.Get(imgUrl)
+	if err != nil {
+		fmt.Println("A error occurred!")
+		return
+	}
+	defer res.Body.Close()
+	// 获得get请求响应的reader对象
+	reader := bufio.NewReaderSize(res.Body, 32*1024)
+	file, err := os.Create(imgPath + fileName)
+	if err != nil {
+		panic(err)
+	}
+	// 获得文件的writer对象
+	writer := bufio.NewWriter(file)
+
+	written, _ := io.Copy(writer, reader)
+	fmt.Printf("Total length: %d", written)
 }
-
-
-
-
-

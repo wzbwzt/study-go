@@ -92,13 +92,27 @@ func (w *WsServer) send(conn *websocket.Conn, stopCh chan int) {
 
 //从conn中读取信息
 func (w *WsServer) connHandle(conn *websocket.Conn) {
+	stopCh := make(chan int)
 	defer func() {
+		close(stopCh)
 		conn.Close()
 	}()
-	stopCh := make(chan int)
 	go w.send(conn, stopCh)
 	for {
-		conn.SetReadDeadline(time.Now().Add(time.Second * time.Duration(5000)))
+		// conn.SetReadDeadline(time.Now().Add(time.Second * time.Duration(5000)))
+		// ping协程:ping-pang验证
+		go func() {
+			tick := time.NewTicker(5 * time.Second)
+			defer tick.Stop()
+			for {
+				select {
+				case <-tick.C:
+					conn.WriteControl(websocket.PingMessage, nil, time.Now().Add(time.Second))
+				case <-stopCh:
+					return
+				}
+			}
+		}()
 		_, msg, err := conn.ReadMessage()
 		if err != nil {
 			close(stopCh)
@@ -117,6 +131,7 @@ func (w *WsServer) connHandle(conn *websocket.Conn) {
 		}
 		fmt.Println("receive:", string(msg))
 	}
+
 }
 
 //WsServer需要实现了Handler这个接口类
