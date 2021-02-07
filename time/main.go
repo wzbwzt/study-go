@@ -83,6 +83,7 @@ func main1() {
 		return
 	}
 	fmt.Println(timeObj)
+	fmt.Println("=======================")
 	loc, err := time.LoadLocation("Asia/Shanghai")
 	if err != nil {
 		fmt.Printf("time location failed err :%v", err)
@@ -138,7 +139,8 @@ func main2() {
 }
 
 func main() {
-
+	main1()
+	return
 	year, month, _ := time.Now().AddDate(0, -1, 0).Date()
 	fmt.Println(year)
 	fmt.Println(int(month))
