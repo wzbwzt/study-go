@@ -5,10 +5,10 @@ go 1.13
 require (
 	//github.com/360EntSecGroup-Skylar/excelize v1.4.1
 	github.com/360EntSecGroup-Skylar/excelize/v2 v2.3.0
-	github.com/disintegration/imageorient v0.0.0-20180920195336-8147d86e83ec
 	github.com/disintegration/imaging v1.6.2
 	github.com/fastly/go-utils v0.0.0-20180712184237-d95a45783239 // indirect
 	github.com/fogleman/gg v1.3.0
+	github.com/garyburd/redigo v1.6.2
 	github.com/go-redis/redis v6.15.8+incompatible
 	github.com/go-sql-driver/mysql v1.5.0
 	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0 // indirect

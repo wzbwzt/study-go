@@ -686,5 +686,41 @@ func main() {
 
 	fmt.Printf("%#v\n", s)
 	// fmt.Printf("%#v\n", img)
+	var a2 []*string
+	if a2 == nil {
+		fmt.Println(123)
+	}
+	fmt.Printf("%#v", a2)
+	fmt.Printf("%p\n", a2)
+	str_accessory, _ := json.Marshal(a2)
+	fmt.Println(len(str_accessory))
+	fmt.Println(string(str_accessory))
 
+	var a3 []string
+	if a3 == nil {
+		fmt.Println(456)
+	}
+	a1 := []*string{}
+	if a1 == nil {
+		fmt.Println(234)
+	}
+	fmt.Printf("%#v", a1)
+	fmt.Printf("%p", a1)
+	str_accessory, _ = json.Marshal(a1)
+	fmt.Println(string(str_accessory))
+
+	str_accessory, _ = json.Marshal(nil)
+	str_res := string(str_accessory)
+	fmt.Println(&str_res)
+	if &str_res == nil {
+		fmt.Println("is nil")
+	}
+	fmt.Printf("%#v\n", string(str_accessory))
+	fmt.Println(len(str_accessory))
+
+	var test1 *string
+	fmt.Println(&test1)
+	if &test1 == nil {
+		fmt.Println("is nill")
+	}
 }
