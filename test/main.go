@@ -723,4 +723,19 @@ func main() {
 	if &test1 == nil {
 		fmt.Println("is nill")
 	}
+
+	//
+	slice_test := [][]float32{
+		{123, 234.9},
+		{123, 234.9},
+		{123, 234.9},
+	}
+	slice_b, _ := json.Marshal(slice_test)
+	fmt.Println(string(slice_b))
+	var Unmarshal_test [][]float32
+	json.Unmarshal(slice_b, &Unmarshal_test)
+	fmt.Printf("%#v\n", Unmarshal_test)
+
+	t := time.Now()
+	fmt.Println(int(t.Weekday()))
 }
