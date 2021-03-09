@@ -14,5 +14,15 @@ func main() {
 		r2 := rand.Intn(10) //0<=r2<10
 		fmt.Println(r1, r2)
 	}
+	s := "ww are ch"
+	// for _, v := range s {
+	// 	fmt.Println(string(v))
+	// }
+
+	ss := []rune(s)
+	for _, v := range ss {
+		fmt.Println(string(v))
+	}
+	fmt.Println(time.Now().Format(time.RFC3339))
 
 }

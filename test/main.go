@@ -85,6 +85,10 @@ func (ct *CleanTask) Execute() {
 	println("CleanTask.Execute()")
 }
 
+func main() {
+
+}
+
 func main1() {
 	cleanTask := &CleanTask{
 		Task{},
@@ -614,7 +618,7 @@ func main222() {
 
 }
 
-func main() {
+func main123() {
 	a := 12345
 	fmt.Println(a) // 输出 12345
 	//前置补0
