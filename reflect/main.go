@@ -19,7 +19,7 @@ func reflectType(i interface{}) {
 	t := reflect.TypeOf(i)
 	// fmt.Printf("type:%v\n", t)
 
-	fmt.Printf("type:%v ;kind:%v;%v\n", t.Name(), t.Kind(),t) //Value()有Kind()方法
+	fmt.Printf("type:%v ;kind:%v;%v\n", t.Name(), t.Kind(), t) //Value()有Kind()方法
 }
 
 //valueOf
@@ -107,9 +107,9 @@ func main1() {
 	fmt.Println("map中不存在的键：", reflect.ValueOf(ma).MapIndex(reflect.ValueOf("娜扎")).IsValid())
 
 }
-func main(){
+func main() {
 	// 实例化一个匿名结构体
-	st := struct{
+	st := struct {
 		abc string
 	}{
 		"abc",

@@ -23,6 +23,24 @@ import (
 var wg sync.WaitGroup
 
 func main() {
+	// runtime.GOMAXPROCS(1)
+	// wg := sync.WaitGroup{}
+	// wg.Add(20)
+	// for i := 0; i < 10; i++ {
+	// 	go func() {
+	// 		fmt.Println("A: ", i)
+	// 		wg.Done()
+	// 	}()
+	// }
+	// for i := 0; i < 10; i++ {
+	// 	go func(i int) {
+	// 		fmt.Println("B: ", i)
+	// 		wg.Done()
+	// 	}(i)
+	// }
+	// wg.Wait()
+	// return
+
 	//默认使用物理线程数；当指定1个OS线程时；下面函数按照顺序执行；当使用os线程数大于1时，下面的函数会同时执行
 	runtime.GOMAXPROCS(1)
 	fmt.Println(runtime.NumCPU()) //查看物理线程数，即CPU的逻辑核心数
@@ -45,6 +63,3 @@ func b() {
 		fmt.Printf("B:%d\n", i)
 	}
 }
-
-
-
