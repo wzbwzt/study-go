@@ -12,7 +12,7 @@ import (
 	"strings"
 )
 
-func main1() {
+func main() {
 	//get请求示例1；对于get的提交的query值无法编译
 	// resp, err := http.Get("http://127.0.0.1:9090/simulation?name=铁柱&id=123")
 	// if err != nil {
@@ -32,6 +32,7 @@ func main1() {
 
 	req, err := http.NewRequest("get", urlObj.String(), nil)
 	resp, err := http.DefaultClient.Do(req) //发送请求
+	// req.Header.Add()
 	if err != nil {
 		fmt.Println("send request failed;err:", err)
 
@@ -69,7 +70,7 @@ func postDemo() {
 	fmt.Println(string(b))
 }
 
-func main() {
+func main1() {
 	imgPath := "C:/Users/LM-LL/Desktop/"
 	imgUrl := "http://hbimg.b0.upaiyun.com/32f065b3afb3fb36b75a5cbc90051b1050e1e6b6e199-Ml6q9F_fw320"
 

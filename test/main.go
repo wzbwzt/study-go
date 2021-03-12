@@ -15,6 +15,7 @@ import (
 	"reflect"
 	"strconv"
 	"strings"
+	"sync"
 	"time"
 
 	_ "image/gif"
@@ -83,6 +84,54 @@ type CleanTask struct {
 
 func (ct *CleanTask) Execute() {
 	println("CleanTask.Execute()")
+}
+
+type threadSafeSet struct {
+	sync.RWMutex
+	s []interface{}
+}
+
+func (set *threadSafeSet) Iter() <-chan interface{} {
+	// ch := make(chan interface{}) // 解除注释看看！
+	ch := make(chan interface{}, len(set.s))
+	go func() {
+		set.RLock()
+
+		for elem, value := range set.s {
+			ch <- elem
+			fmt.Println("Iter:", elem, value)
+		}
+
+		close(ch)
+		set.RUnlock()
+
+	}()
+
+	return ch
+}
+
+func main188() {
+	th := threadSafeSet{
+		s: []interface{}{"1", "2"},
+	}
+	v := <-th.Iter()
+	fmt.Printf("%s%v", "ch", v)
+
+}
+
+func main() {
+	channel := make(chan int)
+	for i := 0; i < 10; i++ {
+		go func() {
+			fmt.Println(i)
+			channel <- i
+		}()
+	}
+
+	for i := 0; i < 10; i++ {
+		num := <-channel
+		fmt.Println("num:", num)
+	}
 }
 
 func main1() {
@@ -614,24 +663,7 @@ func main222() {
 
 }
 
-func testF(req []int) {
-	src := make([]int, 6)
-	copy(src, req)
-	fmt.Println(src)
-	src[0] = 8
-	// req = append(req, 12)
-	// req = req[:2]
-
-	fmt.Println(src)
-}
-func main() {
-	test_s := make([]int, 0, 8)
-	test_s = []int{1, 2, 3}
-	fmt.Println(test_s)
-	testF(test_s)
-	fmt.Println(test_s)
-	return
-
+func main123() {
 	a := 12345
 	fmt.Println(a) // 输出 12345
 	//前置补0
@@ -703,6 +735,7 @@ func main() {
 
 	fmt.Printf("%#v\n", s)
 	// fmt.Printf("%#v\n", img)
+<<<<<<< HEAD
 	fmt.Println(len("978fea5a-20cf-11eb-a264-02420a001b12"))
 
 	now := time.Now()
@@ -711,4 +744,58 @@ func main() {
 	if now.After(test_timer) {
 		fmt.Println("true")
 	}
+=======
+	var a2 []*string
+	if a2 == nil {
+		fmt.Println(123)
+	}
+	fmt.Printf("%#v", a2)
+	fmt.Printf("%p\n", a2)
+	str_accessory, _ := json.Marshal(a2)
+	fmt.Println(len(str_accessory))
+	fmt.Println(string(str_accessory))
+
+	var a3 []string
+	if a3 == nil {
+		fmt.Println(456)
+	}
+	a1 := []*string{}
+	if a1 == nil {
+		fmt.Println(234)
+	}
+	fmt.Printf("%#v", a1)
+	fmt.Printf("%p", a1)
+	str_accessory, _ = json.Marshal(a1)
+	fmt.Println(string(str_accessory))
+
+	str_accessory, _ = json.Marshal(nil)
+	str_res := string(str_accessory)
+	fmt.Println(&str_res)
+	if &str_res == nil {
+		fmt.Println("is nil")
+	}
+	fmt.Printf("%#v\n", string(str_accessory))
+	fmt.Println(len(str_accessory))
+
+	var test1 *string
+	fmt.Println(&test1)
+	if &test1 == nil {
+		fmt.Println("is nill")
+	}
+
+	//
+	slice_test := [][]float32{
+		{123, 234.9},
+		{123, 234.9},
+		{123, 234.9},
+	}
+	slice_b, _ := json.Marshal(slice_test)
+	fmt.Println(string(slice_b))
+	var Unmarshal_test [][]float32
+	json.Unmarshal(slice_b, &Unmarshal_test)
+	fmt.Printf("%#v\n", Unmarshal_test)
+
+	t := time.Now()
+	fmt.Println(int(t.Weekday()))
+>>>>>>> 0ef0a6ad6bc0d9ecb2ef94c116cebb8acc19fb3c
 }

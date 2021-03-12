@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"reflect"
 	"testing"
+
+	. "github.com/smartystreets/goconvey/convey"
 )
 
 //示例
@@ -98,9 +100,67 @@ func BenchmarkFib40(b *testing.B) { benchmarkFib(b, 40) }
 
 //示例函数
 func ExampleSplittostring() {
-	fmt.Println(Splittostring( "adfgadsf","d"))
+	fmt.Println(Splittostring("adfgadsf", "d"))
 	fmt.Println(Splittostring("avddfddfddf", "fd"))
 	// Output:
 	// [a fga sf]
 	// [avdd d df]
+}
+
+//goconvey 的使用：
+//- go convey是一个支持golang的单元测试框架
+//- go convey能够自动监控文件修改并启动测试，并可以将测试结果实时输出到Web界面
+//- go convey提供了丰富的断言简化测试用例的编写
+func TestIntegerStuff(t *testing.T) {
+	Convey("Given some integer with a starting value", t, func() {
+		x := 1
+
+		Convey("When the integer is incremented", func() {
+			x++
+
+			Convey("The value should be greater by one", func() {
+				So(x, ShouldEqual, 2)
+			})
+		})
+	})
+}
+
+func TestSplittostring2convey(t *testing.T) { //// 测试函数名必须以Test开头，必须接收一个*testing.T类型参数
+	Convey("testSplittostring", t, func() {
+		//可以使用标准断言，也是可以自己写断言方法
+		shouldFunc := func(actual interface{}, expected ...interface{}) string {
+			if !reflect.DeepEqual(actual, expected[0]) { // 因为slice不能比较直接，借助反射包中的方法比较
+				return fmt.Sprintf("excepted:%v, got:%v", expected, actual) // 测试失败输出错误提示
+			}
+			return ""
+		}
+		Convey("test a:b:c |:", func() {
+			So(Splittostring("a:b:c", ":"), shouldFunc, []string{"a", "b", "c"})
+		})
+	})
+}
+
+//子测试
+func TestSplittostringWithSubTest2convey(t *testing.T) {
+	Convey("testSplittostring with subtest", t, func() {
+		shouldFunc := func(actual interface{}, expected ...interface{}) string {
+			g := actual.([]string)
+			w := expected[0].([]string)
+			if !reflect.DeepEqual(g, w) { // 因为slice不能比较直接，借助反射包中的方法比较
+				return fmt.Sprintf("excepted:%v, got:%v", expected, actual) // 测试失败输出错误提示
+			}
+			return ""
+		}
+		Convey("test a:b:c |:", func() {
+			So(Splittostring("a:b:c", ":"), shouldFunc, []string{"a", "b", "c"})
+		})
+
+		Convey("test adfgadsf | d", func() {
+			So(Splittostring("adfgadsf", "d"), shouldFunc, []string{"a", "fga", "sf"})
+		})
+
+		Convey("test avddfddfddf | fd", func() {
+			So(Splittostring("avddfddfddf", "fd"), shouldFunc, []string{"avdd", "d", "df"})
+		})
+	})
 }

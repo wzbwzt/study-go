@@ -36,7 +36,7 @@ func main1() {
 	fmt.Println(flag.NFlag())
 }
 
-func main(){
+func main() {
 	s := flag.String("name", "wzb", "xingming")
 	flag.Parse()
 	fmt.Println(*s)

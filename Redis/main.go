@@ -2,7 +2,10 @@ package main
 
 import (
 	"fmt"
+	"log"
+	"time"
 
+	redis2 "github.com/garyburd/redigo/redis"
 	"github.com/go-redis/redis"
 )
 
@@ -55,24 +58,49 @@ func initRedis3() (err error) {
 //连接池连接	"github.com/garyburd/redigo/redis"
 //"github.com/go-redis/redis" 不支持连接池
 func initRedis() (err error) {
-	// redisPool := &redis.Pool{
-	// 	MaxIdle:     10,                               //最大闲置数
-	// 	MaxActive:   100,                              //最大连接数
-	// 	IdleTimeout: time.Duration(100) * time.Second, //连接超时
-	// 	Dial: func() (redis.Conn, error) {
-	// 		return redis.Dial("tcp", secKillConfig.redisConf.redisAddr)
-	// 	},
-	// }
+	redisPool := &redis2.Pool{
+		MaxIdle:     10,                               //最大闲置数
+		MaxActive:   100,                              //最大连接数
+		IdleTimeout: time.Duration(100) * time.Second, //连接超时
+		Dial: func() (redis2.Conn, error) {
+			con, err := redis2.Dial("tcp", "127.0.0.1:6379")
+			return con, err
+		},
+	}
 
-	// //测试连接池
-	// conn := redisPool.Get()
-	// _, err = conn.Do("ping")
-	// if err != nil {
-	// 	return
-	// }
-	return
+	//测试连接池
+	c := redisPool.Get()
+	_, err = c.Do("ping")
+	if err != nil {
+		return
+	}
+
+	c.Send("SUBSCRIBE", "TongTianDaDao")
+	c.Flush()
+	for {
+		reply, err := redis2.Values(c.Receive())
+		if err != nil {
+			log.Println("Receive failed:", err)
+		}
+
+		log.Println("reply:", reply)
+
+		for i, v := range reply {
+
+			switch vv := v.(type) {
+			case int64:
+				log.Println(i, ":", vv)
+			case []byte:
+				log.Println(i, ":", string(vv))
+			case string:
+				log.Println(i, ":", vv)
+			default:
+				log.Println("unknown:", v)
+			}
+		}
+	}
 }
 func main() {
-	initRedis1()
-
+	err := initRedis()
+	fmt.Println(err)
 }
