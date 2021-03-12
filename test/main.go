@@ -614,7 +614,24 @@ func main222() {
 
 }
 
+func testF(req []int) {
+	src := make([]int, 6)
+	copy(src, req)
+	fmt.Println(src)
+	src[0] = 8
+	// req = append(req, 12)
+	// req = req[:2]
+
+	fmt.Println(src)
+}
 func main() {
+	test_s := make([]int, 0, 8)
+	test_s = []int{1, 2, 3}
+	fmt.Println(test_s)
+	testF(test_s)
+	fmt.Println(test_s)
+	return
+
 	a := 12345
 	fmt.Println(a) // 输出 12345
 	//前置补0
