@@ -683,11 +683,25 @@ func main222() {
 }
 
 func main() {
+
+	var test_s []int
+	fmt.Printf("%#v", test_s)
+	if test_s == nil {
+		fmt.Println("is null")
+	}
+	fmt.Println(len(test_s))
+	a := make([]int, 0)
+	fmt.Printf("%#v", a)
+	fmt.Println(len(a))
+	if a == nil {
+		fmt.Println("is null")
+	}
+	return
+
 	averagePrice, _ := strconv.ParseFloat(fmt.Sprintf("%.2f", -1980/float64(-2)), 64)
 	fmt.Println(averagePrice)
 	return
-	a := 12345
-	fmt.Println(a) // 输出 12345
+
 	//前置补0
 	fmt.Printf("%08d\n", a)    //9位，不足前面凑0补齐 输出 00012345
 	fmt.Printf("%0*d\n", 8, a) //同上  输出 00012345
@@ -816,5 +830,4 @@ func main() {
 	for _, v := range s_test {
 		fmt.Println(string(v))
 	}
-
 }
