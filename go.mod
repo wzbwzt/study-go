@@ -29,10 +29,12 @@ require (
 	github.com/pkg/errors v0.9.1
 	github.com/rifflock/lfshook v0.0.0-20180920164130-b9218ef580f5
 	github.com/robfig/cron/v3 v3.0.1
-	github.com/sbinet/go-python v0.1.0 // indirect
+	github.com/satori/go.uuid v1.2.0
+	github.com/sbinet/go-python v0.1.0
 	github.com/sirupsen/logrus v1.4.2
 	github.com/skip2/go-qrcode v0.0.0-20200617195104-da1b6568686e
 	github.com/smartystreets/goconvey v1.6.4
+	github.com/streadway/amqp v1.0.0
 	github.com/tebeka/strftime v0.1.4 // indirect
 	golang.org/x/crypto v0.0.0-20200709230013-948cd5f35899 // indirect
 	golang.org/x/net v0.0.0-20200707034311-ab3426394381
