@@ -36,7 +36,7 @@ func main() {
 	body := "Hello World!"
 	// 4.将消息发布到声明的队列
 	err = ch.Publish(
-		"",     // exchange
+		"",     // exchange:默认交换器
 		q.Name, // routing key
 		false,  // mandatory
 		false,  // immediate
