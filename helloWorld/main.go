@@ -142,7 +142,7 @@ go语言中函数传的参数永远是复制黏贴的值
 
 */
 //程序的入口函数
-func main1() {
+func main() {
 	fmt.Println("hello wzb")
 	//声明的同时赋值
 	var s1 string = "tiezhu"
@@ -168,8 +168,12 @@ func main1() {
 	//>> 将二进制位右移指定位数
 	fmt.Println(5 >> 2) //1
 
-	//v := int8(1) //只能存8位
+	// v := int8(1) //只能存8位
 	//fmt.Println(v << 10) //错误的用法  int8只有8位  左移10位虽然不会报错但是只会展示8位即：00000000
+
+	testf := float32(1.2)
+	testI := int64(testf)
+	fmt.Println(testI)
 
 	//赋值运算符  用来给变量赋值
 	val := 10

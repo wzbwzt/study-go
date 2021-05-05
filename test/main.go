@@ -735,16 +735,6 @@ func main123() {
 
 	fmt.Printf("%#v\n", s)
 	// fmt.Printf("%#v\n", img)
-<<<<<<< HEAD
-	fmt.Println(len("978fea5a-20cf-11eb-a264-02420a001b12"))
-
-	now := time.Now()
-	test_time := "20:10:09"
-	test_timer, _ := time.Parse("15:04:05", test_time)
-	if now.After(test_timer) {
-		fmt.Println("true")
-	}
-=======
 	var a2 []*string
 	if a2 == nil {
 		fmt.Println(123)
@@ -797,5 +787,4 @@ func main123() {
 
 	t := time.Now()
 	fmt.Println(int(t.Weekday()))
->>>>>>> 0ef0a6ad6bc0d9ecb2ef94c116cebb8acc19fb3c
 }
