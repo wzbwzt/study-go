@@ -119,7 +119,7 @@ func main188() {
 
 }
 
-func main() {
+func main199() {
 	channel := make(chan int)
 	for i := 0; i < 10; i++ {
 		go func() {
@@ -132,6 +132,25 @@ func main() {
 		num := <-channel
 		fmt.Println("num:", num)
 	}
+
+	WorkTimeStart := "22:00:01"
+	WorkTimeEnd := "08:00:30"
+	ZeroTime := "24:00:00"
+	workStart, err := time.Parse("15:04:05", WorkTimeStart)
+	workEnd, err := time.Parse("15:04:05", WorkTimeEnd)
+	zeroTime, err := time.Parse("15:04:05", ZeroTime)
+	if err != nil {
+		fmt.Println(err)
+	}
+	if workStart.Before(workEnd) {
+		fmt.Println("true")
+	} else {
+		fmt.Println("false")
+	}
+	if zeroTime.After(workStart) {
+		fmt.Println("zer0")
+	}
+
 }
 
 func main1() {
@@ -663,9 +682,26 @@ func main222() {
 
 }
 
-func main123() {
-	a := 12345
-	fmt.Println(a) // 输出 12345
+func main() {
+
+	var test_s []int
+	fmt.Printf("%#v", test_s)
+	if test_s == nil {
+		fmt.Println("is null")
+	}
+	fmt.Println(len(test_s))
+	a := make([]int, 0)
+	fmt.Printf("%#v", a)
+	fmt.Println(len(a))
+	if a == nil {
+		fmt.Println("is null")
+	}
+	return
+
+	averagePrice, _ := strconv.ParseFloat(fmt.Sprintf("%.2f", -1980/float64(-2)), 64)
+	fmt.Println(averagePrice)
+	return
+
 	//前置补0
 	fmt.Printf("%08d\n", a)    //9位，不足前面凑0补齐 输出 00012345
 	fmt.Printf("%0*d\n", 8, a) //同上  输出 00012345
@@ -787,4 +823,11 @@ func main123() {
 
 	t := time.Now()
 	fmt.Println(int(t.Weekday()))
+
+	s_test := "wzbwzt"
+	fmt.Println(s_test)
+	fmt.Println(string(s_test[1]))
+	for _, v := range s_test {
+		fmt.Println(string(v))
+	}
 }
