@@ -683,6 +683,16 @@ func main222() {
 }
 
 func main() {
+	HouseID := fmt.Sprintf("%s%s%07d", "3302990200", "121", 1)
+	num := HouseID[14:]
+	new_num, err := strconv.ParseInt(num, 10, 64)
+	if err != nil {
+		return
+	}
+	houseid := HouseID[:14] + fmt.Sprintf("%07d", new_num+1)
+	fmt.Println(houseid)
+
+	return
 
 	var test_s []int
 	fmt.Printf("%#v", test_s)
