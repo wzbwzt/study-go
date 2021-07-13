@@ -3,16 +3,15 @@ package main
 import (
 	"bufio"
 	"crypto/md5"
-	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"math"
 	"net/http"
 	"os"
 	"path"
 	"reflect"
+	"regexp"
 	"strconv"
 	"strings"
 	"sync"
@@ -682,7 +681,52 @@ func main222() {
 
 }
 
+func testF(s []*int) {
+	tmp := []int{1, 2, 3}
+	t := make([]int, len(tmp), len(tmp))
+	copy(t, tmp)
+	a := 123
+	s = append(s, &a)
+}
 func main() {
+	s := []int64{1, 2}
+	func(req []int64) {
+		// req = append(req, 3) //发生了扩容，重新分配内存
+		fmt.Printf("%#v-%p\n", req, req)
+		req[1] += 9
+	}(s)
+	fmt.Printf("%#v-%p\n", s, s)
+
+	return
+	var tt []int64
+	fmt.Printf("%#v-%p", tt, tt)
+	for _, v := range tt {
+		fmt.Println("hello")
+		fmt.Println(v)
+	}
+
+	return
+	s1 := []*int{}
+	// s1 := make([]*int, 20, 20)
+	testF(s1)
+	fmt.Println(s1)
+	return
+	maptest := make(map[int]int, 2)
+	fmt.Println(maptest)
+	maptest[1] = 1
+	fmt.Println(maptest)
+	fmt.Println(maptest[2])
+	return
+	address := "联排21-120"
+	valid := regexp.MustCompile("[0-9]")
+	sli := valid.FindAllStringSubmatch(address, -1)
+	sli2 := valid.FindAllString(address, 1)
+	sli3 := valid.FindString(address)
+	fmt.Printf("%#v\n", sli)
+	fmt.Printf("%#v\n", sli2)
+	fmt.Printf("%#v\n", sli3)
+
+	return
 	HouseID := fmt.Sprintf("%s%s%07d", "3302990200", "121", 1)
 	num := HouseID[14:]
 	new_num, err := strconv.ParseInt(num, 10, 64)
@@ -770,9 +814,9 @@ func main() {
 	}
 	defer img_res.Body.Close()
 
-	byte_img, err := ioutil.ReadAll(img_res.Body)
-	s := base64.StdEncoding.EncodeToString(byte_img)
-	s = "data:image/jpeg;base64," + s
+	// byte_img, err := ioutil.ReadAll(img_res.Body)
+	// s := base64.StdEncoding.EncodeToString(byte_img)
+	// s = "data:image/jpeg;base64," + s
 
 	// img, _, err := imageorient.Decode(img_res.Body)
 	// if err != nil {
