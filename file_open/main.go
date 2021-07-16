@@ -58,8 +58,12 @@ func readfileByBufio() {
 	//相当于从buf缓存区读取文件；先从磁盘中读文件放在缓存区；
 	reader := bufio.NewReader(fileObj)
 	for {
+		// ReadString 会一直阻塞直到遇到分隔符 '\n'
+		// 遇到分隔符后会返回上次遇到分隔符或连接建立后收到的所有数据, 包括分隔符本身
+		// 若在遇到分隔符之前遇到异常, ReadString 会返回已收到的数据和错误信息
 		line, err := reader.ReadString('\n')
 		if err == io.EOF {
+			// 通常遇到的错误是连接中断或被关闭，用io.EOF表示
 			fmt.Println("file read end")
 			return
 		}
