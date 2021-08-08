@@ -683,6 +683,11 @@ func main222() {
 }
 
 func main() {
+	num := "33029902002160100"
+	fmt.Println(num[:10], len(num[:10]))
+	fmt.Println(num[:11], len(num[:11]))
+
+	return
 
 	var test_s []int
 	fmt.Printf("%#v", test_s)
