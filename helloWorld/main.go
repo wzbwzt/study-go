@@ -356,3 +356,14 @@ func sintToInt(sint []int) int {
 	return n
 
 }
+
+//字节
+func f1() {
+	n := "0123abc"
+	fmt.Printf("%#v;%T\n", '0', '0')
+	fmt.Printf("A:%#v;%T\n", 'A', 'A')
+	for _, v := range n {
+		fmt.Println(v - '0')
+		fmt.Printf("%v-%T\n", v, v)
+	}
+}
