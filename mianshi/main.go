@@ -1,12 +1,12 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strconv"
+)
 
 func main() {
-	a := "a\r\nb"
-	fmt.Println(a)
-	fmt.Println(len(a))
-	for _, v := range a {
-		fmt.Println(string(v))
-	}
+	var stock float64 = -140
+	res := strconv.FormatFloat(stock, 'e', 2, 64)
+	fmt.Println(res)
 }
