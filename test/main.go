@@ -691,7 +691,7 @@ func testF(s []*int) {
 func main() {
 	ss := "asfkashdfk"
 	for _, v := range ss {
-		fmt.Println(v)
+		fmt.Println(string(v))
 	}
 	return
 	s := []int64{1, 2}
