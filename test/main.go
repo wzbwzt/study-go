@@ -689,6 +689,12 @@ func testF(s []*int) {
 	s = append(s, &a)
 }
 func main() {
+	mapT := make(map[int]string)
+	mapT[1] = "A"
+	fmt.Println(mapT[1])
+	fmt.Println(mapT[2])
+
+	return
 	aa := "ajdsfajf"
 	saa := &aa
 	fmt.Printf("%v", saa)
