@@ -689,6 +689,17 @@ func testF(s []*int) {
 	s = append(s, &a)
 }
 func main() {
+	var ss []*int
+	ss = append(ss, nil)
+	fmt.Println(ss)
+	fmt.Println(len(ss))
+	return
+	jointime, err := time.Parse(time.RFC3339, "")
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println(jointime)
+	return
 	mapT := make(map[int]string)
 	mapT[1] = "A"
 	fmt.Println(mapT[1])
@@ -699,8 +710,8 @@ func main() {
 	saa := &aa
 	fmt.Printf("%v", saa)
 	return
-	ss := "asfkashdfk"
-	for _, v := range ss {
+	ss1 := "asfkashdfk"
+	for _, v := range ss1 {
 		fmt.Println(v)
 	}
 	return
