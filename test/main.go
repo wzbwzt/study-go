@@ -689,6 +689,7 @@ func testF(s []*int) {
 	s = append(s, &a)
 }
 func main() {
+	return
 	aa := "ajdsfajf"
 	saa := &aa
 	fmt.Printf("%v", saa)
