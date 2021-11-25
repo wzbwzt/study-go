@@ -40,26 +40,24 @@ type Phoner interface {
 }
 
 type AppPhone struct {
-
 }
 
 type HuaweiPhone struct {
-
 }
 
-func (a *AppPhone)call(){
+func (a *AppPhone) call() {
 	fmt.Println("i am appPhone")
 }
-func (a *HuaweiPhone)call(){
+func (a *HuaweiPhone) call() {
 	fmt.Println("i am huaweiPhone")
 }
 
 //框架层  基于抽象的接口来封装的 （接口本生就是指针）
-func callPhone(phone Phoner){ //传入的类型是相同的，传入不同的子类，调对应的方法； 可以兼容后期的扩展，调取未来的方法
+func callPhone(phone Phoner) { //传入的类型是相同的，传入不同的子类，调对应的方法； 可以兼容后期的扩展，调取未来的方法
 	phone.call()
 }
 
-func main(){
+func main() {
 	callPhone(&AppPhone{})
 	callPhone(&HuaweiPhone{})
 
