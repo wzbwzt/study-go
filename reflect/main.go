@@ -60,7 +60,7 @@ func reflectSetValue2(i interface{}) {
 	}
 }
 
-func main1() {
+func main() {
 
 	//反射的应用
 	//Unmarshal将jsonz字符串给写入为结构体
@@ -107,7 +107,7 @@ func main1() {
 	fmt.Println("map中不存在的键：", reflect.ValueOf(ma).MapIndex(reflect.ValueOf("娜扎")).IsValid())
 
 }
-func main() {
+func main2() {
 	// 实例化一个匿名结构体
 	st := struct {
 		abc string
@@ -121,5 +121,5 @@ func main() {
 	ma := map[string]int{}
 	// 尝试从map中查找一个不存在的键
 	fmt.Println("map中不存在的键：", reflect.ValueOf(ma).MapIndex(reflect.ValueOf("娜扎")).IsValid())
-	reflect.Type().Field()
+	// reflect.Type().Field()
 }

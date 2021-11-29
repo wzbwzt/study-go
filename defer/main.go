@@ -12,42 +12,43 @@ func main1() {
 	i = 100
 	fmt.Println(i)
 }
+
 /*
 output:
 100
 defer i=10
 */
 
-
-func calc(x,y int )int{
-	res:=x+y
-	fmt.Println(x,y,res)
+func calc(x, y int) int {
+	res := x + y
+	fmt.Println(x, y, res)
 	return res
 }
 
-func main12(){
-	a:=10
-	b:=20
-	defer calc(a,calc(a,b))
-	a=100
-	defer calc(a,calc(a,b))
-	a=1000
+func main12() {
+	a := 10
+	b := 20
+	defer calc(a, calc(a, b))
+	a = 100
+	defer calc(a, calc(a, b))
+	a = 1000
 
 }
+
 //output:
 //10 20 30
 //100 20 120
 //100 120 220
 //10 30 40
 
-func main2(){
-	a:=10
-	b:=20
+func main2() {
+	a := 10
+	b := 20
 	defer func(i int) {
-		calc(a,calc(a,b))
+		calc(a, calc(a, b))
 		fmt.Println(i)
 	}(1000)
-	a=100
+	a = 100
 }
 
 //闭包的原理：a会从函数外面找最新的那个值，这个区别于main2中的压栈执行（先将a传进去，等待执行）；
@@ -56,26 +57,25 @@ func main2(){
 //100 120 220
 //1000
 
-
-func main3(){
-	a:=make([]int ,6)
-	a=append(a,1,2,3)
+func main3() {
+	a := make([]int, 6)
+	a = append(a, 1, 2, 3)
 	fmt.Println(a)
 }
 
 func main() {
 	defer func() {
-		if err:=recover();err!=nil{
+		if err := recover(); err != nil {
 			fmt.Println("++++")
-			f:=err.(func()string)
-			fmt.Println(err,f(),reflect.TypeOf(err).Kind().String())
-		}else {
+			f := err.(func() string)
+			fmt.Println(err, f(), reflect.TypeOf(err).Kind().String())
+		} else {
 			fmt.Println("fatal")
 		}
 	}()
 	defer func() {
 		fmt.Println("-----")
-		panic (func()string {
+		panic(func() string {
 			return "defer panic"
 		})
 	}()
@@ -87,6 +87,3 @@ func main() {
 ++++
 0x49abd0 defer panic func
 */
-
-
-
