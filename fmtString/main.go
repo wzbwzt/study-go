@@ -34,6 +34,10 @@ func main() {
 	//打印十六进制
 	fmt.Printf("%x\n", n)
 
+	//移动光标\b表示一位:相当于删除一位
+	fmt.Printf("123456")
+	fmt.Printf("\b\b%d\n", n)
+
 	f := 12.34
 	fmt.Printf("浮点数:%T\n", f)
 	fmt.Printf("%b\n", f)               //无小数部分、二进制指数的科学计数法，如-123456p-78
