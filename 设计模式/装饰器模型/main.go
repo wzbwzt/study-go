@@ -14,14 +14,6 @@ type User struct {
 	Age  int
 }
 
-func main() {
-	user := GetUserInfo()
-	fmt.Printf("%v", user)
-
-	withroleuser := GetUserInfoWithRole(GetUserInfo)()
-	fmt.Printf("%v", withroleuser)
-}
-
 func GetUserInfo() *User {
 	return &User{Name: "joel", Age: 20}
 }
@@ -34,4 +26,11 @@ func GetUserInfoWithRole(f userFunc) userFunc {
 		user.Name = "amdin-" + user.Name
 		return user
 	}
+}
+func main() {
+	user := GetUserInfo()
+	fmt.Printf("%v", user)
+
+	withroleuser := GetUserInfoWithRole(GetUserInfo)()
+	fmt.Printf("%v", withroleuser)
 }
