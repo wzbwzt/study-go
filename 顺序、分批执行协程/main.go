@@ -33,16 +33,16 @@ func job1() {
 }
 
 func job2() {
-	// con.L.Lock()
+	con.L.Lock()
 	con.Wait()
-	// con.L.Unlock()
+	con.L.Unlock()
 
 	println("job2")
 }
 func job3() {
-	// con.L.Lock()
+	con.L.Lock()
 	con.Wait()
-	// con.L.Unlock()
+	con.L.Unlock()
 
 	println("job3")
 }
