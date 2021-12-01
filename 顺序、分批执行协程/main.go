@@ -2,6 +2,7 @@ package main
 
 import (
 	"sync"
+	"time"
 )
 
 //协程按照顺序执行,eg.fun1/func2/fun3,先执行fun1再执行func2orfunc3
@@ -16,19 +17,33 @@ import (
 
 type jobFunc func()
 
+var con *sync.Cond
+
 func main() {
+	con = sync.NewCond(&sync.Mutex{})
+
 	wg := do(job1, job2, job3)
 	wg.Wait()
 }
 
 func job1() {
+	time.Sleep(time.Second * 1)
 	println("job1")
+	con.Broadcast()
 }
 
 func job2() {
+	// con.L.Lock()
+	con.Wait()
+	// con.L.Unlock()
+
 	println("job2")
 }
 func job3() {
+	// con.L.Lock()
+	con.Wait()
+	// con.L.Unlock()
+
 	println("job3")
 }
 
