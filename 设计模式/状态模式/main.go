@@ -63,7 +63,7 @@ type LicenseState struct {
 var OK = errors.New("success")
 
 func (this *LicenseState) Next(mathine *Machine) error {
-	fmt.Println("是否统一安装协议")
+	fmt.Println("是否同意安装协议")
 	res := ""
 	fmt.Scanln(&res)
 	if res != "y" {

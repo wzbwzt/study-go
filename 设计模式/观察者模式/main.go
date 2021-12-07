@@ -10,18 +10,20 @@ type Observer interface {
 	Update(int64) error
 }
 type Stock struct {
+	ID int64
 }
 
 func (this *Stock) Update(id int64) error {
-	fmt.Printf("库存%d回滚成功\n", id)
+	fmt.Printf("库存%d回滚成功\n", this.ID)
 	return nil
 }
 
 type Issue struct {
+	ID int64
 }
 
 func (this *Issue) Update(id int64) error {
-	fmt.Printf("工单%d已经取消回滚成功\n", id)
+	fmt.Printf("工单%d已经取消回滚成功\n", this.ID)
 	return nil
 }
 
@@ -64,8 +66,8 @@ func main() {
 	//eg. 被观察者（订单）,观察者（库存，工单）,当订单取消订单时，库存和工单相应触发取消
 
 	//创建观察者
-	stock := &Stock{}
-	issue := &Issue{}
+	stock := &Stock{ID: 1}
+	issue := &Issue{ID: 2}
 
 	//创建被观察者
 	order := Order{}
