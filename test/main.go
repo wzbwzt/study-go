@@ -689,6 +689,11 @@ func testF(s []*int) {
 	s = append(s, &a)
 }
 func main() {
+	atest := []int{1, 2, 3}
+	for k, v := range atest {
+		println(k, v)
+	}
+	return
 	var ss []*int
 	ss = append(ss, nil)
 	fmt.Println(ss)
