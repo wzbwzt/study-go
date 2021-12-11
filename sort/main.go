@@ -5,7 +5,7 @@ import (
 )
 
 //排序方法总结
-var a = []int{12, 6, 15, 22, 100, 88, 66,3,234,23,54,14,3,134,676,9,134,854}
+var a = []int{12, 6, 15, 22, 100, 88, 66, 3, 234, 23, 54, 14, 3, 134, 676, 9, 134, 854}
 
 //冒泡排序
 /*
@@ -14,20 +14,19 @@ var a = []int{12, 6, 15, 22, 100, 88, 66,3,234,23,54,14,3,134,676,9,134,854}
 针对所有的元素重复以上的步骤，除了最后一个；
 重复步骤1~3，直到排序完成。
 */
-func BubbleSort(x []int)[]int{
-	for i:=0;i<len(x)-1;i++ {
-		for j:=0;j<len(x)-1-i;j++ {
-			if  x[j]>x[j+1] {
+func BubbleSort(x []int) []int {
+	for i := 0; i < len(x)-1; i++ {
+		for j := 0; j < len(x)-1-i; j++ {
+			if x[j] > x[j+1] {
 				var tmp int
-				tmp=x[j+1]
-				x[j+1]=x[j]
-				x[j]=tmp
+				tmp = x[j+1]
+				x[j+1] = x[j]
+				x[j] = tmp
 			}
 		}
 	}
 	return x
-}	
-
+}
 
 //选择排序（Selection Sort）
 /*
@@ -35,40 +34,37 @@ func BubbleSort(x []int)[]int{
 然后，再从剩余未排序元素中继续寻找最小（大）元素，然后放到已排序序列的末尾。
 以此类推，直到所有元素均排序完毕。
 */
-func SelectSort(x []int)[]int{
+func SelectSort(x []int) []int {
 	var minIndex int
 	var tmp int
-	for i:=0;i<len(x)-1;i++ {
-		minIndex=i
-		for j:=i+1;j<len(x);j++ {
-			if x[minIndex]>x[j] {
-				minIndex=j
+	for i := 0; i < len(x)-1; i++ {
+		minIndex = i
+		for j := i + 1; j < len(x); j++ {
+			if x[minIndex] > x[j] {
+				minIndex = j
 			}
 		}
-		tmp=x[i]
-		x[i]=x[minIndex]
-		x[minIndex]=tmp
+		tmp = x[i]
+		x[i] = x[minIndex]
+		x[minIndex] = tmp
 	}
 	return x
 }
 
-
 //插入排序
-func InsertSort(x []int)[]int{
-		for j:=1;j<len(x)-1;j++ {
-			for i:=j-1;i>=0 ;i--{
-				if x[j]<x[i] {
-					x[i]=x[j]
-				}
+func InsertSort(x []int) []int {
+	for j := 1; j < len(x)-1; j++ {
+		for i := j - 1; i >= 0; i-- {
+			if x[j] < x[i] {
+				x[i] = x[j]
 			}
 		}
-		return x
+	}
+	return x
 }
 
-func main(){
+func main() {
 	fmt.Println(BubbleSort(a))
 	fmt.Println(SelectSort(a))
 	fmt.Println(InsertSort(a))
 }
-
-
