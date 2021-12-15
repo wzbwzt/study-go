@@ -688,7 +688,83 @@ func testF(s []*int) {
 	a := 123
 	s = append(s, &a)
 }
+
+//struct 转 map
+func StructToMap(source interface{}) map[string]interface{} {
+	fmt.Printf("%#v\n", source)
+
+	valueof := reflect.ValueOf(source)
+	if valueof.Kind() == reflect.Ptr {
+		valueof = valueof.Elem()
+	}
+	if valueof.Kind() != reflect.Struct {
+		panic("not struct")
+	}
+
+	typeof := reflect.TypeOf(source)
+	if typeof.Kind() == reflect.Ptr {
+		typeof = typeof.Elem()
+	}
+
+	res := make(map[string]interface{}, valueof.NumField())
+
+	for i := 0; i < valueof.NumField(); i++ {
+		filedvalue := valueof.Field(i)
+		filedtype := typeof.Field(i)
+
+		if filedvalue.Kind() == reflect.Ptr {
+			filedvalue = filedvalue.Elem()
+		}
+
+		switch filedvalue.Kind() {
+		case reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int, reflect.Int64:
+			res[filedtype.Name] = filedvalue.Int()
+		case reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint, reflect.Uint64:
+			res[filedtype.Name] = filedvalue.Uint()
+		case reflect.Float32, reflect.Float64:
+			res[filedtype.Name] = filedvalue.Float()
+		case reflect.String:
+			res[filedtype.Name] = filedvalue.String()
+		case reflect.Bool:
+			res[filedtype.Name] = filedvalue.Bool()
+		}
+	}
+	return res
+}
+
 func main() {
+	type User struct {
+		Id        int
+		Name      *string
+		Man       bool
+		Childuser *User
+	}
+	name := "joel"
+	id := 1
+	childuser := User{}
+	u := User{Name: &name, Id: id, Man: true, Childuser: &childuser}
+	m := StructToMap(&u)
+	for k, v := range m {
+		fmt.Printf("%s-%v\n", k, v)
+	}
+	fmt.Printf("%#v", u)
+
+	// mm := StructToMap(user{})
+	// fmt.Println(mm)
+
+	return
+	// s1 := []*int{}
+	s1 := make([]*int, 20)
+	testF(s1)
+	fmt.Println(s1)
+
+	maptest := make(map[int]int, 2)
+	fmt.Println(maptest)
+	fmt.Println(len(maptest))
+	maptest[1] = 1
+	fmt.Println(maptest)
+	fmt.Println(maptest[2])
+	return
 	atest := []int{1, 2, 3}
 	for k, v := range atest {
 		println(k, v)
@@ -737,17 +813,7 @@ func main() {
 	}
 
 	return
-	s1 := []*int{}
-	// s1 := make([]*int, 20, 20)
-	testF(s1)
-	fmt.Println(s1)
-	return
-	maptest := make(map[int]int, 2)
-	fmt.Println(maptest)
-	maptest[1] = 1
-	fmt.Println(maptest)
-	fmt.Println(maptest[2])
-	return
+
 	address := "联排21-120"
 	valid := regexp.MustCompile("[0-9]")
 	sli := valid.FindAllStringSubmatch(address, -1)
@@ -805,8 +871,8 @@ func main() {
 	str_action_card := string(action_card)
 	fmt.Printf("%v", str_action_card)
 	fmt.Printf("%v", action_card)
-	id := ""
-	fmt.Println(&id)
+	// id := ""
+	// fmt.Println(&id)
 
 	// json_str := `{"小区id": null, "物业名称": "物业名称", "竣工时间": "竣工时间"}`
 	type residential struct {
