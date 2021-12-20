@@ -17,6 +17,8 @@ import (
 
 //终端输出表格：https://github.com/olekukonko/tablewriter
 
+var cmds = &cobra.Command{}
+
 var rootCmd = &cobra.Command{
 	Use:   "info",
 	Short: "get info(cpu,mem) per second",
@@ -45,8 +47,11 @@ var rootCmd = &cobra.Command{
 	},
 }
 
+func init() {
+	cmds.AddCommand(rootCmd)
+}
 func Execute() {
-	if err := rootCmd.Execute(); err != nil {
+	if err := cmds.Execute(); err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}

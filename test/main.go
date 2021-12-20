@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"crypto/md5"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"math"
@@ -691,7 +692,6 @@ func testF(s []*int) {
 
 //struct 转 map
 func StructToMap(source interface{}) map[string]interface{} {
-	fmt.Printf("%#v\n", source)
 
 	valueof := reflect.ValueOf(source)
 	if valueof.Kind() == reflect.Ptr {
@@ -716,6 +716,9 @@ func StructToMap(source interface{}) map[string]interface{} {
 			filedvalue = filedvalue.Elem()
 		}
 
+		if filedtype.Tag.Get("rft") == "omit" {
+			continue
+		}
 		switch filedvalue.Kind() {
 		case reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int, reflect.Int64:
 			res[filedtype.Name] = filedvalue.Int()
@@ -727,27 +730,59 @@ func StructToMap(source interface{}) map[string]interface{} {
 			res[filedtype.Name] = filedvalue.String()
 		case reflect.Bool:
 			res[filedtype.Name] = filedvalue.Bool()
+		case reflect.Struct:
+			if filedvalue.Type().Name() == "Time" {
+				res[filedtype.Name] = filedvalue.Interface().(time.Time).Format(time.RFC3339)
+			}
 		}
 	}
 	return res
 }
 
+type MyErr struct {
+	Code int
+	Msg  string
+}
+
+func (this *MyErr) Error() string {
+	return this.Msg
+}
+
+func NewMyErr(code int, msg string) error {
+	return &MyErr{Code: code, Msg: msg}
+}
+func (this *MyErr) Unwrap(err error) error {
+	return &MyErr{Code: 2, Msg: "bottom err"}
+}
+
 func main() {
+	err := NewMyErr(1, "failed")
+	fmt.Println(errors.Unwrap(err))
+	fmt.Println(err)
+
+	return
+	type idType int
+	type Hoby struct {
+		Name string
+	}
 	type User struct {
-		Id        int
+		Hoby
+		Id        idType
 		Name      *string
-		Man       bool
+		Man       bool `rft:"omit"`
 		Childuser *User
+		Current   *time.Time
 	}
 	name := "joel"
 	id := 1
-	childuser := User{}
-	u := User{Name: &name, Id: id, Man: true, Childuser: &childuser}
+	now := time.Now()
+	childuser := User{Current: &now}
+	u := User{Name: &name, Id: idType(id), Man: true, Childuser: &childuser, Current: &now}
+
 	m := StructToMap(&u)
 	for k, v := range m {
 		fmt.Printf("%s-%v\n", k, v)
 	}
-	fmt.Printf("%#v", u)
 
 	// mm := StructToMap(user{})
 	// fmt.Println(mm)
