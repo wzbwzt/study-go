@@ -756,6 +756,14 @@ func (this *MyErr) Unwrap(err error) error {
 }
 
 func main() {
+	list := make([]int, 10)
+	alist := list //引用类型
+	for i := 0; i < 10; i++ {
+		alist[i] = i
+	}
+	fmt.Println(list)
+	fmt.Println(alist)
+	return
 	err := NewMyErr(1, "failed")
 	fmt.Println(errors.Unwrap(err))
 	fmt.Println(err)
