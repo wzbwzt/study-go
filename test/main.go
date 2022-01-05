@@ -21,6 +21,8 @@ import (
 	_ "image/gif"
 	_ "image/jpeg"
 	_ "image/png"
+
+	"github.com/labstack/gommon/log"
 )
 
 /*
@@ -755,7 +757,34 @@ func (this *MyErr) Unwrap(err error) error {
 	return &MyErr{Code: 2, Msg: "bottom err"}
 }
 
+type User struct {
+	Name string
+	Age  int
+}
+
+func (this *User) Test() {
+	this.Age++
+}
+
+type item struct {
+	Name string
+}
+
 func main() {
+	item := &item{}
+	// defer func() {
+	// 	fmt.Println(item.Name)
+	// }()
+	defer func() {
+		log.Infof("Item:%s", item.Name)
+	}()
+	item.Name = "joel"
+	fmt.Println("over")
+	return
+	t := User{Age: 2}
+	t.Test()
+	fmt.Println(t)
+	return
 	list := make([]int, 10)
 	alist := list //引用类型
 	for i := 0; i < 10; i++ {
@@ -1015,8 +1044,8 @@ func main() {
 	json.Unmarshal(slice_b, &Unmarshal_test)
 	fmt.Printf("%#v\n", Unmarshal_test)
 
-	t := time.Now()
-	fmt.Println(int(t.Weekday()))
+	// t := time.Now()
+	// fmt.Println(int(t.Weekday()))
 
 	s_test := "wzbwzt"
 	fmt.Println(s_test)
