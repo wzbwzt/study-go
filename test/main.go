@@ -770,7 +770,7 @@ type item struct {
 	Name string
 }
 
-func main() {
+func main21() {
 	item := &item{}
 	// defer func() {
 	// 	fmt.Println(item.Name)
@@ -1053,4 +1053,13 @@ func main() {
 	for _, v := range s_test {
 		fmt.Println(string(v))
 	}
+}
+
+type User1 struct {
+	Name string
+}
+
+//go:generate go version
+func main() {
+
 }
