@@ -1060,6 +1060,13 @@ type User1 struct {
 }
 
 //go:generate go version
-func main() {
+func main33() {
+	a := make([]int, 10)
+	fmt.Println(a)
+	a = append(a, 1)
+	fmt.Println(a)
+}
 
+func main() {
+	fmt.Println(make([]int, 10))
 }
