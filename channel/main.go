@@ -31,11 +31,26 @@ for {
 	}
 }
 
-*/
-// 	}
-// }
+/*
+1. 对于无缓冲区的channel，往channel发送数据和从channel接收数据都会阻塞。
+2.对于nil channel和有缓冲区的channel
 
-// */
+channel	nil	空的	非空非满	满了
+--------------------------------------
+发送数据	阻塞	  ok	  ok		阻塞
+--------------------------------------
+接收数据	阻塞	  阻塞   ok		 ok
+--------------------------------------
+close()    panic   ok    ok        ok
+--------------------------------------
+
+channel被关闭后：
+往被关闭的channel发送数据会触发panic。
+从被关闭的channel接收数据，会先读完channel里的数据。如果数据读完了，继续从channel读数据会拿到channel里存储的元素类型的零值。
+data, ok := <- c
+对于上面的代码，如果channel c关闭了，继续从c里读数据，当c里还有数据时，data就是对应读到的值，ok的值是true。如果c的数据已经读完了，那data就是零值，ok的值是false。
+channel被关闭后，如果再次关闭，会引发panic。
+*/
 
 var c chan int
 var wg sync.WaitGroup

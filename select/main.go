@@ -6,8 +6,11 @@ import "fmt"
 //同一时刻对多个通道实现操作的场景；
 /*
 可处理一个或多个channel的发送/接收操作。
-如果多个case同时满足，select会随机选择一个。
-对于没有case的select{}会一直等待，可用于阻塞main函数。
+
+select的运行机制如下：
+- 选取一个可执行不阻塞的case分支，如果多个case分支都不阻塞，会随机选一个case分支执行，和case分支在代码里写的顺序没关系。
+- 如果所有case分支都阻塞，会进入default分支执行。
+- 如果没有default分支，那select会阻塞，直到有一个case分支不阻塞。
 */
 
 func main() {
@@ -21,4 +24,24 @@ func main() {
 		}
 	}
 
+	audition1()
+
+}
+
+//面试题1
+//程序可能panic，也可能打印"CLOSED, "
+func audition1() {
+	data := make(chan int)
+	shutdown := make(chan int)
+	close(shutdown)
+	close(data)
+
+	select {
+	case <-shutdown:
+		fmt.Print("CLOSED, ")
+	case data <- 1:
+		fmt.Print("HAS WRITTEN, ")
+	default:
+		fmt.Print("DEFAULT, ")
+	}
 }
