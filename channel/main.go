@@ -5,6 +5,8 @@ import (
 	"sync"
 )
 
+//Golang的Channel, 发送一个数据到Channel和从Channel接收一个数据都是原子性的。
+
 //channle就三种操作
 //发送（send）、接收(receive）和关闭（close）三种操作。
 //通道关闭后还是可以receive
