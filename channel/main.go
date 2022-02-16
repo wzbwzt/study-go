@@ -7,6 +7,14 @@ import (
 
 //Golang的Channel, 发送一个数据到Channel和从Channel接收一个数据都是原子性的。
 
+/*
+Channel是异步进行的, channel存在3种状态：
+
+nil，未初始化的状态，只进行了声明，或者手动赋值为nil
+active，正常的channel，可读或者可写
+closed，已关闭，千万不要误认为关闭channel后，channel的值是nil
+*/
+
 //channle就三种操作
 //发送（send）、接收(receive）和关闭（close）三种操作。
 //通道关闭后还是可以receive

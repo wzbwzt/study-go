@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"runtime"
+)
 
 //select 多路复用
 //同一时刻对多个通道实现操作的场景；
@@ -44,4 +47,5 @@ func audition1() {
 	default:
 		fmt.Print("DEFAULT, ")
 	}
+	runtime.GC()
 }
