@@ -1068,5 +1068,8 @@ func main33() {
 }
 
 func main() {
+	var a uintptr
+	a = 1
+	fmt.Println(a)
 	fmt.Println(make([]int, 10))
 }

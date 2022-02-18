@@ -62,15 +62,20 @@ data, ok := <- c
 channel被关闭后，如果再次关闭，会引发panic。
 */
 
+/*
+chan 作为参数传递时，不完全是引用传递
+*/
+
 var c chan int
 var wg sync.WaitGroup
 
 func main() {
-	//noBufChan()
+	// noBufChan()
 	// bufChan()
 	//channelDemo()
-	channelDemo2()
+	// channelDemo2()
 	// test()
+	test1()
 
 }
 func test() {
@@ -173,4 +178,21 @@ func channelDemo2() {
 	for i := range ch2 { // 通道关闭后会退出for range循环
 		fmt.Println(i)
 	}
+}
+
+//证明chan 不完全是引用传递
+func test1() {
+	var c chan int
+
+	initchan(c)
+
+	if c == nil {
+		fmt.Println("is nil")
+	} else {
+		fmt.Println("is not nil", c)
+	}
+}
+
+func initchan(c chan int) {
+	c = make(chan int)
 }
