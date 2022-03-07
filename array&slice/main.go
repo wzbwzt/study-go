@@ -177,6 +177,7 @@ func main() {
 	appendSlice()
 
 	audition()
+	audition2()
 
 	copyForSlice()
 }
@@ -307,4 +308,11 @@ func audition() {
 	x = append(x, y...)
 	x = append(x, y...)
 	fmt.Println(a, x) //[0 2 3 3] [0 2 3 3 3]
+}
+
+//面试题目
+func audition2() {
+	a := [...]int{0, 1, 2, 3}
+	x := a[2:3:3]
+	fmt.Printf("len:%v;cap:%v,value；%v\n", len(x), cap(x), x)
 }

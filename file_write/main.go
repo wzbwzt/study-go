@@ -8,7 +8,7 @@ import (
 )
 
 func writeDemo1() {
-	fileObj, err := os.OpenFile("./nothistxt.txt", os.O_WRONLY|os.O_CREATE|os.O_APPEND|os.O_TRUNC, 666) //第三个参数是8进制权限；windows上没用
+	fileObj, err := os.OpenFile("./nothistxt.txt", os.O_WRONLY|os.O_CREATE|os.O_APPEND|os.O_TRUNC, 0666) //第三个参数是8进制权限；windows上没用
 	if err != nil {
 		fmt.Printf("file open failed  the err is %v", err)
 		return
@@ -21,7 +21,7 @@ func writeDemo1() {
 }
 
 func writeDemo2() {
-	fileObj, err := os.OpenFile("./demo2.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 666)
+	fileObj, err := os.OpenFile("./demo2.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
 	if err != nil {
 		fmt.Printf("open file failed the err is %v", err)
 		return

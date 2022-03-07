@@ -492,6 +492,8 @@ github.com/valyala/fasttemplate v1.0.1 h1:tY9CJiPnMXf1ERmG2EyK7gNUd+c6RKGD0IfU8W
 github.com/valyala/fasttemplate v1.0.1/go.mod h1:UQGH1tvbgY+Nz5t2n7tXsz52dQxojPUpymEIMZ47gx8=
 github.com/valyala/fasttemplate v1.2.1 h1:TVEnxayobAdVkhQfrfes2IzOB6o+z4roRkPF52WA1u4=
 github.com/valyala/fasttemplate v1.2.1/go.mod h1:KHLXt3tVN2HBp8eijSv/kGJopbvo7S+qRAEEKiv+SiQ=
+github.com/wuqinqiang/easyfsm v0.0.3 h1:An4y3xSCttQQt0dMu8UaWxdX3cB5h3eR/nUxUgiuSVg=
+github.com/wuqinqiang/easyfsm v0.0.3/go.mod h1:pvxRIX0c1VkJgtivi/oCuhR2I1x/ZSDnPriUzFEV2+o=
 github.com/xiang90/probing v0.0.0-20190116061207-43a291ad63a2/go.mod h1:UETIi67q53MR2AWcXfiuqkDkRtnGDLqkBTpCHuJHxtU=
 github.com/xordataexchange/crypt v0.0.3-0.20170626215501-b2862e3d0a77/go.mod h1:aYKd//L2LvnjZzWKhF00oedf4jCCReLcmhLdhm1A27Q=
 github.com/xuri/efp v0.0.0-20191019043341-b7dc4fe9aa91 h1:gp02YctZuIPTk0t7qI+wvg3VQwTPyNmSGG6ZqOsjSL8=

@@ -13,6 +13,7 @@ import (
 	"path"
 	"reflect"
 	"regexp"
+	"sort"
 	"strconv"
 	"strings"
 	"sync"
@@ -1068,8 +1069,65 @@ func main33() {
 }
 
 func main() {
-	var a uintptr
-	a = 1
-	fmt.Println(a)
-	fmt.Println(make([]int, 10))
+	data := `[
+        {
+            "date": "2022-2-23",
+            "count": 2
+        },
+        {
+            "date": "2022-2-22",
+            "count": 1
+        },
+        {
+            "date": "2022-2-28",
+            "count": 10
+        },
+        {
+            "date": "2022-2-27",
+            "count": 0
+        },
+        {
+            "date": "2022-2-26",
+            "count": 12
+        },
+        {
+            "date": "2022-2-25",
+            "count": 0
+        },
+        {
+            "date": "2022-2-24",
+            "count": 0
+        }
+    ]`
+
+	var res []*staticGotoCheckRspModel
+	err := json.Unmarshal([]byte(data), &res)
+	if err != nil {
+		log.Error(err)
+	}
+	for _, v := range res {
+		fmt.Printf("%#v\n", v)
+	}
+	fmt.Println("sort res")
+	sort.Sort(staticGotoCheckRspListModel(res))
+	for _, v := range res {
+		fmt.Printf("%#v\n", v)
+	}
+
+}
+
+type staticGotoCheckRspModel struct {
+	Date  string `json:"date"`
+	Count int    `json:"count"`
+}
+type staticGotoCheckRspListModel []*staticGotoCheckRspModel
+
+func (s staticGotoCheckRspListModel) Len() int {
+	return len(s)
+}
+func (s staticGotoCheckRspListModel) Swap(i, j int) {
+	s[i], s[j] = s[j], s[i]
+}
+func (s staticGotoCheckRspListModel) Less(i, j int) bool {
+	return s[i].Date < s[j].Date
 }
