@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+option go_package = "./api;api";
+
+service Goodbye{
+  rpc Goodbye(GoodbyeReq)returns(GoodbyeRsp){}
+}
+message GoodbyeReq{
+  string content = 1;
+}
+message GoodbyeRsp{
+  string content = 2;
+}

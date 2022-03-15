@@ -1,0 +1,17 @@
+name:
+  server: micro-wire-server
+  client: micro-wire-client
+database:
+  debug: true
+  type: mysql
+  DB: root:mysql@tcp(127.0.0.1:3306)/service_test?charset=utf8mb4&parseTime=True&loc=Local
+etcd:
+  [ 127.0.0.1:2379 ]
+redis:
+  addr: 127.0.0.1:6379
+  pwd: '123456'
+  db: 0
+nats:
+  addr: nats://127.0.0.1:4222
+http:
+  addr: localhost:8000
