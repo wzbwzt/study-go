@@ -6,8 +6,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/labstack/gommon/log"
 	"github.com/pkg/errors"
+	"google.golang.org/appengine/log"
 )
 
 var DingTalkToken = "https://oapi.dingtalk.com/robot/send?access_token=80573028ce2ca559603366d6ca18c38c160d407c49168ed5dadae86b635163b4"

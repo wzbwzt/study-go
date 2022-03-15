@@ -11,7 +11,7 @@ var wg sync.WaitGroup
 
 var maxnum chan struct{} = make(chan struct{}, 5)
 
-var maxnum2 chan struct{} = make(chan struct{}, 1)
+var maxnum2 chan struct{} = make(chan struct{})
 
 //周期性的开启指定数量的携程并发完成，并保证当前批次完成后，再开启同样批次的携程完成任务
 // func main() {
@@ -44,10 +44,10 @@ var maxnum2 chan struct{} = make(chan struct{}, 1)
 // }
 
 func main() {
-	maxnum2 <- struct{}{}
 	wg.Add(1)
 
 	go func() {
+		maxnum2 <- struct{}{}
 		for {
 			wg.Wait()
 			time.Sleep(time.Second * 2)
@@ -68,5 +68,5 @@ func main() {
 
 func doJob() {
 	fmt.Println(rand.Int63n(100))
-	// time.Sleep(time.Second * 13)
+	time.Sleep(time.Second * 5)
 }

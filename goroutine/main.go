@@ -8,6 +8,12 @@ import (
 //程序启动之后也会创建一个主goroutine（main） 去执行
 //goroutine 什么时候结束？goroutine对应的函数结束了，goroutine也就结束了
 //main 函数执行完了；由main函数创建的那些goroutine也就结束了
+
+/*
+协程的主动退出：通过 runtime.Goexit()可以做到提前结束协程，且结束前还能执行到defer的内容•
+runtime.Goexit()其实是对goexit0的封装，只要执行 goexit0 这个函数，当前协程就会退出，
+同时还能调度下一个可执行的协程出来跑
+*/
 func main() {
 	for i := 0; i < 100; i++ {
 		//go hello(i) //开启一个单独的goroutine去执行hello函数（任务）

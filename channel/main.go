@@ -5,6 +5,16 @@ import (
 	"sync"
 )
 
+//Golang的Channel, 发送一个数据到Channel和从Channel接收一个数据都是原子性的。
+
+/*
+Channel是异步进行的, channel存在3种状态：
+
+nil，未初始化的状态，只进行了声明，或者手动赋值为nil
+active，正常的channel，可读或者可写
+closed，已关闭，千万不要误认为关闭channel后，channel的值是nil
+*/
+
 //channle就三种操作
 //发送（send）、接收(receive）和关闭（close）三种操作。
 //通道关闭后还是可以receive
@@ -31,21 +41,41 @@ for {
 	}
 }
 
-*/
-// 	}
-// }
+/*
+1. 对于无缓冲区的channel，往channel发送数据和从channel接收数据都会阻塞。
+2.对于nil channel和有缓冲区的channel
 
-// */
+channel	nil	空的	非空非满	满了
+--------------------------------------
+发送数据	阻塞	  ok	  ok		阻塞
+--------------------------------------
+接收数据	阻塞	  阻塞   ok		 ok
+--------------------------------------
+close()    panic   ok    ok        ok
+--------------------------------------
+
+channel被关闭后：
+往被关闭的channel发送数据会触发panic。
+从被关闭的channel接收数据，会先读完channel里的数据。如果数据读完了，继续从channel读数据会拿到channel里存储的元素类型的零值。
+data, ok := <- c
+对于上面的代码，如果channel c关闭了，继续从c里读数据，当c里还有数据时，data就是对应读到的值，ok的值是true。如果c的数据已经读完了，那data就是零值，ok的值是false。
+channel被关闭后，如果再次关闭，会引发panic。
+*/
+
+/*
+chan 作为参数传递时，不完全是引用传递
+*/
 
 var c chan int
 var wg sync.WaitGroup
 
 func main() {
-	//noBufChan()
+	// noBufChan()
 	// bufChan()
 	//channelDemo()
-	channelDemo2()
+	// channelDemo2()
 	// test()
+	test1()
 
 }
 func test() {
@@ -148,4 +178,21 @@ func channelDemo2() {
 	for i := range ch2 { // 通道关闭后会退出for range循环
 		fmt.Println(i)
 	}
+}
+
+//证明chan 不完全是引用传递
+func test1() {
+	var c chan int
+
+	initchan(c)
+
+	if c == nil {
+		fmt.Println("is nil")
+	} else {
+		fmt.Println("is not nil", c)
+	}
+}
+
+func initchan(c chan int) {
+	c = make(chan int)
 }

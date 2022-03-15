@@ -1,9 +1,11 @@
+// +build ignore
 package main
 
 import (
 	"bufio"
 	"crypto/md5"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"math"
@@ -12,6 +14,7 @@ import (
 	"path"
 	"reflect"
 	"regexp"
+	"sort"
 	"strconv"
 	"strings"
 	"sync"
@@ -20,6 +23,8 @@ import (
 	_ "image/gif"
 	_ "image/jpeg"
 	_ "image/png"
+
+	"github.com/labstack/gommon/log"
 )
 
 /*
@@ -688,7 +693,152 @@ func testF(s []*int) {
 	a := 123
 	s = append(s, &a)
 }
-func main() {
+
+//struct 转 map
+func StructToMap(source interface{}) map[string]interface{} {
+
+	valueof := reflect.ValueOf(source)
+	if valueof.Kind() == reflect.Ptr {
+		valueof = valueof.Elem()
+	}
+	if valueof.Kind() != reflect.Struct {
+		panic("not struct")
+	}
+
+	typeof := reflect.TypeOf(source)
+	if typeof.Kind() == reflect.Ptr {
+		typeof = typeof.Elem()
+	}
+
+	res := make(map[string]interface{}, valueof.NumField())
+
+	for i := 0; i < valueof.NumField(); i++ {
+		filedvalue := valueof.Field(i)
+		filedtype := typeof.Field(i)
+
+		if filedvalue.Kind() == reflect.Ptr {
+			filedvalue = filedvalue.Elem()
+		}
+
+		if filedtype.Tag.Get("rft") == "omit" {
+			continue
+		}
+		switch filedvalue.Kind() {
+		case reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int, reflect.Int64:
+			res[filedtype.Name] = filedvalue.Int()
+		case reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint, reflect.Uint64:
+			res[filedtype.Name] = filedvalue.Uint()
+		case reflect.Float32, reflect.Float64:
+			res[filedtype.Name] = filedvalue.Float()
+		case reflect.String:
+			res[filedtype.Name] = filedvalue.String()
+		case reflect.Bool:
+			res[filedtype.Name] = filedvalue.Bool()
+		case reflect.Struct:
+			if filedvalue.Type().Name() == "Time" {
+				res[filedtype.Name] = filedvalue.Interface().(time.Time).Format(time.RFC3339)
+			}
+		}
+	}
+	return res
+}
+
+type MyErr struct {
+	Code int
+	Msg  string
+}
+
+func (this *MyErr) Error() string {
+	return this.Msg
+}
+
+func NewMyErr(code int, msg string) error {
+	return &MyErr{Code: code, Msg: msg}
+}
+func (this *MyErr) Unwrap(err error) error {
+	return &MyErr{Code: 2, Msg: "bottom err"}
+}
+
+type User struct {
+	Name string
+	Age  int
+}
+
+func (this *User) Test() {
+	this.Age++
+}
+
+type item struct {
+	Name string
+}
+
+func main21() {
+	item := &item{}
+	// defer func() {
+	// 	fmt.Println(item.Name)
+	// }()
+	defer func() {
+		log.Infof("Item:%s", item.Name)
+	}()
+	item.Name = "joel"
+	fmt.Println("over")
+	return
+	t := User{Age: 2}
+	t.Test()
+	fmt.Println(t)
+	return
+	list := make([]int, 10)
+	alist := list //引用类型
+	for i := 0; i < 10; i++ {
+		alist[i] = i
+	}
+	fmt.Println(list)
+	fmt.Println(alist)
+	return
+	err := NewMyErr(1, "failed")
+	fmt.Println(errors.Unwrap(err))
+	fmt.Println(err)
+
+	return
+	type idType int
+	type Hoby struct {
+		Name string
+	}
+	type User struct {
+		Hoby
+		Id        idType
+		Name      *string
+		Man       bool `rft:"omit"`
+		Childuser *User
+		Current   *time.Time
+	}
+	name := "joel"
+	id := 1
+	now := time.Now()
+	childuser := User{Current: &now}
+	u := User{Name: &name, Id: idType(id), Man: true, Childuser: &childuser, Current: &now}
+
+	m := StructToMap(&u)
+	for k, v := range m {
+		fmt.Printf("%s-%v\n", k, v)
+	}
+
+	// mm := StructToMap(user{})
+	// fmt.Println(mm)
+
+	return
+	// s1 := []*int{}
+	s1 := make([]*int, 20)
+	testF(s1)
+	fmt.Println(s1)
+
+	maptest := make(map[int]int, 2)
+	fmt.Println(maptest)
+	fmt.Println(len(maptest))
+	maptest[1] = 1
+	fmt.Println(maptest)
+	fmt.Println(maptest[2])
+	return
 	atest := []int{1, 2, 3}
 	for k, v := range atest {
 		println(k, v)
@@ -737,17 +887,7 @@ func main() {
 	}
 
 	return
-	s1 := []*int{}
-	// s1 := make([]*int, 20, 20)
-	testF(s1)
-	fmt.Println(s1)
-	return
-	maptest := make(map[int]int, 2)
-	fmt.Println(maptest)
-	maptest[1] = 1
-	fmt.Println(maptest)
-	fmt.Println(maptest[2])
-	return
+
 	address := "联排21-120"
 	valid := regexp.MustCompile("[0-9]")
 	sli := valid.FindAllStringSubmatch(address, -1)
@@ -805,8 +945,8 @@ func main() {
 	str_action_card := string(action_card)
 	fmt.Printf("%v", str_action_card)
 	fmt.Printf("%v", action_card)
-	id := ""
-	fmt.Println(&id)
+	// id := ""
+	// fmt.Println(&id)
 
 	// json_str := `{"小区id": null, "物业名称": "物业名称", "竣工时间": "竣工时间"}`
 	type residential struct {
@@ -906,8 +1046,8 @@ func main() {
 	json.Unmarshal(slice_b, &Unmarshal_test)
 	fmt.Printf("%#v\n", Unmarshal_test)
 
-	t := time.Now()
-	fmt.Println(int(t.Weekday()))
+	// t := time.Now()
+	// fmt.Println(int(t.Weekday()))
 
 	s_test := "wzbwzt"
 	fmt.Println(s_test)
@@ -915,4 +1055,80 @@ func main() {
 	for _, v := range s_test {
 		fmt.Println(string(v))
 	}
+}
+
+type User1 struct {
+	Name string
+}
+
+//go:generate go version
+func main33() {
+	a := make([]int, 10)
+	fmt.Println(a)
+	a = append(a, 1)
+	fmt.Println(a)
+}
+
+func main() {
+	data := `[
+        {
+            "date": "2022-2-23",
+            "count": 2
+        },
+        {
+            "date": "2022-2-22",
+            "count": 1
+        },
+        {
+            "date": "2022-2-28",
+            "count": 10
+        },
+        {
+            "date": "2022-2-27",
+            "count": 0
+        },
+        {
+            "date": "2022-2-26",
+            "count": 12
+        },
+        {
+            "date": "2022-2-25",
+            "count": 0
+        },
+        {
+            "date": "2022-2-24",
+            "count": 0
+        }
+    ]`
+
+	var res []*staticGotoCheckRspModel
+	err := json.Unmarshal([]byte(data), &res)
+	if err != nil {
+		log.Error(err)
+	}
+	for _, v := range res {
+		fmt.Printf("%#v\n", v)
+	}
+	fmt.Println("sort res")
+	sort.Sort(staticGotoCheckRspListModel(res))
+	for _, v := range res {
+		fmt.Printf("%#v\n", v)
+	}
+
+}
+
+type staticGotoCheckRspModel struct {
+	Date  string `json:"date"`
+	Count int    `json:"count"`
+}
+type staticGotoCheckRspListModel []*staticGotoCheckRspModel
+
+func (s staticGotoCheckRspListModel) Len() int {
+	return len(s)
+}
+func (s staticGotoCheckRspListModel) Swap(i, j int) {
+	s[i], s[j] = s[j], s[i]
+}
+func (s staticGotoCheckRspListModel) Less(i, j int) bool {
+	return s[i].Date < s[j].Date
 }

@@ -7,6 +7,16 @@ import (
 	"time"
 )
 
+/*
+Context 使用原则:
+
+- 不要把Context放在结构体中，要以参数的方式传递。
+- 以Context作为参数的函数方法，应该把Context作为第一个参数，放在第一位。
+- 给一个函数方法传递Context的时候，不要传递nil，如果不知道传递什么，就使用context.TODO。
+- Context的Value相关方法应该传递必须的数据，不要什么数据都使用这个传递。
+- Context是线程安全的，可以放心的在多个goroutine中传递。
+*/
+
 var wg sync.WaitGroup
 
 //TraceCode 追踪码  用户WithValue
@@ -70,9 +80,9 @@ LOOP:
 		fmt.Printf("worker, trace code:%s\n", traceCode)
 		time.Sleep(time.Millisecond * 10) // 假设正常连接数据库耗时10毫秒
 		select {
-			case <-ctxP.Done(): // 50毫秒后自动调用
-				break LOOP
-			default:
+		case <-ctxP.Done(): // 50毫秒后自动调用
+			break LOOP
+		default:
 		}
 	}
 	wg.Done()
@@ -116,4 +126,3 @@ func main() {
 	cancel()
 	wg.Wait()
 }
-

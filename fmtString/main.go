@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"time"
 )
 
 //fmt占位符
@@ -13,6 +14,13 @@ import (
 //fmt.Print()连续不换行输出
 //fmt.Println()换行输出
 func main() {
+	//每次行首输出(覆盖前次结果)
+	for i := 0; i < 10; i++ {
+		fmt.Printf("\r%d", i)
+		time.Sleep(time.Second)
+	}
+	return
+
 	//打印内存地址
 	ss := []int{1, 2, 3}
 	fmt.Printf("%p\n", &ss) //使用%p  传的值得是内存地址（指针）
@@ -96,7 +104,7 @@ func main() {
 	}
 	name := "阿无的吴"
 	//向打开的文件句柄中写入内容
-	fmt.Fprintf(fileObj, "往文件中写如信息：%s", name)
+	fmt.Fprintf(fileObj, "往文件中写如信息:%s", name)
 
 	ss1 := fmt.Sprint("沙河小王子")
 	name1 := "沙河小王子"
