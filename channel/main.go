@@ -56,9 +56,11 @@ close()    panic   ok    ok        ok
 
 channel被关闭后：
 往被关闭的channel发送数据会触发panic。
-从被关闭的channel接收数据，会先读完channel里的数据。如果数据读完了，继续从channel读数据会拿到channel里存储的元素类型的零值。
+从被关闭的channel接收数据，会先读完channel里的数据。如果数据读完了，
+继续从channel读数据会拿到channel里存储的元素类型的零值。
 data, ok := <- c
-对于上面的代码，如果channel c关闭了，继续从c里读数据，当c里还有数据时，data就是对应读到的值，ok的值是true。如果c的数据已经读完了，那data就是零值，ok的值是false。
+对于上面的代码，如果channel c关闭了，继续从c里读数据，当c里还有数据时，data就是对应读到的值，
+ok的值是true。如果c的数据已经读完了，那data就是零值，ok的值是false。
 channel被关闭后，如果再次关闭，会引发panic。
 */
 

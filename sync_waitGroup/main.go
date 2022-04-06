@@ -8,6 +8,7 @@ import (
 )
 
 /*
+
 在WaitGroup里主要有三个方法:
 
 - Add, 可以添加或减少 goroutine的数量.
@@ -20,6 +21,9 @@ import (
 注意:
 在Golang官网中对于WaitGroup介绍是A WaitGroup must not be copied after first use,在 WaitGroup 第一次使用后，不能被拷贝。
 
+WaitGroup 实现原理:
+WaitGroup 主要维护了 2 个计数器，一个是请求计数器 v，一个是等待计数器 w，二者组成一个 64bit 的值，请求计数器占高 32bit，等待计数器占低32bit。
+每次 Add 执行，请求计数器 v 加 1，Done 方法执行，等待计数器减 1，v 为0 时通过信号量唤醒 Wait()
 */
 var wg sync.WaitGroup
 

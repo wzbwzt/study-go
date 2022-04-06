@@ -1,6 +1,5 @@
 package main
 
-
 /*
 - 应用场景：高并发的场景下，有些操作只需要执行一次，例如只加载一次配置文件、只关闭一次通道等；
 - sync.Once只有一个Do方法：func (o *Once) Do(f func())
@@ -8,10 +7,10 @@ package main
 */
 
 import (
-"sync"
+	"sync"
 )
 
-type singleton struct {}
+type singleton struct{}
 
 var instance *singleton
 var once sync.Once
