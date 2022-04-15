@@ -72,6 +72,8 @@ var c chan int
 var wg sync.WaitGroup
 
 func main() {
+	test2()
+	return
 	// noBufChan()
 	// bufChan()
 	//channelDemo()
@@ -197,4 +199,10 @@ func test1() {
 
 func initchan(c chan int) {
 	c = make(chan int)
+}
+
+//是否panic
+func test2() {
+	var c chan struct{}
+	<-c
 }

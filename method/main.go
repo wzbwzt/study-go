@@ -38,3 +38,14 @@ func main() {
 	d1.wang() //默认传的就是结构体的指针
 	fmt.Println(d1.age)
 }
+
+//question
+/*
+func (i int) PrintInt() { fmt.Println(i)
+}
+
+func main() {
+	var i int = 1
+	i.PrintInt()  //compilation error;因为基于类型创建的方法必须定义在同一个包内
+}
+*/

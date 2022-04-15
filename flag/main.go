@@ -7,7 +7,7 @@ import (
 )
 
 //flag  命令行标位符
-func main1() {
+func main() {
 	//定义命令行参数方式1// flag.TypeVar(Type指针, flag名, 默认值, 帮助信息)
 	var name string
 	var age int
@@ -36,7 +36,7 @@ func main1() {
 	fmt.Println(flag.NFlag())
 }
 
-func main() {
+func main1() {
 	s := flag.String("name", "wzb", "xingming")
 	flag.Parse()
 	fmt.Println(*s)
