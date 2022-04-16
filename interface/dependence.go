@@ -1,6 +1,7 @@
+//go:build ignore
+// +build ignore
+
 package main
-
-
 
 //-------------------
 //抽象层
@@ -16,38 +17,44 @@ type Driver interface {
 //实现层
 //-------------------
 //car
-type Benc struct {}
-func (b *Benc)Run(){}
+type Benc struct{}
 
-type BMW struct {}
-func (b *BMW)Run(){}
+func (b *Benc) Run() {}
 
-type Fent struct {}
-func (f *Fent)Run(){}
+type BMW struct{}
+
+func (b *BMW) Run() {}
+
+type Fent struct{}
+
+func (f *Fent) Run() {}
 
 //driver
-type ZhanS struct {}
-func (f *ZhanS)Drive(car Car){
+type ZhanS struct{}
+
+func (f *ZhanS) Drive(car Car) {
 	car.Run()
 }
 
-type LiS struct {}
-func (z *LiS)Drive(car Car){
+type LiS struct{}
+
+func (z *LiS) Drive(car Car) {
 	car.Run()
 }
 
-type WanW struct {}
-func (f *WanW)Drive(car Car){
+type WanW struct{}
+
+func (f *WanW) Drive(car Car) {
 	car.Run()
 }
 
 //-------------------
 //业务逻辑层
 //-------------------
-func main(){
+func main() {
 	// 业务1：ZhanS开奔驰
 	var z ZhanS
 	var fentian Car
-	fentian=&Fent{}  //多态
+	fentian = &Fent{} //多态
 	z.Drive(fentian)
 }

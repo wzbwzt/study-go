@@ -10,7 +10,7 @@ import (
 	"google.golang.org/appengine/log"
 )
 
-var DingTalkToken = "https://oapi.dingtalk.com/robot/send?access_token=80573028ce2ca559603366d6ca18c38c160d407c49168ed5dadae86b635163b4"
+var DingTalkToken = "https://oapi.dingtalk.com/robot/send?access_token=*********"
 
 func SendDingMsg(msg string) {
 	keyword := "langmy:" //安全用关键字

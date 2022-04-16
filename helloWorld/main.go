@@ -64,6 +64,11 @@ const (
 	k        //zz
 	p = iota //4
 )
+const (
+	a = "name"
+	b = iota
+	c = iota
+)
 
 //多个常量声明在一行
 const (

@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package main
 
 import "fmt"
@@ -10,7 +13,6 @@ import "fmt"
 //有内存Memory storage()
 //Cpu calcalate()
 //------------------------
-
 
 //------------------------
 //实现层：
@@ -36,75 +38,77 @@ type Cpu interface {
 	Calcalate()
 }
 
-
 type Computer struct {
-	ItemCard Card
+	ItemCard   Card
 	ItemMemory Memory
-	ItemCpu Cpu
+	ItemCpu    Cpu
 }
 
 //NewComputer  初始化一个computer类对象
-func NewComputer(cpu Cpu,card Card,memory Memory)(c *Computer){
-	c=&Computer{        //多态性
-		ItemCard: card,
-		ItemCpu: cpu,
+func NewComputer(cpu Cpu, card Card, memory Memory) (c *Computer) {
+	c = &Computer{ //多态性
+		ItemCard:   card,
+		ItemCpu:    cpu,
 		ItemMemory: memory,
 	}
 	return
 }
-func (c *Computer)Work(){
+func (c *Computer) Work() {
 	c.ItemCard.Display()
 	c.ItemMemory.Storage()
 	c.ItemCpu.Calcalate()
 }
+
 //------------实现层------------
 type IntelCpu struct {
+}
+
+func (i *IntelCpu) Calcalate() {
 
 }
-func (i *IntelCpu)Calcalate(){
 
-}
 type IntelCard struct {
+}
+
+func (i *IntelCard) Display() {
 
 }
-func (i *IntelCard)Display(){
 
-}
 type IntelMemory struct {
+}
+
+func (i *IntelMemory) Storage() {
 
 }
-func (i *IntelMemory)Storage(){
 
-}
 type KingMemory struct {
+}
+
+func (k *KingMemory) Storage() {
 
 }
-func (k *KingMemory)Storage(){
 
-}
 type NVIDCard struct {
-
-}
-func (n *NVIDCard)Display(){
-
 }
 
+func (n *NVIDCard) Display() {
+
+}
 
 //------------逻辑层------------
-func main(){
+func main() {
 	//组装Intel系列的电脑 并运行
-	intelComputer:=NewComputer(&IntelCpu{},&IntelCard{},&IntelMemory{})
+	intelComputer := NewComputer(&IntelCpu{}, &IntelCard{}, &IntelMemory{})
 	intelComputer.Work()
 	//组装Intel Cpu、Kingston Memory、NVIDIA Card混合的电脑并运行
-	mixComputer:=NewComputer(&IntelCpu{},&NVIDCard{},&KingMemory{})
+	mixComputer := NewComputer(&IntelCpu{}, &NVIDCard{}, &KingMemory{})
 	mixComputer.Work()
 
 	var a int
 	//a = 100
 	fmt.Println(&a)
 
-
-	b:= map[string]int{"zs":12}
+	b := map[string]int{"zs": 12}
 	fmt.Println(b)
 
 	//var b map[string]int
@@ -112,7 +116,3 @@ func main(){
 	//b["zs"] = 100
 	//fmt.Println(b) //会panic
 }
-
-
-
-
