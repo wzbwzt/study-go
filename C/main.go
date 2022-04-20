@@ -1,3 +1,6 @@
+//go:build lib
+// +build lib
+
 package main
 
 /*

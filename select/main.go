@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package main
 
 import (
@@ -14,6 +17,7 @@ select的运行机制如下：
 - 选取一个可执行不阻塞的case分支，如果多个case分支都不阻塞，会随机选一个case分支执行，和case分支在代码里写的顺序没关系。
 - 如果所有case分支都阻塞，会进入default分支执行。
 - 如果没有default分支，那select会阻塞，直到有一个case分支不阻塞。
+- 对于 select 语句，在进入该语句时，会按源码的顺序对每一个 case 子句进行求值：这个求值只针对发送或接收操作的额外表达式。（详见notion-Journal-GO）
 */
 
 func main() {
