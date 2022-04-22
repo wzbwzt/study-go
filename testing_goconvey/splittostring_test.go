@@ -164,3 +164,10 @@ func TestSplittostringWithSubTest2convey(t *testing.T) {
 		})
 	})
 }
+
+//如果有需要，可以调用 *T 和 *B 的 Skip 方法，跳过该测试或基准测试
+func TestTimeConsuming(t *testing.T) {
+	if testing.Short() {
+		t.Skip("skipping test in short mode.")
+	}
+}

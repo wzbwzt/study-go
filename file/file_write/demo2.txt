@@ -1,0 +1,1 @@
+bufio write的方法

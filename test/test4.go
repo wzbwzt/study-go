@@ -3,9 +3,10 @@
 
 package main
 
-// import "C"
+import "C"
 
 func main() {
+
 	var ch chan struct{}
 	<-ch
 }
