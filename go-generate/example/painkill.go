@@ -7,6 +7,5 @@ import (
 )
 
 func main() {
-	fmt.Println(painkiller.Pill(7).String())
 	fmt.Println(painkiller.Ibuprofen)
 }
