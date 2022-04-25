@@ -52,6 +52,7 @@ require (
 	github.com/soheilhy/cmux v0.1.4 // indirect
 	github.com/spf13/cobra v1.3.0 // indirect
 	github.com/streadway/amqp v1.0.0
+	github.com/stretchr/testify v1.7.1
 	github.com/tebeka/strftime v0.1.4 // indirect
 	github.com/tmc/grpc-websocket-proxy v0.0.0-20190109142713-0ad062ec5ee5 // indirect
 	github.com/wuqinqiang/easyfsm v0.0.3 // indirect

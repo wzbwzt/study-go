@@ -98,6 +98,17 @@ func BenchmarkFib10(b *testing.B) { benchmarkFib(b, 10) }
 func BenchmarkFib20(b *testing.B) { benchmarkFib(b, 20) }
 func BenchmarkFib40(b *testing.B) { benchmarkFib(b, 40) }
 
+func BenchmarkFib(b *testing.B) {
+	b.RunParallel(func(p *testing.PB) {
+		for p.Next() {
+			if Fib(30) != Fib(30) {
+				b.Error("test fail")
+			}
+		}
+	})
+
+}
+
 //示例函数
 func ExampleSplittostring() {
 	fmt.Println(Splittostring("adfgadsf", "d"))
