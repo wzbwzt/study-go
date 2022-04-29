@@ -3,9 +3,7 @@
 
 package main
 
-import (
-	"fmt"
-)
+import "fmt"
 
 func f(n int) (r int) {
 	defer func() {
