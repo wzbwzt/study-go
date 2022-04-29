@@ -25,6 +25,6 @@ func main1() {
 	f(eat | sleep | da) //衍生到file_write文件中的 os.OpenFile()函数中间参数flag的 |传递；决定文件是否追加+创建等多重模式的操作
 }
 
-func main(){
-	fmt.Println(strconv.FormatFloat(float64(2.3),'b',-1,32))
+func main() {
+	fmt.Println(strconv.FormatFloat(float64(2.3), 'b', -1, 32))
 }
