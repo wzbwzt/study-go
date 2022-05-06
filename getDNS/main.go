@@ -2,8 +2,9 @@ package main
 
 import (
 	"fmt"
-	"github.com/miekg/dns"
 	"time"
+
+	"github.com/miekg/dns"
 )
 
 func CNAME2(src string, dnsService string) (dst []string, err error) {
@@ -40,8 +41,7 @@ func CNAME2(src string, dnsService string) (dst []string, err error) {
 	return
 }
 
-func main(){
+func main() {
 	cname2, _ := CNAME2("www.baidu.com", "8.8.8.8")
 	fmt.Println(cname2)
 }
-
