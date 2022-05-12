@@ -3,7 +3,9 @@
 
 package main
 
-import "encoding/base64"
+import (
+	"encoding/base64"
+)
 
 /*
 Base64
