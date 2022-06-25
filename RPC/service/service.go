@@ -28,24 +28,25 @@ golang中的rpc必须符合的4个条件
 //以计算矩形面积和周长为例
 
 type Rect struct {
-
 }
-
 
 type Params struct {
-	Width int
+	Width  int
 	Height int
 }
+
 //矩形面积
-func (r *Rect)Area(params Params,resp *int)(error){
-	*resp = params.Width*params.Height
+func (r *Rect) Area(params Params, resp *int) error {
+	*resp = params.Width * params.Height
 	return nil
 }
+
 //矩形周长
-func (r *Rect)Perimeter(params Params,resp *int)(error){
-	*resp=(params.Width+params.Height)*2
+func (r *Rect) Perimeter(params Params, resp *int) error {
+	*resp = (params.Width + params.Height) * 2
 	return nil
 }
+
 //net/rpc
 //func main(){
 //	//1.注册服务
@@ -64,9 +65,9 @@ func (r *Rect)Perimeter(params Params,resp *int)(error){
 //}
 
 //net/rpc/jsonrpc
-func main(){
+func main() {
 	//注册服务
-	rect:=new(Rect)
+	rect := new(Rect)
 	err := rpc.Register(rect)
 	if err != nil {
 		log.Fatal(err)
@@ -77,16 +78,16 @@ func main(){
 		log.Fatal(err)
 	}
 	//循环监听
-	for  {
+	for {
 		conn, err := listen.Accept()
 		if err != nil {
 			continue
 		}
-		go func(conn net.Conn){
+		go func(conn net.Conn) {
 			fmt.Println("new a client")
 			jsonrpc.ServeConn(conn)
 
 		}(conn)
 	}
-	
+
 }

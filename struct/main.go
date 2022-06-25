@@ -17,6 +17,7 @@ type person struct {
 	age    int
 	gender string
 	hobby  []string
+	joel
 }
 
 //类型的别名设置（打印出的类型还是int）
@@ -62,6 +63,20 @@ func main() {
 		[]string{
 			"up", "fight",
 		},
+		joel{},
 	}
 	fmt.Println(p3)
+}
+
+type joel struct {
+	age string
+}
+
+func (j joel) Hi() {
+	println(123)
+}
+
+func Hi() {
+	var p person
+	p.Hi() //匿名嵌入默认继承joel的Hi()方法
 }
