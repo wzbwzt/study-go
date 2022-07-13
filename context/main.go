@@ -110,19 +110,19 @@ func main() {
 	//}
 	//-----------------------------------------------------------------
 	//WithTimeout()//通常用于数据库或者网络连接的超时控制。
-	//ctx3, cancel3 := context.WithTimeout(context.Background(), time.Millisecond*50) // 设置一个50毫秒的超时
-	//wg.Add(1)
-	//go connectDB(ctx3)
-	//time.Sleep(time.Second * 2)
-	//cancel3()
-	//wg.Wait()
-	//-----------------------------------------------------------------
-	ctxP, cancel := context.WithTimeout(context.Background(), time.Millisecond*50) // 设置一个50毫秒的超时
-	// 在系统的入口中设置trace code传递给后续启动的goroutine实现日志数据聚合
-	ctxP = context.WithValue(ctxP, TraceCode("TRACE_CODE"), "123123")
+	ctx3, cancel3 := context.WithTimeout(context.Background(), time.Millisecond*50) // 设置一个50毫秒的超时
 	wg.Add(1)
-	go withvalue(ctxP)
-	time.Sleep(time.Second * 5)
-	cancel()
+	connectDB(ctx3)
+	// time.Sleep(time.Second * 2)
+	cancel3()
 	wg.Wait()
+	//-----------------------------------------------------------------
+	// ctxP, cancel := context.WithTimeout(context.Background(), time.Millisecond*50) // 设置一个50毫秒的超时
+	// // 在系统的入口中设置trace code传递给后续启动的goroutine实现日志数据聚合
+	// ctxP = context.WithValue(ctxP, TraceCode("TRACE_CODE"), "123123")
+	// wg.Add(1)
+	// go withvalue(ctxP)
+	// time.Sleep(time.Second * 5)
+	// cancel()
+	// wg.Wait()
 }

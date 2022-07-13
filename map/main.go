@@ -1,6 +1,11 @@
+//go:build ignore
+// +build ignore
+
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 /*
 map 的 key 为什么是无序的？
