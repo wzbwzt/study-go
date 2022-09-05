@@ -10,9 +10,10 @@ import (
 	"os"
 	"path"
 	"strings"
+	"time"
 )
 
-func main() {
+func main1() {
 	//get请求示例1；对于get的提交的query值无法编译
 	// resp, err := http.Get("http://127.0.0.1:9090/simulation?name=铁柱&id=123")
 	// if err != nil {
@@ -70,8 +71,15 @@ func postDemo() {
 	fmt.Println(string(b))
 }
 
-func main1() {
-	imgPath := "C:/Users/LM-LL/Desktop/"
+func main() {
+	var lasttime int64 = 1660155360000000
+	lastT := time.UnixMicro(lasttime)
+	println(lastT.Format(time.RFC3339))
+
+	timestamp := lastT.Add(time.Second * 3)
+	println(timestamp.Format(time.RFC3339))
+	return
+	imgPath := "./"
 	imgUrl := "http://hbimg.b0.upaiyun.com/32f065b3afb3fb36b75a5cbc90051b1050e1e6b6e199-Ml6q9F_fw320"
 
 	fileName := path.Base(imgUrl)

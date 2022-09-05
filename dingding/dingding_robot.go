@@ -22,7 +22,7 @@ func SendDingMsg(msg string) {
 	req, err := http.NewRequest("POST", webHook, strings.NewReader(content))
 	if err != nil {
 		// handle error
-		log.Errorf("创建dingtaklk 请求 ", errors.WithStack(err))
+		log.Errorf("创建dingtaklk 请求 %v", errors.WithStack(err))
 		fmt.Println(err)
 	}
 	client := &http.Client{

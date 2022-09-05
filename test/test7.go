@@ -3,7 +3,9 @@
 
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func change(s ...int) {
 	s = append(s, 3)
