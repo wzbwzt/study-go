@@ -21,6 +21,7 @@ import (
 	"strings"
 	"sync"
 	"time"
+	"unicode"
 
 	_ "image/gif"
 	_ "image/jpeg"
@@ -1071,7 +1072,97 @@ func main33() {
 	fmt.Println(a)
 }
 
+func wordPattern(pattern string, s string) bool {
+	p2s := make(map[rune]string)
+	ss := strings.Split(s, " ")
+	if len(ss) != len(pattern) {
+		return false
+	}
+	for i, v := range pattern {
+		reflectV, ok := p2s[v]
+		if ok {
+			if reflectV != ss[i] {
+				return false
+			}
+		}
+		p2s[v] = ss[i]
+
+	}
+	return true
+}
+
+func intersection(nums1 []int, nums2 []int) []int {
+	sort.Ints(nums1)
+	sort.Ints(nums2)
+
+	var res []int
+	for i, j := 0, 0; i < len(nums1) && j < len(nums2); {
+		if nums1[i] == nums2[j] {
+			if res == nil || nums1[i] != res[len(res)-1] {
+				res = append(res, nums1[i])
+			}
+			i++
+			j++
+		} else if nums1[i] < nums2[j] {
+			i++
+		} else {
+			j++
+		}
+
+	}
+	return res
+}
+
+func longestPalindrome(s string) int {
+	s_map := make(map[rune]int)
+	for _, v := range s {
+		s_map[v]++
+	}
+	res, ant := 0, 0
+	for _, v := range s_map {
+		if v%2 == 0 {
+			res += v
+		} else {
+			ant = 1
+		}
+	}
+	return res + ant
+}
+
+func shortestCompletingWord(licensePlate string, words []string) (ans string) {
+	var cnt [26]int
+
+	for _, ch := range licensePlate {
+		if unicode.IsLetter(ch) {
+			cnt[unicode.ToLower(ch)-'a']++
+		}
+	}
+
+next:
+	for _, word := range words {
+		c := [26]int{}
+		for _, ch := range word {
+			c[ch-'a']++
+		}
+		for i := 0; i < 26; i++ {
+			if c[i] < cnt[i] {
+				continue next
+			}
+		}
+		if ans == "" || len(word) < len(ans) {
+			ans = word
+		}
+	}
+	return
+}
+
 func main() {
+	shortestCompletingWord("1s3 PSt", []string{"step", "steps", "stripe", "stepple"})
+
+	return
+	longestPalindrome("abccccdd")
+
+	return
 	data := `[
         {
             "date": "2022-2-23",
