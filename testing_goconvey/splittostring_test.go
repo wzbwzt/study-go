@@ -182,3 +182,39 @@ func TestTimeConsuming(t *testing.T) {
 		t.Skip("skipping test in short mode.")
 	}
 }
+
+//1.18新功能:模糊测试
+/*
+1.Go 语言的模糊测试，与其他三种测试方式相同，测试文件的文件名以 _test.go 结尾，测试文件中必须导入 testing 包。
+
+2.模糊测试与其他三种测试方式的不同点是，函数名和函数签名不同。
+我们在之前关于 Go 测试的文章中介绍过，功能测试的函数名以 Test 开头，函数签名是 t testing.T。
+性能测试的函数名以 Benchmark 开头，函数签名是 b testing.B。
+模糊测试的函数名以 Fuzz 开头，函数签名是 f testing.F。
+
+3.与功能测试和性能测试相同，运行模糊测试也是使用 go test 命令，可以运行 go help test或 go help testflag 了解更多。
+*/
+func Reverse(s string) string {
+	b := []byte(s)
+	for i, j := 0, len(b)-1; i < len(b)/2; i, j = i+1, j-1 {
+		b[i], b[j] = b[j], b[i]
+	}
+	return string(b)
+}
+
+func FuzzReverse(f *testing.F) {
+	testcases := []string{"Hello, world", " ", "!12345"}
+	for _, tc := range testcases {
+		f.Add(tc) // Use f.Add to provide a seed corpus
+	}
+	f.Fuzz(func(t *testing.T, orig string) { //orig为模糊参数,根据测试对象的函数参数来定义
+		rev := Reverse(orig)
+		doubleRev := Reverse(rev)
+		if orig != doubleRev {
+			t.Errorf("Before: %q, after: %q", orig, doubleRev)
+		}
+	})
+}
+
+//在运行 go test -fuzz=Fuzz（也可以使用完整模糊测试函数名），运行失败时，将导致运行失败的输入写入种子语料库。
+//需要注意的时，当模糊测试可以通过时，模糊测试将一直运行，我们需要使用 ctrl-C 结束程序。或者使用 -fuzztime 30s，代表如果模糊测试通过，运行 30s 将自动停止。
