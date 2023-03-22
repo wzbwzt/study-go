@@ -148,7 +148,7 @@ func channelDemo() {
 	//wg.Wait()
 }
 
-//单项通道  规定通道只能用来send 或者receive;一般用于函数参数的传递，来保证通道的操作唯一
+// 单项通道  规定通道只能用来send 或者receive;一般用于函数参数的传递，来保证通道的操作唯一
 func f1(ch chan<- int) {
 	for i := 0; i < 100; i++ {
 		ch <- i
@@ -184,7 +184,7 @@ func channelDemo2() {
 	}
 }
 
-//证明chan 不完全是引用传递
+// 证明chan 不完全是引用传递
 func test1() {
 	var c chan int
 
@@ -201,7 +201,7 @@ func initchan(c chan int) {
 	c = make(chan int)
 }
 
-//是否panic
+// 是否panic
 func test2() {
 	var c chan struct{}
 	<-c

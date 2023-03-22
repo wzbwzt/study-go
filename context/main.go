@@ -19,7 +19,7 @@ Context 使用原则:
 
 var wg sync.WaitGroup
 
-//TraceCode 追踪码  用户WithValue
+// TraceCode 追踪码  用户WithValue
 type TraceCode string
 
 //context 用来指定goroutine 的取消退出
@@ -51,7 +51,7 @@ LOOP:
 	defer wg.Done()
 }
 
-//WithTimeout()示例
+// WithTimeout()示例
 func connectDB(ctx3 context.Context) {
 LOOP:
 	for {
@@ -67,7 +67,7 @@ LOOP:
 
 }
 
-//WithValue()示例
+// WithValue()示例
 func withvalue(ctxP context.Context) {
 	key := TraceCode("TRACE_CODE")
 	traceCode, ok := ctxP.Value(key).(string) // 在子goroutine中获取trace code  .()类型断言

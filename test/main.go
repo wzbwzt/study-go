@@ -177,7 +177,7 @@ func main18() {
 
 }
 
-//在使用func (t Time) AddDate(years int, months int, days int) Time{}需要注意如果是8.31往后推一个月会直接跳过9月
+// 在使用func (t Time) AddDate(years int, months int, days int) Time{}需要注意如果是8.31往后推一个月会直接跳过9月
 func main3() {
 	t, _ := time.Parse(time.RFC3339, "2020-08-31T08:10:45.814Z")
 	year := t.Year()
@@ -272,7 +272,7 @@ func RemoveFromSlice(target, source []string) []string {
 	return source
 }
 
-//数组去重
+// 数组去重
 func RemoveRepeatedElement(arr []string) (newArr []string) {
 	newArr = make([]string, 0)
 	for i := 0; i < len(arr); i++ {
@@ -317,7 +317,7 @@ func main29() {
 
 }
 
-//判断浮点数是不是整数
+// 判断浮点数是不是整数
 func main26() {
 	var a float64
 	a = 1.23
@@ -549,7 +549,7 @@ type SecLimit struct {
 	curTime int64 //访问的时间(精确到秒)
 }
 
-//Count 更新每秒访问数量
+// Count 更新每秒访问数量
 func (s *SecLimit) Count(nowTime int64) (newCount int) {
 	if s.curTime == nowTime {
 		return s.count + 1
@@ -697,7 +697,7 @@ func testF(s []*int) {
 	s = append(s, &a)
 }
 
-//struct 转 map
+// struct 转 map
 func StructToMap(source interface{}) map[string]interface{} {
 
 	valueof := reflect.ValueOf(source)
