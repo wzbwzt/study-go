@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"reflect"
 	"unsafe"
 )
 
@@ -13,6 +14,9 @@ unsafe库徘徊在“类型安全”边缘，由于它们绕过了 Golang 的内
 unsafe库源码极少，只有两个类型的定义和三个方法的声明。
 */
 func main() {
+	changeType()
+	readPrivateField()
+
 	//Pointer 类型
 	//这个类型比较重要，它是实现定位欲读写的内存的基础。官方文档对该类型有四个重要描述：
 	//（1）任何类型的指针都可以被转化为 Pointer
@@ -59,8 +63,77 @@ func main() {
 	offset := unsafe.Offsetof(d.c3)
 	q := (*int)(unsafe.Pointer(uintptr(pp) + offset))
 	fmt.Println(*q) // 13
-	*pp = 1023
+	// *pp = 1023
 
 	fmt.Println(d.c3) // 1013
 
+}
+
+// 使用unsafe.Pointer进行指针类型转换
+func changeType() {
+	v1 := uint(12)
+	v2 := int(13)
+
+	fmt.Println(reflect.TypeOf(v1)) //uint
+	fmt.Println(reflect.TypeOf(v2)) //int
+
+	fmt.Println(reflect.TypeOf(&v1)) //*uint
+	fmt.Println(reflect.TypeOf(&v2)) //*int
+
+	p := &v1
+	p = (*uint)(unsafe.Pointer(&v2)) //使用unsafe.Pointer进行类型的转换
+
+	fmt.Println(reflect.TypeOf(p)) // *unit
+	fmt.Println(*p)                //13
+}
+
+// 使用unsafe.Pointer 读写结构体的私有成员
+func readPrivateField() {
+	var x struct {
+		a int
+		b int
+		c []int
+	}
+
+	// unsafe.Offsetof 函数的参数必须是一个字段,  比如 x.b,  方法会返回 b 字段相对于 x 起始地址的偏移量, 包括可能的空洞。
+
+	// 指针运算 uintptr(unsafe.Pointer(&x)) + unsafe.Offsetof(x.b)。
+
+	// 和 pb := &x.b 等价
+	pb := (*int)(unsafe.Pointer(uintptr(unsafe.Pointer(&x)) + unsafe.Offsetof(x.b)))
+
+	*pb = 42
+	fmt.Println(x.b) // "42"
+}
+
+// string 和 []byte 零拷贝转换
+func testString2Bytes() {
+	s := "Hello World"
+	b := string2bytes(s)
+	fmt.Println(b)
+	s = bytes2string(b)
+	fmt.Println(s)
+
+}
+func string2bytes(s string) []byte {
+	stringHeader := (*reflect.StringHeader)(unsafe.Pointer(&s))
+
+	bh := reflect.SliceHeader{
+		Data: stringHeader.Data,
+		Len:  stringHeader.Len,
+		Cap:  stringHeader.Len,
+	}
+
+	return *(*[]byte)(unsafe.Pointer(&bh))
+}
+
+func bytes2string(b []byte) string {
+	sliceHeader := (*reflect.SliceHeader)(unsafe.Pointer(&b))
+
+	sh := reflect.StringHeader{
+		Data: sliceHeader.Data,
+		Len:  sliceHeader.Len,
+	}
+
+	return *(*string)(unsafe.Pointer(&sh))
 }
