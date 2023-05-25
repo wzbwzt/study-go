@@ -9,10 +9,10 @@ import (
 	"time"
 )
 
-//fmt占位符
-//fmt.Printf()格式化输出
-//fmt.Print()连续不换行输出
-//fmt.Println()换行输出
+// fmt占位符
+// fmt.Printf()格式化输出
+// fmt.Print()连续不换行输出
+// fmt.Println()换行输出
 func main() {
 	//每次行首输出(覆盖前次结果)
 	for i := 0; i < 10; i++ {
@@ -137,7 +137,7 @@ func bufioDemo() {
 	fmt.Printf("%#v\n", text)
 }
 
-//前/后置补零
+// 前/后置补零
 func buZero() {
 	a := 12345
 	fmt.Println(a) // 输出 12345

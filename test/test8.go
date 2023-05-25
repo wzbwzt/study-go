@@ -3,36 +3,20 @@
 
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 func main() {
-	var nodes = &ListNode{Val: 1}
-	nodes.Next = &ListNode{Val: 2}
-	nodes.Next.Next = &ListNode{Val: 2}
-	nodes.Next.Next.Next = &ListNode{Val: 1}
-	fmt.Println(isPalindrome(nodes))
+	start := time.Now()
 
-}
-
-type ListNode struct {
-	Val  int
-	Next *ListNode
-}
-
-func isPalindrome(head *ListNode) bool {
-	frontPointer := head
-	var recursivelyCheck func(*ListNode) bool
-	recursivelyCheck = func(curNode *ListNode) bool {
-		if curNode != nil {
-			if !recursivelyCheck(curNode.Next) {
-				return false
-			}
-			if curNode.Val != frontPointer.Val {
-				return false
-			}
-			frontPointer = frontPointer.Next
+	t := time.NewTicker(time.Second * 1)
+	for {
+		select {
+		case <-t.C:
+			d := time.Since(start).Seconds()
+			fmt.Printf("\b\b\b%03d", int(d))
 		}
-		return true
 	}
-	return recursivelyCheck(head)
 }
